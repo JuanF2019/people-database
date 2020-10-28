@@ -2,10 +2,12 @@ package collections;
 
 public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K, V> {
 
-	
+	private RedBlackTreeNode<K,V> nillNode;
 	
 	public RedBlackTree() {
 		super();
+		nillNode = new RedBlackTreeNode<K,V>(null,null);
+		nillNode.setColor(Color.BLACK);
 	}
 	
 	public boolean add(K key, V value) {
@@ -18,7 +20,10 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 			//Left and right are null, always when adding
 			RedBlackTreeNode<K,V> parent = (RedBlackTreeNode<K,V>)addedNode.getParent();
 			
-			replacementNode.setParent(parent);			
+			replacementNode.setParent(parent);	
+			
+			replacementNode.setLeft(nillNode);
+			replacementNode.setRight(nillNode);
 			
 			if(parent.getLeft() == addedNode) {
 				parent.setLeft(replacementNode);
@@ -46,7 +51,7 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 				uncle = (RedBlackTreeNode<K,V>)z.getParent().getParent().getRight();
 				
 				//Case 1: Uncle color is red
-				if(uncle != null && uncle.getColor() == Color.RED) {
+				if(uncle.getColor() == Color.RED) {
 					((RedBlackTreeNode<K,V>) z.getParent()).setColor(Color.BLACK);
 					uncle.setColor(Color.BLACK);
 					((RedBlackTreeNode<K,V>) z.getParent().getParent()).setColor(Color.RED);
@@ -92,16 +97,100 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 			
 			}
 		}
-		//Case 0: Z is black, covered by always setting root to black
+		//Case 0: Z is root, covered by always setting root to black
 		((RedBlackTreeNode<K,V>)root).setColor(Color.BLACK);
 				
 	}
 	
-	public boolean remove() {
-		return false;
+	public boolean remove(K key) {
+		RedBlackTreeNode<K,V> removedNode = (RedBlackTreeNode<K, V>) super.removeBase(key);
+		
+		if(removedNode != null) {
+			
+			removeFixUp((removedNode.getLeft()==null)? ((RedBlackTreeNode<K, V>)removedNode.getRight()):((RedBlackTreeNode<K, V>)removedNode.getLeft()));			
+			
+			return true;
+		}
+		else {
+			return false;
+		}	
 	}
 	
-	public RedBlackTreeNode<K,V> removeFixUp(){
+	//Based on pseudocode from Cormen Introduction to algorithms 3ed
+	public RedBlackTreeNode<K,V> removeFixUp(RedBlackTreeNode<K,V> x){
+		
+		while(x != root && x.getColor() == Color.BLACK) {
+			RedBlackTreeNode<K,V> sibling;
+			if(x == x.getParent().getLeft()) {
+				sibling = (RedBlackTreeNode<K,V>) x.getParent().getRight();
+				
+				//Case 1: x sibling is red
+				if(sibling.getColor() == Color.RED) {
+					sibling.setColor(Color.BLACK);
+					((RedBlackTreeNode<K, V>) sibling.getParent()).setColor(Color.RED);
+					rotateLeft((RedBlackTreeNode<K, V>) x.getParent());
+					sibling = (RedBlackTreeNode<K, V>) x.getParent().getRight();
+				}
+				//Case 2: x sibling is black and sibling's children are black
+				if(((RedBlackTreeNode<K, V>) sibling.getLeft()).getColor() == Color.BLACK 
+				&& ((RedBlackTreeNode<K, V>) sibling.getRight()).getColor() == Color.BLACK) {
+					sibling.setColor(Color.RED);
+					x = (RedBlackTreeNode<K, V>) x.getParent();					
+				}
+				else {
+					
+					//Case 3: x sibling is black and sibling's left child is red and right child is black
+					if(((RedBlackTreeNode<K, V>)sibling.getRight()).getColor() == Color.BLACK) {
+						((RedBlackTreeNode<K, V>) sibling.getLeft()).setColor(Color.BLACK);
+						sibling.setColor(Color.RED);
+						rotateRight(sibling);
+						sibling = (RedBlackTreeNode<K, V>) x.getParent().getRight();
+					}
+					
+					//Case 4: x sibling is black and sibling's right child is red
+					sibling.setColor(((RedBlackTreeNode<K, V>) x.getParent()).getColor());
+					((RedBlackTreeNode<K, V>) x.getParent()).setColor(Color.BLACK);
+					((RedBlackTreeNode<K, V>) sibling.getRight()).setColor(Color.BLACK);
+					rotateLeft((RedBlackTreeNode<K, V>) x.getParent());
+					x = (RedBlackTreeNode<K, V>) root;
+				}				
+			}
+			else {
+				sibling = (RedBlackTreeNode<K,V>) x.getParent().getLeft();
+				
+				//Case 1: x sibling is red
+				if(sibling.getColor() == Color.RED) {
+					sibling.setColor(Color.BLACK);
+					((RedBlackTreeNode<K, V>) sibling.getParent()).setColor(Color.RED);
+					rotateRight((RedBlackTreeNode<K, V>) x.getParent());
+					sibling = (RedBlackTreeNode<K, V>) x.getParent().getLeft();
+				}
+				//Case 2: x sibling is black and sibling's children are black
+				if(((RedBlackTreeNode<K, V>) sibling.getRight()).getColor() == Color.BLACK 
+				&& ((RedBlackTreeNode<K, V>) sibling.getLeft()).getColor() == Color.BLACK) {
+					sibling.setColor(Color.RED);
+					x = (RedBlackTreeNode<K, V>) x.getParent();					
+				}
+				else {
+					
+					//Case 3: x sibling is black and sibling's left child is red and right child is black
+					if(((RedBlackTreeNode<K, V>)sibling.getLeft()).getColor() == Color.BLACK) {
+						((RedBlackTreeNode<K, V>) sibling.getRight()).setColor(Color.BLACK);
+						sibling.setColor(Color.RED);
+						rotateLeft(sibling);
+						sibling = (RedBlackTreeNode<K, V>) x.getParent().getLeft();
+					}
+					
+					//Case 4: x sibling is black and sibling's right child is red
+					sibling.setColor(((RedBlackTreeNode<K, V>) x.getParent()).getColor());
+					((RedBlackTreeNode<K, V>) x.getParent()).setColor(Color.BLACK);
+					((RedBlackTreeNode<K, V>) sibling.getLeft()).setColor(Color.BLACK);
+					rotateRight((RedBlackTreeNode<K, V>) x.getParent());
+					x = (RedBlackTreeNode<K, V>) root;
+				}
+			}
+		}
+		
 		return null;
 	}
 	
