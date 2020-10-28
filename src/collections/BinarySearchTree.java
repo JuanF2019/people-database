@@ -1,15 +1,29 @@
+/*
+ * UNIVERSIDAD ICESI
+ * TAREA INTEGRADORA 2 - ESTRUCTURAS DE DATOS
+ * RODAS / DIAZ / MARTINEZ
+ */
+
 package collections;
 
 public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearchTreeInterface<K,V>{
 	
 	//--------------------------------------------------------------------------------
 	
+	// Relations of the BinarySearchTree class
+	
 	protected Node<K,V> root;
+	
+	//--------------------------------------------------------------------------------
+	
+	// Attributes of the BinarySearchTree class
 	
 	protected int weight;
 	
 	//--------------------------------------------------------------------------------
 
+	// Constructor of the BinarySearchTree class
+	
 	public BinarySearchTree(){
 		
 		weight = 0;
@@ -18,6 +32,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 	
 	//--------------------------------------------------------------------------------
 		
+	//Operations of the BinarySearchTree class
+	
 	public boolean add(K key, V value) {
 		return addBase(key,value) != null;
 	}
@@ -35,6 +51,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 			return root;			
 		}			
 	}	
+	
+	// *****************************************************
 	
 	private Node<K,V> addRecursive(Node<K,V> currentNode, Node<K,V> newNode){
 		
@@ -84,7 +102,7 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		}
 	}
 	
-	//--------------------------------------------------------------------------------
+	// *****************************************************
 	
 	public boolean remove(K key) {
 		return removeBase(key) != null;
@@ -99,6 +117,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 			return null;
 		}
 	}
+	
+	// *****************************************************
 	
 	private Node<K, V> removeRecursive(K key, Node<K,V> currentNode, Node<K,V> parent){
 		if(currentNode != null) {
@@ -177,7 +197,9 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 			return null;
 		}
 	}
-		
+	
+	// *****************************************************
+
 	private Node<K,V> getMin(Node<K,V> node){
 		
 		while(node.getLeft() != null) {
@@ -190,8 +212,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		
 	}
 	
-	//--------------------------------------------------------------------------------
-	
+	// *****************************************************
+
 	public V search(K key) {	
 		
 		if(root != null) {		
@@ -204,6 +226,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		
 	}
 	
+	// *****************************************************
+
 	private Node<K,V> searchNode(K key){
 		if(root != null) {
 			
@@ -218,6 +242,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		}
 	}
 	
+	// *****************************************************
+
 	private Node<K,V> searchNodeRecursive(K key, Node<K,V> currentNode){	
 		if(currentNode != null) {
 			if(key.compareTo(currentNode.getKey()) < 0) {	
@@ -236,8 +262,9 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		}		
 		
 	}
-	//--------------------------------------------------------------------------------
 	
+	// *****************************************************
+
 	public boolean update(K key, V value) {
 		
 		Node<K,V> nodeToUpdate = searchNode(key);
@@ -254,6 +281,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 	}
 	
 	//--------------------------------------------------------------------------------
+	
+	//Get
 	
 	public int getWeight() {		
 		return weight;		

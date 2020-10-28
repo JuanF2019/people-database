@@ -27,13 +27,15 @@ public class DataBaseManager {
 
 	//Relations of the DataBaseManager class
 
-	private AVLInterface<?,?> surnamesTree;
+	private BinarySearchTreeInterface<?,?> surnamesTree;
 
 	private TrieInterface namesTrie;
 
 	private TrieInterface surnamesTrie;
 
 	private TrieInterface fullNamesTrie;
+	
+	private BinarySearchTreeInterface<?,?> fullNamesTree;
 
 	private HashTableInterface<?,?> idsHashTable;
 
@@ -49,6 +51,7 @@ public class DataBaseManager {
 		surnamesTrie = new Trie();
 		fullNamesTrie = new Trie();
 		idsHashTable = new HashTable<>();
+		fullNamesTree = new RedBlackTree<>();
 	}
 
 	//------------------------------------------------------------------------------------
