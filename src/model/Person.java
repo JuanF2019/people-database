@@ -112,8 +112,7 @@ public class Person {
 	//Clones the person
 
 	public Person clone() {
-
-
+		return new Person(name,surname,id,sex,birthday,height,nationality);
 	}
 
 	// *****************************************************
