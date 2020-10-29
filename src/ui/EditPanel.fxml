@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="436.0" fitWidth="770.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image-2.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="254.0" layoutY="14.0" text="Seleccione los datos que desea cambiar" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="nameCB" layoutX="171.0" layoutY="73.0" mnemonicParsing="false" text="Nombre" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="lastNameCB" layoutX="340.0" layoutY="73.0" mnemonicParsing="false" text="Apellido" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="genderCB" layoutX="516.0" layoutY="73.0" mnemonicParsing="false" text="Sexo" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="dateCB" layoutX="140.0" layoutY="122.0" mnemonicParsing="false" text="Fecha nacimiento" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="heightCB" layoutX="340.0" layoutY="122.0" mnemonicParsing="false" text="Estatura" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="nacionalityCB" layoutX="488.0" layoutY="122.0" mnemonicParsing="false" text="Nacionalidad" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <Button fx:id="comeBackButton" layoutX="14.0" layoutY="382.0" mnemonicParsing="false" onAction="#comeBack" style="-fx-background-color: gray;" text="Regresar" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Line endX="639.0" layoutX="115.0" layoutY="170.0" startX="-100.0" stroke="#eeff00" />
+      <Label layoutX="110.0" layoutY="204.0" text="Nombre:" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameEditText" disable="true" layoutX="182.0" layoutY="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
+      <Label layoutX="110.0" layoutY="280.0" text="Apellido:" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="lastNameEditText" disable="true" layoutX="182.0" layoutY="277.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
+      <Label layoutX="487.0" layoutY="194.0" text="Sexo" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="manRBEdit" disable="true" layoutX="412.0" layoutY="228.0" mnemonicParsing="false" text="Masculino" textFill="WHITE">
+         <toggleGroup>
+            <ToggleGroup fx:id="gender" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="womanRBEdit" disable="true" layoutX="519.0" layoutY="228.0" mnemonicParsing="false" text="Femenino" textFill="WHITE" toggleGroup="$gender" />
+      <Label layoutX="354.0" layoutY="280.0" text="Fecha nacimiento" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dateEditText" disable="true" layoutX="487.0" layoutY="278.0" />
+      <Label layoutX="111.0" layoutY="357.0" text="Estatura:" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="heighEditText" disable="true" layoutX="182.0" layoutY="354.0" promptText="cm" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
+      <Label layoutX="367.0" layoutY="357.0" text="Nacionalidad:" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="nacionalityEditText" disable="true" layoutX="499.0" layoutY="355.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
+      <Button fx:id="updateButton" layoutX="671.0" layoutY="382.0" mnemonicParsing="false" onAction="#update" style="-fx-background-color: gray;" text="Actualizar" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="validateButton" layoutX="680.0" layoutY="79.0" mnemonicParsing="false" onAction="#validate" style="-fx-background-color: gray;" text="Validar" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
