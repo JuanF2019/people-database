@@ -34,7 +34,7 @@ public class DataBaseManager {
 	private TrieInterface surnamesTrie;
 
 	private TrieInterface fullNamesTrie;
-	
+
 	private BinarySearchTreeInterface<?,?> fullNamesTree;
 
 	private HashTableInterface<?,?> idsHashTable;
@@ -90,7 +90,29 @@ public class DataBaseManager {
 
 	// *****************************************************
 
-	public Person search(SearchCriteria criteria) {}
+	public Person search(SearchCriteria criteria, String data) {
+		Person aux = null;
+
+		switch(criteria) {
+
+		case NAME:
+			aux = searchByName(data);
+			break;		
+
+		case SURNAME:
+			aux = searchByLastName(data);
+			break;
+
+		case FULL_NAME:
+			aux = searchByFullName(data);
+			break;
+
+		case ID:
+			aux = searchById(Integer.parseInt(data));
+			break;
+		}
+		return aux;
+	}
 
 	// *****************************************************
 
