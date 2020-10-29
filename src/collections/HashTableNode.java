@@ -6,12 +6,17 @@
 
 package collections;
 
-public class HashTableNode<K,V> {
+import java.io.Serializable;
+
+public class HashTableNode<K,V> implements Serializable{
 	
 	//------------------------------------------------------------------------------------
 	
 	// ATTRIBUTES OF THE HASH TABLE NODE
 	
+	//Auto generated
+	private static final long serialVersionUID = -2398324095779943294L;
+
 	private K key;
 	
 	private V value;

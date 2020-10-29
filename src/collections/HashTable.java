@@ -6,11 +6,16 @@
 
 package collections;
 
-public class HashTable<K,V> implements HashTableInterface<K,V> {
+import java.io.Serializable;
+
+public class HashTable<K,V> implements HashTableInterface<K,V>, Serializable {
 	
 	//------------------------------------------------------------------------------------
 	
 	// ATTRIBUTES OF THE HASH TABLE 
+
+	//Auto generated
+	private static final long serialVersionUID = -1136155999946525685L;
 
 	public static final int DEFAULT_CAPACITY = 10000000;
 

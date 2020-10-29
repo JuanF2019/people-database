@@ -1,7 +1,9 @@
 package collections;
 
-public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K, V> {
+public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K, V> implements BinarySearchTreeInterface<K,V> {
 
+	//Auto generated
+	private static final long serialVersionUID = -367507416441450498L;
 	private RedBlackTreeNode<K,V> nillNode;
 	
 	public RedBlackTree() {

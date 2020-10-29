@@ -7,6 +7,10 @@
 package collections;
 
 public class AVLTreeNode<K extends Comparable<K>, V> extends Node<K, V> {
+	
+	//Auto generated
+	private static final long serialVersionUID = 49097610139670076L;
+	
 	private int balanceFactor;	
 			
 	public AVLTreeNode(K key, V value) {

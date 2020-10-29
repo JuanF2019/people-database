@@ -6,7 +6,13 @@
 
 package collections;
 
-public class Node<K extends Comparable<K>,V> {
+import java.io.Serializable;
+
+public class Node<K extends Comparable<K>,V> implements Serializable {
+	
+	//Auto generated
+	private static final long serialVersionUID = 793059671853761706L;
+	
 	protected K key;
 	protected V value;
 	protected int height;

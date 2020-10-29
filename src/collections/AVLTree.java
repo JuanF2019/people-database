@@ -8,6 +8,9 @@ package collections;
 
 public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> implements BinarySearchTreeInterface<K,V>{
 			
+	//Auto generated
+	private static final long serialVersionUID = 5794034253049998590L;
+	
 	public AVLTree() {
 		super();
 	}

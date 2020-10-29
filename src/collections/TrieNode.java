@@ -1,6 +1,11 @@
 package collections;
 
-public class TrieNode {
+import java.io.Serializable;
+
+public class TrieNode implements Serializable{
+	
+	//Auto generated
+	private static final long serialVersionUID = -2562613102632456678L;
 	private char character;
 	private int endOfWords;
 	private TrieNode[] children;

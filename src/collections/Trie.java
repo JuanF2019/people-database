@@ -1,8 +1,12 @@
 package collections;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Trie implements TrieInterface {
+public class Trie implements TrieInterface, Serializable {
+
+	//Auto generated
+	private static final long serialVersionUID = -8221686898088440044L;
 
 	public static final int ASCII_CHARACTER_COUNT = 128;
 	
@@ -17,7 +21,7 @@ public class Trie implements TrieInterface {
 	//Adapted from geek for geeks
 	//Inserts each of s characters as a single node, marks last node as end of word
 	//It is not necessary to store character in node but we will still keep it there
-	//Always adds except when s lenght is 0
+	//Always adds except when s length is 0
 	public boolean add(String s) {
 		if(s.length() > 0) {
 			TrieNode currentNode = root;

@@ -6,18 +6,24 @@
 
 package collections;
 
-public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearchTreeInterface<K,V>{
+import java.io.Serializable;
+
+public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearchTreeInterface<K,V>,Serializable{
 	
 	//--------------------------------------------------------------------------------
 	
 	// Relations of the BinarySearchTree class
+		
 	
+
 	protected Node<K,V> root;
 	
 	//--------------------------------------------------------------------------------
 	
 	// Attributes of the BinarySearchTree class
 	
+	//Auto generated
+	private static final long serialVersionUID = 953054602220219747L;
 	protected int weight;
 	
 	//--------------------------------------------------------------------------------
@@ -319,7 +325,6 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		}
 		else {
 			preOrder += "<" + currentNode.getKey() + "," + currentNode.getValue() + "," +currentNode.getHeight() + "> ";
-			preOrder += (currentNode instanceof AVLTreeNode<?,?>? ((AVLTreeNode<K,V>)currentNode).getBalanceFactor():"");
 			preOrder = preOrder(currentNode.getLeft(),preOrder);
 			preOrder = preOrder(currentNode.getRight(),preOrder);
 			return preOrder;
