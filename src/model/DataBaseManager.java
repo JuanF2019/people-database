@@ -310,7 +310,7 @@ public class DataBaseManager {
 
 	
 	//[name,surname,sex,birthday,height,nationality]
-	public boolean update(String[] fieldsToUpdate) {
+	public void update(String[] fieldsToUpdate) {
 		if(!fieldsToUpdate[0].equals("")) {
 			currentPerson.setName(fieldsToUpdate[0]);
 		}
@@ -343,7 +343,6 @@ public class DataBaseManager {
 			currentPerson.setSurname(fieldsToUpdate[5]);
 		}
 		
-		return false;
 	}
 	
 	// *****************************************************
