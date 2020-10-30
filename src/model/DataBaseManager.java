@@ -103,8 +103,11 @@ public class DataBaseManager {
 	//Operations of class DataBaseManager
 	
 	//Creates new Person receives all parameters
-	public boolean create() {
-		return false;
+	public void create(String name, String ln, Sex s, LocalDate ld, Double height, String nat) {
+		
+		Person p = new Person(name, ln, randomFieldsGenerator.id(), s, ld, height, nat);
+		savePerson(p);
+		savedPeopleNumber++;
 	}
 
 	// *****************************************************

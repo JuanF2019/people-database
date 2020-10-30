@@ -7,6 +7,7 @@
 package ui;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -22,9 +24,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBaseManager;
+import model.Person;
+import model.SearchCriteria;
+import model.Sex;
 
 public class PrincipalController {
 
@@ -33,7 +39,7 @@ public class PrincipalController {
 	// RELATION'S WITH THE ANOTHER CLASS
 
 	private EditController controller;
-	
+
 	private DataBaseManager dbm;
 
 	//------------------------------------------------------------------------------------
@@ -155,9 +161,60 @@ public class PrincipalController {
 
 	@FXML
 	public void add(ActionEvent event) {
+		String name = nameTextAdd.getText();
+		if(name.equals("")) {
+			warning();
+		}
+
+		String ln = lastNameTextAdd.getText();
+		if(ln.equals("")) {
+			warning();
+		}
+		Sex s = null;
+		if(womanRBAdd.isSelected()==true)
+			s = Sex.FEMALE;
+		else if(manRBAdd.isSelected()==true)
+			s = Sex.MALE;
+		else {
+			warning();
+		}
+		String h = heightTextAdd.getText();
+		Double height = 0.0;
+		if(h.equals("")) {
+			warning();
+		}
+		else {
+			height = Double.parseDouble(h);
+		}
+		String nat = nacionalityTextAdd.getValue();
+		if(nat.equals("")) {
+			warning();
+		}
+
+		String birth = dateTextAdd.toString();
+		LocalDate ld=null;
+		if(birth.equals("")) {
+			warning();
+		}
+		else {
+			String[] aux = birth.split("-");
+			int year = Integer.parseInt(aux[0]);
+			int month = Integer.parseInt(aux[1]);
+			int day = Integer.parseInt(aux[2]);
+			ld = LocalDate.of(year, month, day);
+		}
+		
+		dbm.create(name, ln, s, ld, height, nat);
 
 
+	}
 
+	public void warning() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Empty field");
+		alert.setContentText("Please fill all the fields to continue the registration");
+		alert.showAndWait();
 	}
 
 	//------------------------------------------------------------------------------------
@@ -214,29 +271,29 @@ public class PrincipalController {
 	}
 
 	//------------------------------------------------------------------------------------
-	
+
 	// INITIALIZE METHOD
-	
+
 	public void initialize() {
-		
+
 		// A
-		
+
 		nacionalityTextAdd.getItems().add("Anguila");
 		nacionalityTextAdd.getItems().add("Antigua y Barbuda");
 		nacionalityTextAdd.getItems().add("Argentina");
 		nacionalityTextAdd.getItems().add("Aruba");
-		
+
 		// B
-		
+
 		nacionalityTextAdd.getItems().add("Bahamas");
 		nacionalityTextAdd.getItems().add("Barbados");
 		nacionalityTextAdd.getItems().add("Belice");
 		nacionalityTextAdd.getItems().add("Bermudas");
 		nacionalityTextAdd.getItems().add("Bolivia");
 		nacionalityTextAdd.getItems().add("Brasil");
-		
+
 		// C
-		
+
 		nacionalityTextAdd.getItems().add("Canada");
 		nacionalityTextAdd.getItems().add("Chile");
 		nacionalityTextAdd.getItems().add("Colombia");
@@ -244,15 +301,15 @@ public class PrincipalController {
 		nacionalityTextAdd.getItems().add("Cuba");
 
 		// D
-		
+
 		nacionalityTextAdd.getItems().add("Dominica");
-		
+
 		// E
-		
+
 		nacionalityTextAdd.getItems().add("Ecuador");
 		nacionalityTextAdd.getItems().add("El Salvador");
 		nacionalityTextAdd.getItems().add("Estados Unidos");
-		
+
 		// G
 
 		nacionalityTextAdd.getItems().add("Granada");
@@ -260,65 +317,65 @@ public class PrincipalController {
 		nacionalityTextAdd.getItems().add("Guam");
 		nacionalityTextAdd.getItems().add("Guatemala");
 		nacionalityTextAdd.getItems().add("Guyana");
-		
+
 		// H
-		
+
 		nacionalityTextAdd.getItems().add("Haiti");
 		nacionalityTextAdd.getItems().add("Honduras");
-		
+
 		// I
-		
+
 		nacionalityTextAdd.getItems().add("Islas Caiman");
 		nacionalityTextAdd.getItems().add("Islas Turcas y Caicos");
 		nacionalityTextAdd.getItems().add("Islas Virgenes Estadounidenses");
 		nacionalityTextAdd.getItems().add("Islas Virgenes Britanicas");
-		
+
 		// J
-		
+
 		nacionalityTextAdd.getItems().add("Jamaica");
-		
+
 		// M
-		
+
 		nacionalityTextAdd.getItems().add("Malvinas");
 		nacionalityTextAdd.getItems().add("Mexico");
 		nacionalityTextAdd.getItems().add("Montserrat");
-		
+
 		// N
-		
+
 		nacionalityTextAdd.getItems().add("Nicaragua");
-		
+
 		// P
-		
+
 		nacionalityTextAdd.getItems().add("Panama");
 		nacionalityTextAdd.getItems().add("Paraguay");
 		nacionalityTextAdd.getItems().add("Peru");
 		nacionalityTextAdd.getItems().add("Puerto rico");
-		
+
 		// R
-		
+
 		nacionalityTextAdd.getItems().add("Republica Dominicana");
-		
+
 		// S
-		
+
 		nacionalityTextAdd.getItems().add("San Cristobal y Nieves");
 		nacionalityTextAdd.getItems().add("San Vicente y Granadines");
 		nacionalityTextAdd.getItems().add("Santa Lucia");
 		nacionalityTextAdd.getItems().add("Surinam");
-		
+
 		// T
-		
+
 		nacionalityTextAdd.getItems().add("Trinidad y Tobago");
-		
+
 		// U
-		
+
 		nacionalityTextAdd.getItems().add("Uruguay");
-		
+
 		// V
-		
+
 		nacionalityTextAdd.getItems().add("Venezuela");
-		
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
 
 }

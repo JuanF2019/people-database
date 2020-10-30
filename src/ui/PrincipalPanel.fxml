@@ -91,7 +91,7 @@
                      </toggleGroup>
                   </RadioButton>
                   <RadioButton fx:id="nSearch" layoutX="160.0" layoutY="86.0" mnemonicParsing="false" text="Nombre" textFill="WHITE" toggleGroup="$optionSearch" />
-                  <RadioButton fx:id="lnSearch" layoutX="376.0" layoutY="86.0" mnemonicParsing="false" text="Apellido" textFill="WHITE" toggleGroup="$optionSearch" />
+                  <RadioButton fx:id="lnSearch" layoutX="386.0" layoutY="86.0" mnemonicParsing="false" text="Apellido" textFill="WHITE" toggleGroup="$optionSearch" />
                   <RadioButton fx:id="csearch" layoutX="270.0" layoutY="123.0" mnemonicParsing="false" text="Codigo" textFill="WHITE" toggleGroup="$optionSearch" />
                </children>
             </AnchorPane>
