@@ -6,6 +6,8 @@
 
 package collections;
 
+import java.util.ArrayList;
+
 public interface TrieInterface {
 
 	//------------------------------------------------------------------------------------
@@ -17,6 +19,8 @@ public interface TrieInterface {
 	public boolean search(String s);
 	
 	public boolean isEmpty();
+
+	public ArrayList<String> getPredictions(String prefix);
 	
 	//------------------------------------------------------------------------------------
 

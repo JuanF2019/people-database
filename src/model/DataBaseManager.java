@@ -7,7 +7,14 @@
 package model;
 
 import collections.*;
+import utilities.Pair;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class DataBaseManager {
 
@@ -15,19 +22,27 @@ public class DataBaseManager {
 
 	//Constants of the DataBaseManager class
 
-	public static int MAX_PEOPLE_NUMBER = Integer.MAX_VALUE;
+	public static final int MAX_PEOPLE_NUMBER = Integer.MAX_VALUE;
+	
+	public static final String PICTURE_URL = "https://thispersondoesnotexist.com/";
 
 	//------------------------------------------------------------------------------------
 
 	//Attributes of the DataBaseManager class
 
 	private int savedPeopleNumber;
-
+	
+	private BufferedReader br;
+	
+	private BufferedWriter bw;
+	
 	//------------------------------------------------------------------------------------
 
 	//Relations of the DataBaseManager class
 
-	private BinarySearchTreeInterface<?,?> surnamesTree;
+	private BinarySearchTreeInterface<String,Person> namesTree;
+	
+	private BinarySearchTreeInterface<String,Person> surnamesTree;
 
 	private TrieInterface namesTrie;
 
@@ -35,18 +50,23 @@ public class DataBaseManager {
 
 	private TrieInterface fullNamesTrie;
 
-	private BinarySearchTreeInterface<?,?> fullNamesTree;
+	private BinarySearchTreeInterface<String,Person> fullNamesTree;
 
-	private HashTableInterface<?,?> idsHashTable;
+	private HashTableInterface<Integer,Person> idsHashTable;
 
 	private Person currentPerson;
-
+	
+	private RandomFieldsGenerator randomFieldsGenerator;
+	
+	
+	
 	//------------------------------------------------------------------------------------
 
 	// Constructor method of the DataBaseManager class
 
 	public DataBaseManager() {
 		surnamesTree = new AVLTree<>();
+		namesTree = new AVLTree<>();
 		namesTrie = new Trie();
 		surnamesTrie = new Trie();
 		fullNamesTrie = new Trie();
@@ -73,20 +93,234 @@ public class DataBaseManager {
 	//------------------------------------------------------------------------------------
 
 	//Operations of class DataBaseManager
-
-	public boolean create() {}
-
-	// *****************************************************
-
-	public boolean read() {}
-
-	// *****************************************************
-
-	public boolean update() {}
+	
+	//Creates new Person receives all parameters
+	public boolean create() {
+		return false;
+	}
 
 	// *****************************************************
 
-	public boolean delete() {}
+	public boolean read() {
+		return readPeopleData() && readGenerationData();
+	}
+	
+	
+	public boolean readPeopleData(){
+		
+		
+		//loads all data from people
+		
+		
+		
+		return false;
+	}
+	
+	// *****************************************************
+	
+	public boolean readGenerationData() {
+						
+		ArrayList<Pair<Integer,Double>> loadedAges = loadAges();
+		
+		if(loadedAges == null)
+			return false;
+		
+		ArrayList<String> loadedNames = loadNames();
+		
+		if(loadedNames == null)
+			return false;
+		
+		ArrayList<String> loadedSurnames = loadSurnames();
+		
+		if(loadedSurnames == null)
+			return false;
+		
+		ArrayList<Pair<String,Double>> loadedCountries = loadCountries();
+		
+		if(loadedCountries == null)
+			return false;
+		
+		randomFieldsGenerator = new RandomFieldsGenerator(loadedSurnames, loadedSurnames, loadedCountries, loadedAges, (HashTable<Integer,Person>)idsHashTable);
+				
+		return true;				
+	}
+
+	// *****************************************************
+	
+	private ArrayList<Pair<Integer, Double>> loadAges() {
+		ArrayList<Pair<Integer,Double>> ages;
+		try {
+			
+			ages =  new ArrayList<>();
+			
+			br = new BufferedReader(new FileReader(new File("data/generation_data/ages.csv")));
+			
+			br.readLine();//Ignores first line
+			
+			double acumulatedProbability = 0;
+			String line = br.readLine();
+			String[] splitLine = null;
+			
+			
+			while(line != null && !line.isEmpty()) {
+									
+				splitLine = line.split(",");
+						
+				int maxAge = Integer.parseInt(splitLine[1]);
+					
+				acumulatedProbability += Integer.parseInt(splitLine[2]);
+					
+				ages.add(new Pair<Integer,Double>(maxAge, Double.valueOf(acumulatedProbability)));
+				
+							
+				line = br.readLine();
+				
+			}
+			
+			br.close();
+			return ages;
+		}
+		catch(Exception ex) {
+			return null;
+		}
+	}
+	
+	// *****************************************************
+	
+	private ArrayList<String> loadNames() {
+		ArrayList<String> loadedNames;
+		
+		try {
+			loadedNames = new ArrayList<>();
+			
+			br = new BufferedReader(new FileReader(new File("data/generation_data/names.csv")));
+			
+			String line = br.readLine();			
+			
+			while(line != null && !line.isEmpty()) {
+													
+				loadedNames.add(line);		
+							
+				line = br.readLine();			
+			}
+			
+			br.close();
+			
+			return loadedNames;
+		}
+		catch(Exception ex) {
+			return null;
+		}
+	}
+	
+	// *****************************************************
+	
+	private ArrayList<String> loadSurnames() {
+		ArrayList<String> loadedSurnames;
+		try {
+			
+			loadedSurnames = new ArrayList<>();
+			
+			br = new BufferedReader(new FileReader(new File("data/generation_data/surnames.csv")));
+			
+			String line = br.readLine();		
+			
+			while(line != null && !line.isEmpty()) {
+													
+				loadedSurnames.add(line);		
+							
+				line = br.readLine();			
+			}
+			
+			br.close();
+			
+			return loadedSurnames;
+		}
+		catch(Exception ex) {
+			return null;
+		}
+	}
+	
+	// *****************************************************
+	
+	private ArrayList<Pair<String, Double>> loadCountries() {
+		
+		ArrayList<Pair<String,Double>> loadedCountries;
+		
+		try {
+			
+			loadedCountries = new ArrayList<>();
+			
+			br = new BufferedReader(new FileReader(new File("data/generation_data/countries_population.csv")));
+			
+			br.readLine();//Ignores first line
+			
+			double acumulatedSum = 0;
+			String line = br.readLine();
+			String[] splitLine = null;
+			
+			
+			while(line != null && !line.isEmpty()) {
+									
+				splitLine = line.split(",");
+					
+				String country = splitLine[0];
+				
+				int population = Integer.parseInt(splitLine[1]);
+					
+				acumulatedSum += population;
+					
+				loadedCountries.add(new Pair<String,Double>(country, Double.valueOf(population)));
+											
+				line = br.readLine();				
+								
+			}
+			
+			double accumulatedProbability = 0;
+			double probability = 0;;
+			
+			for (int i = 0 ; i < loadedCountries.size() ; i++) {
+				Pair<String,Double> pair = loadedCountries.get(i);
+				
+				probability = pair.getValue()/acumulatedSum;
+				accumulatedProbability += probability;
+								
+				pair.setValue(Double.valueOf(accumulatedProbability));
+			}
+			
+			
+			br.close();
+			return loadedCountries;
+		}
+		catch(Exception ex) {
+			return null;
+		}
+	}
+	
+	// *****************************************************
+
+	
+	//[name,surname,sex,birthday,height,nationality]
+	public boolean update(boolean[] fieldsToUpdate) {
+		return false;
+	}
+	
+	// *****************************************************
+	
+	//Serialize data
+	public boolean write() {
+		
+		
+		//Saves a file for each structure
+		return false;
+	}
+
+	// *****************************************************
+	
+	//removes current person
+	public boolean delete() {
+		return false;
+	}
 
 	// *****************************************************
 
@@ -100,7 +334,7 @@ public class DataBaseManager {
 			break;		
 
 		case SURNAME:
-			aux = searchByLastName(data);
+			aux = searchBySurname(data);
 			break;
 
 		case FULL_NAME:
@@ -116,39 +350,102 @@ public class DataBaseManager {
 
 	// *****************************************************
 
-	private Person searchByName(String name) {}
+	private Person searchByName(String name) {
+		currentPerson = namesTree.search(name);
+		return currentPerson;
+	}
 
 	// *****************************************************
 
-	private Person searchByLastName(String ln) {}
+	private Person searchBySurname(String surname) {
+		currentPerson =  surnamesTree.search(surname);
+		return currentPerson;
+	}
 
 	// *****************************************************
 
-	private Person searchByFullName(String fn) {}
+	private Person searchByFullName(String fn) {
+		currentPerson = fullNamesTree.search(fn);
+		return currentPerson;
+	}
 
 	// *****************************************************
 
-	private Person searchById(int id) {}
+	private Person searchById(int id) {
+		currentPerson = idsHashTable.search(id);
+		return currentPerson;
+	}
 
 	// *****************************************************
 
-	public String[] getNextPredictions(char newCharacter, SearchCriteria criteria) {}
+	public ArrayList<String> getPredictions(String prefix, SearchCriteria criteria) {
+		switch(criteria) {
+		case NAME:
+			return namesTrie.getPredictions(prefix);
+			
+		case SURNAME:
+			return surnamesTrie.getPredictions(prefix);
+			
+		case FULL_NAME:
+			return fullNamesTrie.getPredictions(prefix);
+			
+		default:
+			return null;
+		}		
+	}
 
 	// *****************************************************
 
-	public String[] getPrevPredictions(SearchCriteria criteria) {}
+	public void clearCurrentPerson() {
+		currentPerson = null;
+	}
 
 	// *****************************************************
 
-	public void clearCurrentPerson() {}
+	public boolean generatePeople(int n) {
+		
+		if(MAX_PEOPLE_NUMBER - savedPeopleNumber - n >= 0) {
+			for (int i = 0; i < n; i++) {
+				Person newPerson = generatePerson();
+				
+				String name = newPerson.getName();
+				String surname = newPerson.getSurname();
+				int id = newPerson.getId();
+				
+				namesTrie.add(name);
+				namesTree.add(name, newPerson);
+				
+				surnamesTrie.add(surname);
+				surnamesTree.add(surname, newPerson);
+				
+				String fullName = name + " " + surname;
+				
+				fullNamesTrie.add(fullName);
+				fullNamesTree.add(fullName,newPerson);
+								
+				idsHashTable.insert(id,newPerson);				
+			}
+			savedPeopleNumber += n;
+			return true;		
+		} 
+		else {
+			return false;
+		}		
+	}
 
 	// *****************************************************
 
-	public boolean generatePeople(int n) {}
-
-	// *****************************************************
-
-	private boolean generatePerson() {}
+	private Person generatePerson() {
+		String name = randomFieldsGenerator.name();
+		String surname = randomFieldsGenerator.surname();
+		int id = randomFieldsGenerator.id();
+		Sex sex = randomFieldsGenerator.sex();
+		LocalDate birthday = randomFieldsGenerator.birthday();
+		int height = randomFieldsGenerator.height();
+		String nationality = randomFieldsGenerator.nationality();	
+		
+		return new Person(name, surname, id, sex, birthday, height, nationality);
+	}
 
 	//------------------------------------------------------------------------------------
 
