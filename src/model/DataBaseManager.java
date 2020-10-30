@@ -36,6 +36,8 @@ public class DataBaseManager {
 	
 	private BufferedWriter bw;
 	
+	private ArrayList<String> countries;
+	
 	//------------------------------------------------------------------------------------
 
 	//Relations of the DataBaseManager class
@@ -72,6 +74,7 @@ public class DataBaseManager {
 		fullNamesTrie = new Trie();
 		idsHashTable = new HashTable<>();
 		fullNamesTree = new RedBlackTree<>();
+		countries = new ArrayList<>();
 	}
 
 	//------------------------------------------------------------------------------------
@@ -271,6 +274,7 @@ public class DataBaseManager {
 				acumulatedSum += population;
 					
 				loadedCountries.add(new Pair<String,Double>(country, Double.valueOf(population)));
+				countries.add(country);
 											
 				line = br.readLine();				
 								
@@ -446,7 +450,11 @@ public class DataBaseManager {
 		
 		return new Person(name, surname, id, sex, birthday, height, nationality);
 	}
-
+	
+	public ArrayList<String> getCountries(){
+		return countries;
+	}
+	
 	//------------------------------------------------------------------------------------
 
 }
