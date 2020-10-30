@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.DataBaseManager;
 
 public class PrincipalController {
 
@@ -32,6 +33,8 @@ public class PrincipalController {
 	// RELATION'S WITH THE ANOTHER CLASS
 
 	private EditController controller;
+	
+	private DataBaseManager dbm;
 
 	//------------------------------------------------------------------------------------
 
@@ -39,7 +42,8 @@ public class PrincipalController {
 
 	public PrincipalController() {
 
-		controller = new EditController();
+		dbm = new DataBaseManager();
+		controller = new EditController(dbm);
 
 	}
 

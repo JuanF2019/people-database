@@ -320,7 +320,7 @@ public class DataBaseManager {
 		}
 		
 		if(!fieldsToUpdate[2].equals("")) {
-			if(!fieldsToUpdate[2].equals(Sex.FEMALE.toString()))
+			if(!fieldsToUpdate[2].equalsIgnoreCase(Sex.FEMALE.toString()))
 			currentPerson.setSex(Sex.FEMALE);
 			else
 				currentPerson.setSex(Sex.MALE);

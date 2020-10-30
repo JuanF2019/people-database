@@ -22,6 +22,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import model.DataBaseManager;
 
 public class EditController {
 	
@@ -30,14 +31,18 @@ public class EditController {
 	// RELATION'S WITH ANOTHER CLASS
 	
 	private PrincipalController controller;
+	
+	private DataBaseManager dbm;
 
 	//------------------------------------------------------------------------------------
 
 	// CONSTRUCTOR METHOD OF THE EDIT CONTROLLER
 
-	public EditController() {
+	public EditController(DataBaseManager dbm) {
 
 		controller = new PrincipalController("People database");
+		
+		this.dbm = dbm;
 
 	}
 
@@ -139,10 +144,24 @@ public class EditController {
 
 	// UPDATE METHOD TO THE WINDOW
 
+	//[name,surname,sex,birthday,height,nationality]
 	@FXML
 	public void update(ActionEvent event) {
 
-
+		String[] change = new String[6];
+		change[0] = nameEditText.getText();
+		change[1] = lastNameEditText.getText();
+		if(womanRBEdit.isSelected()==true)
+			change[2] = "female";
+		else if(manRBEdit.isSelected()==true)
+			change[2] = "male";
+		else
+			change[2] = "";
+		change[3] = dateEditText.toString();
+		change[4] = heighEditText.getText();
+		change[5] = nacionalityEditText.getValue();
+		
+		dbm.update(change);
 
 	}
 
