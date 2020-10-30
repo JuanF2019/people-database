@@ -7,6 +7,7 @@
 package model;
 
 import collections.*;
+import javafx.util.converter.LocalDateStringConverter;
 import utilities.Pair;
 
 import java.io.BufferedReader;
@@ -83,6 +84,10 @@ public class DataBaseManager {
 
 	public int getSavedPeopleNumber() {
 		return savedPeopleNumber;
+	}
+
+	public ArrayList<String> getCountries(){
+		return countries;
 	}
 
 	//------------------------------------------------------------------------------------
@@ -305,7 +310,39 @@ public class DataBaseManager {
 
 	
 	//[name,surname,sex,birthday,height,nationality]
-	public boolean update(boolean[] fieldsToUpdate) {
+	public boolean update(String[] fieldsToUpdate) {
+		if(!fieldsToUpdate[0].equals("")) {
+			currentPerson.setName(fieldsToUpdate[0]);
+		}
+		
+		if(!fieldsToUpdate[1].equals("")) {
+			currentPerson.setSurname(fieldsToUpdate[1]);
+		}
+		
+		if(!fieldsToUpdate[2].equals("")) {
+			if(!fieldsToUpdate[2].equals(Sex.FEMALE.toString()))
+			currentPerson.setSex(Sex.FEMALE);
+			else
+				currentPerson.setSex(Sex.MALE);
+		}
+		
+		if(!fieldsToUpdate[3].equals("")) {
+			String[] aux = fieldsToUpdate[3].split("-");
+			int year = Integer.parseInt(aux[0]);
+			int month = Integer.parseInt(aux[1]);
+			int day = Integer.parseInt(aux[2]);
+			
+			currentPerson.setBirthday(LocalDate.of(year, month, day));
+		}
+		
+		if(!fieldsToUpdate[4].equals("")) {
+			currentPerson.setHeight(Double.parseDouble(fieldsToUpdate[4]));
+		}
+		
+		if(!fieldsToUpdate[5].equals("")) {
+			currentPerson.setSurname(fieldsToUpdate[5]);
+		}
+		
 		return false;
 	}
 	
@@ -449,10 +486,6 @@ public class DataBaseManager {
 		String nationality = randomFieldsGenerator.nationality();	
 		
 		return new Person(name, surname, id, sex, birthday, height, nationality);
-	}
-	
-	public ArrayList<String> getCountries(){
-		return countries;
 	}
 	
 	//------------------------------------------------------------------------------------
