@@ -109,6 +109,17 @@ public class DataBaseManager {
 		savePerson(p);
 		savedPeopleNumber++;
 	}
+	
+	private void savePerson(Person newPerson) {
+		namesTree.add(newPerson.getName(), newPerson);
+		surnamesTree.add(newPerson.getSurname(), newPerson);
+		fullNamesTree.add(newPerson.getName() + " " + newPerson.getSurname(), newPerson);
+		idsHashTable.insert(newPerson.getId(), newPerson);
+		
+		namesTrie.add(newPerson.getName());
+		surnamesTrie.add(newPerson.getSurname());
+		fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
+	}
 
 	// *****************************************************
 
@@ -312,8 +323,8 @@ public class DataBaseManager {
 	// *****************************************************
 
 	
-	//[name,surname,sex,birthday,height,nationality]
-	public void update(String[] fieldsToUpdate) {
+	//[name,surname,sex,"",height,nationality]
+	public void update(String[] fieldsToUpdate, LocalDate newBirthday) {
 		if(!fieldsToUpdate[0].equals("")) {
 			currentPerson.setName(fieldsToUpdate[0]);
 		}
@@ -329,13 +340,8 @@ public class DataBaseManager {
 				currentPerson.setSex(Sex.MALE);
 		}
 		
-		if(!fieldsToUpdate[3].equals("")) {
-			String[] aux = fieldsToUpdate[3].split("-");
-			int year = Integer.parseInt(aux[0]);
-			int month = Integer.parseInt(aux[1]);
-			int day = Integer.parseInt(aux[2]);
-			
-			currentPerson.setBirthday(LocalDate.of(year, month, day));
+		if(newBirthday != null) {
+			currentPerson.setBirthday(newBirthday);
 		}
 		
 		if(!fieldsToUpdate[4].equals("")) {
@@ -388,35 +394,34 @@ public class DataBaseManager {
 			aux = searchById(Integer.parseInt(data));
 			break;
 		}
+		
+		currentPerson = aux;
+		
 		return aux;
 	}
 
 	// *****************************************************
 
 	private Person searchByName(String name) {
-		currentPerson = namesTree.search(name);
-		return currentPerson;
+		return namesTree.search(name);		
 	}
 
 	// *****************************************************
 
 	private Person searchBySurname(String surname) {
-		currentPerson =  surnamesTree.search(surname);
-		return currentPerson;
+		return surnamesTree.search(surname);
 	}
 
 	// *****************************************************
 
 	private Person searchByFullName(String fn) {
-		currentPerson = fullNamesTree.search(fn);
-		return currentPerson;
+		return fullNamesTree.search(fn);
 	}
 
 	// *****************************************************
 
 	private Person searchById(int id) {
-		currentPerson = idsHashTable.search(id);
-		return currentPerson;
+		return idsHashTable.search(id);
 	}
 
 	// *****************************************************
