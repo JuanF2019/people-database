@@ -7,6 +7,7 @@
 package ui;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import model.DataBaseManager;
+import model.Sex;
 
 public class EditController {
 	
@@ -147,22 +149,26 @@ public class EditController {
 	//[name,surname,sex,birthday,height,nationality]
 	@FXML
 	public void update(ActionEvent event) {
-
-		String[] change = new String[6];
-		change[0] = nameEditText.getText();
-		change[1] = lastNameEditText.getText();
-		if(womanRBEdit.isSelected()==true)
-			change[2] = "female";
-		else if(manRBEdit.isSelected()==true)
-			change[2] = "male";
-		else
-			change[2] = "";
-		change[3] = dateEditText.toString();
-		change[4] = heighEditText.getText();
-		change[5] = nacionalityEditText.getValue();
 		
-		dbm.update(change);
-
+		Sex newSex;
+		
+		String newName = nameEditText.getText();
+		String newSurname = lastNameEditText.getText();
+		
+		if(womanRBEdit.isSelected())
+			newSex = Sex.FEMALE;
+		else if(manRBEdit.isSelected())
+			newSex = Sex.MALE;
+		else
+			newSex = null;
+		
+		LocalDate newBirthday = dateEditText.getValue();		//Pendiente validadr
+		
+		Double newHeight = Double.parseDouble(heighEditText.getText()); //Pendiente validar
+		
+		String newNationality = nacionalityEditText.getValue();
+		
+		dbm.update(newName, newSurname, newSex, newBirthday, newHeight, newNationality);
 	}
 
 	//------------------------------------------------------------------------------------

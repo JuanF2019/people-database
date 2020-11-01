@@ -13,7 +13,14 @@ import utilities.Pair;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -27,6 +34,10 @@ public class DataBaseManager {
 	
 	public static final String PICTURE_URL = "https://thispersondoesnotexist.com/";
 
+	public static final String GENERATION_DATA_PATH = "data/generation_data/";
+	
+	public static final String PEOPLE_DATA_PATH = "data/people_data/people.dat";
+	
 	//------------------------------------------------------------------------------------
 
 	//Attributes of the DataBaseManager class
@@ -92,14 +103,6 @@ public class DataBaseManager {
 
 	//------------------------------------------------------------------------------------
 
-	// Set's methods of the DataBaseManager class
-
-	public void setSavedPeopleNumber(int savedPeopleNumber) {
-		this.savedPeopleNumber = savedPeopleNumber;
-	}
-
-	//------------------------------------------------------------------------------------
-
 	//Operations of class DataBaseManager
 	
 	//Creates new Person receives all parameters
@@ -109,6 +112,8 @@ public class DataBaseManager {
 		savePerson(p);
 		savedPeopleNumber++;
 	}
+	
+	// *****************************************************
 	
 	private void savePerson(Person newPerson) {
 		namesTree.add(newPerson.getName(), newPerson);
@@ -127,15 +132,39 @@ public class DataBaseManager {
 		return readPeopleData() && readGenerationData();
 	}
 	
+	// *****************************************************
 	
-	public boolean readPeopleData(){
-		
-		
-		//loads all data from people
-		
-		
-		
-		return false;
+	public boolean readPeopleData() {		
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PEOPLE_DATA_PATH));	
+						
+			Object[] rawPeople = (Object[]) ois.readObject();
+			
+			for (Object object : rawPeople) {
+				Person person = (Person) object;
+				
+				String name = person.getName();
+				String surname =person.getSurname();
+				String fullName = name + " " + surname;
+				int id = person.getId();
+				
+				namesTree.add(name, person);
+				surnamesTree.add(surname, person);
+				fullNamesTree.add(fullName, person);
+				idsHashTable.insert(id, person);
+				
+				namesTrie.add(name);
+				surnamesTrie.add(surname);
+				fullNamesTrie.add(fullName);
+			}
+			
+			ois.close();
+			
+			return true;
+		} catch (Exception e) {
+			
+			return false;
+		}
 	}
 	
 	// *****************************************************
@@ -175,7 +204,7 @@ public class DataBaseManager {
 			
 			ages =  new ArrayList<>();
 			
-			br = new BufferedReader(new FileReader(new File("data/generation_data/ages.csv")));
+			br = new BufferedReader(new FileReader(new File(GENERATION_DATA_PATH + "ages.csv")));
 			
 			br.readLine();//Ignores first line
 			
@@ -215,7 +244,7 @@ public class DataBaseManager {
 		try {
 			loadedNames = new ArrayList<>();
 			
-			br = new BufferedReader(new FileReader(new File("data/generation_data/names.csv")));
+			br = new BufferedReader(new FileReader(new File(GENERATION_DATA_PATH + "names.csv")));
 			
 			String line = br.readLine();			
 			
@@ -243,7 +272,7 @@ public class DataBaseManager {
 			
 			loadedSurnames = new ArrayList<>();
 			
-			br = new BufferedReader(new FileReader(new File("data/generation_data/surnames.csv")));
+			br = new BufferedReader(new FileReader(new File(GENERATION_DATA_PATH + "surnames.csv")));
 			
 			String line = br.readLine();		
 			
@@ -273,7 +302,7 @@ public class DataBaseManager {
 			
 			loadedCountries = new ArrayList<>();
 			
-			br = new BufferedReader(new FileReader(new File("data/generation_data/countries_population.csv")));
+			br = new BufferedReader(new FileReader(new File(GENERATION_DATA_PATH + "countries_population.csv")));
 			
 			br.readLine();//Ignores first line
 			
@@ -321,107 +350,117 @@ public class DataBaseManager {
 	}
 	
 	// *****************************************************
-
 	
-	//[name,surname,sex,"",height,nationality]
-	public void update(String[] fieldsToUpdate, LocalDate newBirthday) {
-		if(!fieldsToUpdate[0].equals("")) {
-			currentPerson.setName(fieldsToUpdate[0]);
+	public void update(String n, String sn, Sex s, LocalDate bd, Double height, String nat) {
+		
+		if(n != null || sn != null) {
+			String prevName = currentPerson.getName();
+			String prevSurname = currentPerson.getSurname();
+			String prevFullName = prevName + " " + prevSurname;
+			
+			fullNamesTree.remove(prevFullName);
+			fullNamesTrie.remove(prevFullName);
+			
+			if(n != null) { 			
+				namesTree.remove(prevName);
+				namesTrie.remove(prevName);
+				
+				currentPerson.setName(n);
+				
+				namesTree.add(n, currentPerson);
+				namesTrie.add(n);
+			}
+			
+			if(sn != null) {
+				surnamesTree.remove(prevSurname);
+				surnamesTrie.remove(prevSurname);
+				
+				currentPerson.setSurname(sn);
+				
+				surnamesTree.add(sn, currentPerson);
+				surnamesTrie.add(sn);		
+			}
+			
+			String newFullName = currentPerson.getName() + " " + currentPerson.getSurname();
+			fullNamesTree.add(newFullName, currentPerson);
+			fullNamesTrie.add(newFullName);			
 		}
 		
-		if(!fieldsToUpdate[1].equals("")) {
-			currentPerson.setSurname(fieldsToUpdate[1]);
-		}
+		if(s!=null) currentPerson.setSex(s);
 		
-		if(!fieldsToUpdate[2].equals("")) {
-			if(!fieldsToUpdate[2].equalsIgnoreCase(Sex.FEMALE.toString()))
-			currentPerson.setSex(Sex.FEMALE);
-			else
-				currentPerson.setSex(Sex.MALE);
-		}
+		if(bd != null) currentPerson.setBirthday(bd);
 		
-		if(newBirthday != null) {
-			currentPerson.setBirthday(newBirthday);
-		}
+		if(height != null) currentPerson.setHeight(height);
 		
-		if(!fieldsToUpdate[4].equals("")) {
-			currentPerson.setHeight(Double.parseDouble(fieldsToUpdate[4]));
-		}
-		
-		if(!fieldsToUpdate[5].equals("")) {
-			currentPerson.setSurname(fieldsToUpdate[5]);
-		}
-		
+		if(nat != null) currentPerson.setNationality(nat);		
 	}
 	
 	// *****************************************************
 	
 	//Serialize data
-	public boolean write() {
+	public void write() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PEOPLE_DATA_PATH));
 		
+		oos.writeObject(idsHashTable.getAll());
 		
-		//Saves a file for each structure
-		return false;
+		oos.close();
 	}
 
 	// *****************************************************
 	
 	//removes current person
 	public boolean delete() {
-		return false;
+		if(currentPerson != null) {
+			String name = currentPerson.getName();
+			String surname = currentPerson.getSurname();
+			String fullName = name + " " + surname;
+			int id = currentPerson.getId();
+			
+			namesTree.remove(name); // Need to find a way of solving the repeated name problem
+			surnamesTree.remove(surname); // Need to find a way of solving the repeated name problem
+			fullNamesTree.remove(fullName); // Need to find a way of solving the repeated name problem
+			idsHashTable.delete(id);
+			
+			namesTrie.remove(name);
+			surnamesTrie.remove(surname);
+			fullNamesTrie.remove(fullName);
+			
+			clearCurrentPerson();
+			
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	// *****************************************************
 
 	public Person search(SearchCriteria criteria, String data) {
-		Person aux = null;
+		Person person = null;
 
 		switch(criteria) {
 
 		case NAME:
-			aux = searchByName(data);
+			person = namesTree.search(data);
 			break;		
 
 		case SURNAME:
-			aux = searchBySurname(data);
+			person = surnamesTree.search(data);
 			break;
 
 		case FULL_NAME:
-			aux = searchByFullName(data);
+			person = fullNamesTree.search(data);
 			break;
 
 		case ID:
-			aux = searchById(Integer.parseInt(data));
+			person = idsHashTable.search(Integer.parseInt(data));
 			break;
 		}
 		
-		currentPerson = aux;
+		currentPerson = person;
 		
-		return aux;
-	}
-
-	// *****************************************************
-
-	private Person searchByName(String name) {
-		return namesTree.search(name);		
-	}
-
-	// *****************************************************
-
-	private Person searchBySurname(String surname) {
-		return surnamesTree.search(surname);
-	}
-
-	// *****************************************************
-
-	private Person searchByFullName(String fn) {
-		return fullNamesTree.search(fn);
-	}
-
-	// *****************************************************
-
-	private Person searchById(int id) {
-		return idsHashTable.search(id);
+		return person;
 	}
 
 	// *****************************************************
