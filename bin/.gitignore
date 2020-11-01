@@ -1,4 +1,5 @@
-/test/
-/model/
-/ui/
 /collections/
+/model/
+/test/
+/ui/
+/utilities/
