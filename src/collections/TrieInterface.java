@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public interface TrieInterface {
 
 	//------------------------------------------------------------------------------------
+	
+	// METHODS TO USE 
 
 	public boolean add(String s);
 	

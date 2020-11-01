@@ -8,24 +8,50 @@ package collections;
 
 public class AVLTreeNode<K extends Comparable<K>, V> extends Node<K, V> {
 	
-	//Auto generated
+	//------------------------------------------------------------------------------------
+	
+	//AUTO GENERATED
+	
 	private static final long serialVersionUID = 49097610139670076L;
 	
 	private int balanceFactor;	
+	
+	//------------------------------------------------------------------------------------
+	
+	// CONTRUCTOR METHOD
 			
 	public AVLTreeNode(K key, V value) {
+		
 		super(key,value);
-		balanceFactor = 0;		
+		
+		balanceFactor = 0;	
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// GET AND SET METHOD
 
 	public int getBalanceFactor() { return balanceFactor; }
+	
 	public void setBalanceFactor(int balanceFactor) { this.balanceFactor = balanceFactor; }
 	
-	public void updateAVLNode() {		
+	//------------------------------------------------------------------------------------
+	
+	// UPDATE NODE METHOD
+	
+	public void updateAVLNode() {	
+		
 		int lh =  left != null? ((AVLTreeNode<K,V>)left).height:0;
+		
 		int rh =  right != null? ((AVLTreeNode<K,V>)right).height:0;
 		
 		height = ((lh > rh)? lh : rh) + 1;
+		
 		balanceFactor = rh - lh;
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
 }
