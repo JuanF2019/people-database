@@ -32,16 +32,18 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 	
 	//------------------------------------------------------------------------------------
 	
-	// AD METHOD FROM THE RED BLAKC TREE
+	// ADD METHOD FROM THE RED BLAKC TREE
 	
 	public boolean add(K key, V value) {
 		
 		Node<K,V> addedNode = super.addBase(key, value);		
 		
-		if(addedNode != null) {
+		if(!(addedNode instanceof RedBlackTreeNode<?,?>)) {
 			
 			//Replaces Node with RedBlackTreeNode
-			RedBlackTreeNode<K,V> replacementNode = new RedBlackTreeNode<>(addedNode.getKey(), addedNode.getValue());
+			RedBlackTreeNode<K,V> replacementNode = new RedBlackTreeNode<>(addedNode.getKey(), null);
+			
+			replacementNode.setValues(addedNode.getValues());
 			
 			//Left and right are null, always when adding
 			RedBlackTreeNode<K,V> parent = (RedBlackTreeNode<K,V>)addedNode.getParent();
@@ -56,7 +58,8 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 				
 				parent.setLeft(replacementNode);
 				
-			} else {
+			}
+			else {
 				
 				parent.setRight(replacementNode);
 				
@@ -66,12 +69,9 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 			
 			return true;
 							
-		} else {
-			
-			return false;
-			
-		}
+		} 
 		
+		return true;		
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -170,12 +170,14 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 	
 	// REMOVE METHOD FROM THE RED BLACK CLASS
 	
-	public boolean remove(K key) {
+	public boolean remove(K key, V value) {
 		
-		RedBlackTreeNode<K,V> removedNode = (RedBlackTreeNode<K, V>) super.removeBase(key);
+		RedBlackTreeNode<K,V> removedNode = (RedBlackTreeNode<K, V>) super.removeBase(key,value);
 		
-		if(removedNode != null) {
+		//Values list from a node will only have size 1 when the node had been removed
+		if(removedNode != null && removedNode.getValues().size() == 1) {
 			
+			//Sends right or left, as real removed node was replaced in tree with its successor, in case is a leaf it points to nill node
 			removeFixUp((removedNode.getLeft()==null)? ((RedBlackTreeNode<K, V>)removedNode.getRight()):((RedBlackTreeNode<K, V>)removedNode.getLeft()));			
 			
 			return true;
@@ -192,7 +194,7 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 	
 	//Based on PSEUDOCODE from CORMEN Introduction to algorithms 3ed
 	
-	public RedBlackTreeNode<K,V> removeFixUp(RedBlackTreeNode<K,V> x){
+	public void removeFixUp(RedBlackTreeNode<K,V> x){
 		
 		while(x != root && x.getColor() == Color.BLACK) {
 			
@@ -314,13 +316,10 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 			
 		}
 		
-		return null;
-		
 	}
 	
 	//------------------------------------------------------------------------------------
 	
-	//This method does not fix the balance factor of nodes that are not modified here
 	//Returns new subtree root
 	
 	private RedBlackTreeNode<K,V> rotateRight(RedBlackTreeNode<K,V> node) {
@@ -392,7 +391,6 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 	
 	//------------------------------------------------------------------------------------
 	
-	//This method does not fix the balance factor of nodes that are not modified here
 	//Returns new subtree root
 	
 	private RedBlackTreeNode<K,V> rotateLeft(RedBlackTreeNode<K,V> node) {

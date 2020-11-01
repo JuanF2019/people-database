@@ -30,44 +30,26 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 	
 	public boolean add(K key, V value) {
 		
+		//Could be a new node or a node with added value
 		Node<K,V> addedNode = super.addBase(key, value);		
 		
-		if(addedNode != null) {
+		if(!(addedNode instanceof AVLTreeNode<?,?>)) {
 			
-			//Replaces Node with AVLTreeNode
-			AVLTreeNode<K,V> replacementNode = new AVLTreeNode<>(addedNode.getKey(), addedNode.getValue());
+			//Replaces Node with AVLTreeNode			
+			AVLTreeNode<K,V> replacementNode = new AVLTreeNode<K,V>(addedNode.getKey(), null);
+			
+			replacementNode.setValues(addedNode.getValues());
 			
 			if(addedNode == root) {
 				root = replacementNode;	
 				
-				return true;
-				
-			} else {
-				
-				AVLTreeNode<K,V> left = (AVLTreeNode<K,V>)addedNode.getLeft();
-				
-				AVLTreeNode<K,V> right = (AVLTreeNode<K,V>)addedNode.getRight();
+			} 
+			else {
 				
 				AVLTreeNode<K,V> parent = (AVLTreeNode<K,V>)addedNode.getParent();
 							
-				replacementNode.setLeft(left);
-				
-				replacementNode.setRight(right);
-				
 				replacementNode.setParent(parent);
-				
-				if(right != null) {
-					
-					right.setParent(replacementNode);
-					
-				}
-				
-				if(left != null) {
-					
-					left.setParent(replacementNode);
-					
-				}
-				
+												
 				if(parent.getLeft() == addedNode) {
 					
 					parent.setLeft(replacementNode);
@@ -91,16 +73,11 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 					
 				}			
 				
-				return true;
-				
 			}
 			
-		} else {
-			
-			return false;
-			
-		}
+		} 
 		
+		return true;
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -156,13 +133,14 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 	
 	// REMOVE METHOD
 	
-	public boolean remove(K key) {		
+	public boolean remove(K key, V value) {		
 		
-		Node<K,V> removed = super.removeBase(key);
+		Node<K,V> removed = super.removeBase(key,value);
 		
-		AVLTreeNode<K,V> removedParent = (removed == null)? null : (AVLTreeNode<K,V>) removed.getParent();		
-		
-		if(removed != null) {
+		//Values list from a node will only have size 1 when the node had been removed
+		if(removed != null && removed.getValues().size() == 1) {
+			
+			AVLTreeNode<K,V> removedParent = (AVLTreeNode<K,V>) removed.getParent();
 			
 			AVLTreeNode<K,V> currentNode = removedParent;
 						

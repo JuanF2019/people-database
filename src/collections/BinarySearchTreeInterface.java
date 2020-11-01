@@ -6,6 +6,10 @@
 
 package collections;
 
+import java.util.List;
+
+//This interface was made including support for repeated values, for that reason the update method is not included
+
 public interface BinarySearchTreeInterface<K extends Comparable<K>,V> {
 	
 	//------------------------------------------------------------------------------------
@@ -14,13 +18,13 @@ public interface BinarySearchTreeInterface<K extends Comparable<K>,V> {
 	
 	public boolean add(K key, V value);
 	
-	public boolean update(K key, V value);
+	public List<V> search(K key);
 	
-	public boolean remove(K key);
+	public V search(K key, V value);
 	
-	public boolean isEmpty();
+	public boolean remove(K key, V value);
 	
-	public V search(K key);
+	public boolean isEmpty();	
 	
 	public int getWeight();
 	

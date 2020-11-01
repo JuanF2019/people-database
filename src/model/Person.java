@@ -130,5 +130,17 @@ public class Person implements Serializable{
 	}
 
 	//------------------------------------------------------------------------------------
+	
+	public boolean equals(Person anotherPerson) {
+			
+		return name.equals(anotherPerson.name)&&
+				surname.equals(anotherPerson.name) && 
+				id == anotherPerson.id &&
+				sex == anotherPerson.sex &&
+				birthday.equals(anotherPerson.birthday) &&
+				height == anotherPerson.height &&
+				nationality.equals(anotherPerson.nationality);
+	}
 
+	//------------------------------------------------------------------------------------
 }

@@ -9,7 +9,6 @@ package model;
 import collections.*;
 import utilities.Pair;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,9 +41,6 @@ public class DataBaseManager {
 	private int savedPeopleNumber;
 	
 	private BufferedReader br;
-	
-	@SuppressWarnings("unused")
-	private BufferedWriter bw;
 	
 	private ArrayList<String> countries;
 	
@@ -108,6 +104,13 @@ public class DataBaseManager {
 		return countries;
 	}
 
+	//------------------------------------------------------------------------------------
+
+	// Get's methods of the DataBaseManager class
+	
+	public void setCurrentPerson(Person p) {
+		currentPerson = p;
+	}
 	//------------------------------------------------------------------------------------
 
 	//Operations of class DataBaseManager
@@ -439,13 +442,13 @@ public class DataBaseManager {
 			
 			String prevFullName = prevName + " " + prevSurname;
 			
-			fullNamesTree.remove(prevFullName);
+			fullNamesTree.remove(prevFullName, currentPerson);
 			
 			fullNamesTrie.remove(prevFullName);
 			
 			if(n != null) { 		
 				
-				namesTree.remove(prevName);
+				namesTree.remove(prevName, currentPerson);
 				
 				namesTrie.remove(prevName);
 				
@@ -459,7 +462,7 @@ public class DataBaseManager {
 			
 			if(sn != null) {
 				
-				surnamesTree.remove(prevSurname);
+				surnamesTree.remove(prevSurname, currentPerson);
 				
 				surnamesTrie.remove(prevSurname);
 				
@@ -518,11 +521,11 @@ public class DataBaseManager {
 			
 			int id = currentPerson.getId();
 			
-			namesTree.remove(name); // Need to find a way of solving the repeated name problem
+			namesTree.remove(name, currentPerson);
 			
-			surnamesTree.remove(surname); // Need to find a way of solving the repeated name problem
+			surnamesTree.remove(surname, currentPerson);
 			
-			fullNamesTree.remove(fullName); // Need to find a way of solving the repeated name problem
+			fullNamesTree.remove(fullName, currentPerson);
 			
 			idsHashTable.delete(id);
 			
@@ -549,38 +552,35 @@ public class DataBaseManager {
 	
 	// Search method
 
-	public Person search(SearchCriteria criteria, String data) {
+	public ArrayList<Person> search(SearchCriteria criteria, String data) {
 		
-		Person person = null;
+		ArrayList<Person> persons = null;
 
 		switch(criteria) {
 
 		case NAME:
 			
-			person = namesTree.search(data);
+			persons = (ArrayList<Person>) namesTree.search(data);
 			break;		
 
 		case SURNAME:
 			
-			person = surnamesTree.search(data);
+			persons = (ArrayList<Person>) surnamesTree.search(data);
 			break;
 
 		case FULL_NAME:
 			
-			person = fullNamesTree.search(data);
+			persons = (ArrayList<Person>) fullNamesTree.search(data);
 			break;
 
 		case ID:
-			
-			person = idsHashTable.search(Integer.parseInt(data));
+			persons = new ArrayList<Person>();
+			persons.add(idsHashTable.search(Integer.parseInt(data)));
 			break;
 			
 		}
 		
-		currentPerson = person;
-		
-		return person;
-		
+		return persons;		
 	}
 
 	//------------------------------------------------------------------------------------

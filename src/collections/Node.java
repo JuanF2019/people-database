@@ -7,18 +7,18 @@
 package collections;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Node<K extends Comparable<K>,V> implements Serializable {
 	
 	//------------------------------------------------------------------------------------
 	
-	// AUTO GENERATED
-	
+	// AUTO GENERATED	
 	private static final long serialVersionUID = 793059671853761706L;
 	
 	protected K key;
 	
-	protected V value;
+	protected ArrayList<V> values;
 	
 	protected int height;
 	
@@ -36,10 +36,11 @@ public class Node<K extends Comparable<K>,V> implements Serializable {
 		
 		this.key = key;
 		
-		this.value = value;
+		values = new ArrayList<V>();
 		
-		height = 1;
-		
+		values.add(value);
+				
+		height = 1;		
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ public class Node<K extends Comparable<K>,V> implements Serializable {
 	
 	public K getKey() { return key;	}
 	
-	public V getValue() { return value;	}
+	public ArrayList<V> getValues() { return values;	}
 	
 	public int getHeight() { return height; }
 	
@@ -78,7 +79,7 @@ public class Node<K extends Comparable<K>,V> implements Serializable {
 	
 	public void setKey(K key) { this.key = key; }
 	
-	public void setValue(V value) { this.value = value; }
+	public void setValues(ArrayList<V> values) { this.values = values; }
 	
 	public void setRight(Node<K, V> right) { this.right = right; }
 	
