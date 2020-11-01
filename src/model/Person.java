@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Person implements Serializable{
+	
+	//------------------------------------------------------------------------------------
 
 	// Attributes of the Person class
 
@@ -36,13 +38,21 @@ public class Person implements Serializable{
 
 	public Person(String name, String surname, int id, 
 			Sex sex, LocalDate birthday, double height, String nationality) {
+		
 		this.name = name;
+		
 		this.surname = surname;
+		
 		this.id = id;
+		
 		this.sex = sex;
+		
 		this.birthday = birthday;
+		
 		this.height = height;
+		
 		this.nationality = nationality;
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -119,6 +129,6 @@ public class Person implements Serializable{
 		return new Person(name,surname,id,sex,birthday,height,nationality);
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
 
 }

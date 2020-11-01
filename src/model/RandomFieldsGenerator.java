@@ -48,11 +48,16 @@ public class RandomFieldsGenerator {
 	//Constructor of the RandomFieldsGenerator class
 
 	public RandomFieldsGenerator(ArrayList<String> ln, ArrayList<String> ls, ArrayList<Pair<String,Double>> lc, ArrayList<Pair<Integer,Double>> a, HashTable<Integer,Person> idsHT) {
+		
 		loadedNames = ln;
 		loadedSurnames = ls;
+		
 		loadedCountries = lc;
+		
 		ages = a;
+		
 		idsHashTable = idsHT;
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -63,27 +68,37 @@ public class RandomFieldsGenerator {
 		return loadedNames.get((int)(Math.random()*loadedNames.size()));
 	}
 	
-	// *****************************************************
-
+	
 	public String surname() {
 		return loadedSurnames.get((int)(Math.random()*loadedSurnames.size()));
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Local date method
 
 	public LocalDate birthday() {
+		
 		double random = Math.random();
 
 		int minAge = - 1;
+		
 		int maxAge = 0;
+		
 		boolean check = false;
 
 		for (int i = 0; i < ages.size() && !check; i++) {
+			
 			minAge = maxAge;
+			
 			maxAge = ages.get(i).getKey();
+			
 			if(random < ages.get(i).getValue()) {
+				
 				check = true;
+				
 			}
+			
 		}
 
 		int age = (int) Math.round(Math.random()*(maxAge - minAge + 1) + minAge);
@@ -93,51 +108,79 @@ public class RandomFieldsGenerator {
 		LocalDate birthday = now.minusYears(age);
 
 		if(birthday.isLeapYear()) {
+			
 			birthday.minusDays((long)Math.random()*366);
-		}
-		else {
+			
+		} else {
+			
 			birthday.minusDays((long)Math.random()*365);
+			
 		}
 
 		return birthday;
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Id method
 
 	public int id() {
+		
 		int id = -1;
+		
 		do {
+			
 			id = (int) (Math.random()*(DataBaseManager.MAX_PEOPLE_NUMBER + 1));
+			
 		} while(idsHashTable.search(id) == null);
 
 		return id;
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Gender method
 
 	public Sex sex() {
+		
 		return(Math.random() < 0.5)? Sex.MALE:Sex.FEMALE;
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Height method
 
 	public int height() {
+		
 		return (int) (Math.random()*(MAX_HEIGHT-MIN_HEIGHT+1) + MIN_HEIGHT);
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Nationality
 
 	public String nationality() {
+		
 		double random = Math.random();
 
 		for (int i = 0; i < loadedCountries.size(); i++) {
+			
 			Pair<String, Double> country = loadedCountries.get(i);
+			
 			if(random < country.getValue()) {
+				
 				return country.getKey();
+				
 			}
+			
 		}
 
 		return null;
+		
 	}
 	
 	//------------------------------------------------------------------------------------

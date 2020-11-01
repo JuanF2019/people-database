@@ -7,9 +7,7 @@
 package model;
 
 import collections.*;
-import javafx.util.converter.LocalDateStringConverter;
 import utilities.Pair;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -46,6 +43,7 @@ public class DataBaseManager {
 	
 	private BufferedReader br;
 	
+	@SuppressWarnings("unused")
 	private BufferedWriter bw;
 	
 	private ArrayList<String> countries;
@@ -79,14 +77,23 @@ public class DataBaseManager {
 	// Constructor method of the DataBaseManager class
 
 	public DataBaseManager() {
+		
 		surnamesTree = new AVLTree<>();
+		
 		namesTree = new AVLTree<>();
+		
 		namesTrie = new Trie();
+		
 		surnamesTrie = new Trie();
+		
 		fullNamesTrie = new Trie();
+		
 		idsHashTable = new HashTable<>();
+		
 		fullNamesTree = new RedBlackTree<>();
+		
 		countries = new ArrayList<>();
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -109,65 +116,100 @@ public class DataBaseManager {
 	public void create(String name, String ln, Sex s, LocalDate ld, Double height, String nat) {
 		
 		Person p = new Person(name, ln, randomFieldsGenerator.id(), s, ld, height, nat);
+		
 		savePerson(p);
+		
 		savedPeopleNumber++;
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Save person on the system
 	
 	private void savePerson(Person newPerson) {
+		
 		namesTree.add(newPerson.getName(), newPerson);
+		
 		surnamesTree.add(newPerson.getSurname(), newPerson);
+		
 		fullNamesTree.add(newPerson.getName() + " " + newPerson.getSurname(), newPerson);
+		
 		idsHashTable.insert(newPerson.getId(), newPerson);
 		
 		namesTrie.add(newPerson.getName());
+		
 		surnamesTrie.add(newPerson.getSurname());
+		
 		fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
+		
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Read method
 
 	public boolean read() {
+		
 		return readPeopleData() && readGenerationData();
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
 	
-	public boolean readPeopleData() {		
+	// Read people database
+	
+	public boolean readPeopleData() {	
+		
 		try {
+			
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PEOPLE_DATA_PATH));	
 						
 			Object[] rawPeople = (Object[]) ois.readObject();
 			
 			for (Object object : rawPeople) {
+				
 				Person person = (Person) object;
 				
 				String name = person.getName();
+				
 				String surname =person.getSurname();
+				
 				String fullName = name + " " + surname;
+				
 				int id = person.getId();
 				
 				namesTree.add(name, person);
+				
 				surnamesTree.add(surname, person);
+				
 				fullNamesTree.add(fullName, person);
+				
 				idsHashTable.insert(id, person);
 				
 				namesTrie.add(name);
+				
 				surnamesTrie.add(surname);
+				
 				fullNamesTrie.add(fullName);
+				
 			}
 			
 			ois.close();
 			
 			return true;
+			
 		} catch (Exception e) {
 			
 			return false;
+			
 		}
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Read generation data
 	
 	public boolean readGenerationData() {
 						
@@ -193,13 +235,18 @@ public class DataBaseManager {
 		
 		randomFieldsGenerator = new RandomFieldsGenerator(loadedSurnames, loadedSurnames, loadedCountries, loadedAges, (HashTable<Integer,Person>)idsHashTable);
 				
-		return true;				
+		return true;
+		
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Load ages method
 	
 	private ArrayList<Pair<Integer, Double>> loadAges() {
+		
 		ArrayList<Pair<Integer,Double>> ages;
+		
 		try {
 			
 			ages =  new ArrayList<>();
@@ -209,9 +256,10 @@ public class DataBaseManager {
 			br.readLine();//Ignores first line
 			
 			double acumulatedProbability = 0;
-			String line = br.readLine();
-			String[] splitLine = null;
 			
+			String line = br.readLine();
+			
+			String[] splitLine = null;
 			
 			while(line != null && !line.isEmpty()) {
 									
@@ -229,19 +277,27 @@ public class DataBaseManager {
 			}
 			
 			br.close();
+			
 			return ages;
-		}
-		catch(Exception ex) {
+			
+		} catch(Exception ex) {
+			
 			return null;
+			
 		}
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Load names method
 	
 	private ArrayList<String> loadNames() {
+		
 		ArrayList<String> loadedNames;
 		
 		try {
+			
 			loadedNames = new ArrayList<>();
 			
 			br = new BufferedReader(new FileReader(new File(GENERATION_DATA_PATH + "names.csv")));
@@ -258,16 +314,23 @@ public class DataBaseManager {
 			br.close();
 			
 			return loadedNames;
-		}
-		catch(Exception ex) {
+			
+		} catch(Exception ex) {
+			
 			return null;
+			
 		}
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Load surnames method
 	
 	private ArrayList<String> loadSurnames() {
+		
 		ArrayList<String> loadedSurnames;
+		
 		try {
 			
 			loadedSurnames = new ArrayList<>();
@@ -286,13 +349,18 @@ public class DataBaseManager {
 			br.close();
 			
 			return loadedSurnames;
-		}
-		catch(Exception ex) {
+			
+		} catch(Exception ex) {
+			
 			return null;
+			
 		}
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Load countries method
 	
 	private ArrayList<Pair<String, Double>> loadCountries() {
 		
@@ -307,9 +375,10 @@ public class DataBaseManager {
 			br.readLine();//Ignores first line
 			
 			double acumulatedSum = 0;
-			String line = br.readLine();
-			String[] splitLine = null;
 			
+			String line = br.readLine();
+			
+			String[] splitLine = null;
 			
 			while(line != null && !line.isEmpty()) {
 									
@@ -329,61 +398,84 @@ public class DataBaseManager {
 			}
 			
 			double accumulatedProbability = 0;
+			
 			double probability = 0;;
 			
 			for (int i = 0 ; i < loadedCountries.size() ; i++) {
+				
 				Pair<String,Double> pair = loadedCountries.get(i);
 				
 				probability = pair.getValue()/acumulatedSum;
+				
 				accumulatedProbability += probability;
 								
 				pair.setValue(Double.valueOf(accumulatedProbability));
+				
 			}
 			
-			
 			br.close();
+			
 			return loadedCountries;
-		}
-		catch(Exception ex) {
+			
+		} catch(Exception ex) {
+			
 			return null;
+			
 		}
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Update method
 	
 	public void update(String n, String sn, Sex s, LocalDate bd, Double height, String nat) {
 		
 		if(n != null || sn != null) {
+			
 			String prevName = currentPerson.getName();
+			
 			String prevSurname = currentPerson.getSurname();
+			
 			String prevFullName = prevName + " " + prevSurname;
 			
 			fullNamesTree.remove(prevFullName);
+			
 			fullNamesTrie.remove(prevFullName);
 			
-			if(n != null) { 			
+			if(n != null) { 		
+				
 				namesTree.remove(prevName);
+				
 				namesTrie.remove(prevName);
 				
 				currentPerson.setName(n);
 				
 				namesTree.add(n, currentPerson);
+				
 				namesTrie.add(n);
+				
 			}
 			
 			if(sn != null) {
+				
 				surnamesTree.remove(prevSurname);
+				
 				surnamesTrie.remove(prevSurname);
 				
 				currentPerson.setSurname(sn);
 				
 				surnamesTree.add(sn, currentPerson);
+				
 				surnamesTrie.add(sn);		
 			}
 			
 			String newFullName = currentPerson.getName() + " " + currentPerson.getSurname();
+			
 			fullNamesTree.add(newFullName, currentPerson);
-			fullNamesTrie.add(newFullName);			
+			
+			fullNamesTrie.add(newFullName);		
+			
 		}
 		
 		if(s!=null) currentPerson.setSex(s);
@@ -392,81 +484,113 @@ public class DataBaseManager {
 		
 		if(height != null) currentPerson.setHeight(height);
 		
-		if(nat != null) currentPerson.setNationality(nat);		
+		if(nat != null) currentPerson.setNationality(nat);
+		
 	}
 	
-	// *****************************************************
+	//------------------------------------------------------------------------------------
 	
 	//Serialize data
+	
 	public void write() throws FileNotFoundException, IOException {
+		
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PEOPLE_DATA_PATH));
 		
 		oos.writeObject(idsHashTable.getAll());
 		
 		oos.close();
+		
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
 	
 	//removes current person
+	
 	public boolean delete() {
+		
 		if(currentPerson != null) {
+			
 			String name = currentPerson.getName();
+			
 			String surname = currentPerson.getSurname();
+			
 			String fullName = name + " " + surname;
+			
 			int id = currentPerson.getId();
 			
 			namesTree.remove(name); // Need to find a way of solving the repeated name problem
+			
 			surnamesTree.remove(surname); // Need to find a way of solving the repeated name problem
+			
 			fullNamesTree.remove(fullName); // Need to find a way of solving the repeated name problem
+			
 			idsHashTable.delete(id);
 			
+			
 			namesTrie.remove(name);
+			
 			surnamesTrie.remove(surname);
+			
 			fullNamesTrie.remove(fullName);
 			
 			clearCurrentPerson();
 			
 			return true;
-		}
-		else {
+			
+		} else {
+			
 			return false;
+			
 		}
+		
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Search method
 
 	public Person search(SearchCriteria criteria, String data) {
+		
 		Person person = null;
 
 		switch(criteria) {
 
 		case NAME:
+			
 			person = namesTree.search(data);
 			break;		
 
 		case SURNAME:
+			
 			person = surnamesTree.search(data);
 			break;
 
 		case FULL_NAME:
+			
 			person = fullNamesTree.search(data);
 			break;
 
 		case ID:
+			
 			person = idsHashTable.search(Integer.parseInt(data));
 			break;
+			
 		}
 		
 		currentPerson = person;
 		
 		return person;
+		
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Get predictions method
 
 	public ArrayList<String> getPredictions(String prefix, SearchCriteria criteria) {
+		
 		switch(criteria) {
+		
 		case NAME:
 			return namesTrie.getPredictions(prefix);
 			
@@ -478,60 +602,89 @@ public class DataBaseManager {
 			
 		default:
 			return null;
-		}		
+			
+		}	
+		
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Clear current person method
 
 	public void clearCurrentPerson() {
 		currentPerson = null;
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Generate people method
 
 	public boolean generatePeople(int n) {
 		
 		if(MAX_PEOPLE_NUMBER - savedPeopleNumber - n >= 0) {
+			
 			for (int i = 0; i < n; i++) {
+				
 				Person newPerson = generatePerson();
 				
 				String name = newPerson.getName();
+				
 				String surname = newPerson.getSurname();
+				
 				int id = newPerson.getId();
 				
 				namesTrie.add(name);
+				
 				namesTree.add(name, newPerson);
 				
 				surnamesTrie.add(surname);
+				
 				surnamesTree.add(surname, newPerson);
 				
 				String fullName = name + " " + surname;
 				
 				fullNamesTrie.add(fullName);
+				
 				fullNamesTree.add(fullName,newPerson);
 								
-				idsHashTable.insert(id,newPerson);				
+				idsHashTable.insert(id,newPerson);
+				
 			}
+			
 			savedPeopleNumber += n;
-			return true;		
-		} 
-		else {
+			
+			return true;
+			
+		} else {
+			
 			return false;
-		}		
+			
+		}
+		
 	}
 
-	// *****************************************************
+	//------------------------------------------------------------------------------------
+	
+	// Generate person method
 
 	private Person generatePerson() {
+		
 		String name = randomFieldsGenerator.name();
+		
 		String surname = randomFieldsGenerator.surname();
+		
 		int id = randomFieldsGenerator.id();
+		
 		Sex sex = randomFieldsGenerator.sex();
+		
 		LocalDate birthday = randomFieldsGenerator.birthday();
+		
 		int height = randomFieldsGenerator.height();
+		
 		String nationality = randomFieldsGenerator.nationality();	
 		
 		return new Person(name, surname, id, sex, birthday, height, nationality);
+		
 	}
 	
 	//------------------------------------------------------------------------------------
