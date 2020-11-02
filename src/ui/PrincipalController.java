@@ -7,38 +7,27 @@
 package ui;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 import model.DataBaseManager;
-import model.Person;
-import model.SearchCriteria;
-import model.Sex;
 
 public class PrincipalController {
 
 	//------------------------------------------------------------------------------------
 
 	// RELATION'S WITH THE ANOTHER CLASS
+	
+	private AddController addController;
+	
+	private SearchController searchController;
 
-	private EditController controller;
+	private EditController editController;
+	
+	private GenerateController generateController;
 
 	private DataBaseManager dbm;
 
@@ -47,335 +36,121 @@ public class PrincipalController {
 	// CONSTRUCTOR METHOD
 
 	public PrincipalController() {
-
-		dbm = new DataBaseManager();
-		controller = new EditController(dbm);
-
-	}
-
-	// *****************************************
-
-	public PrincipalController(String name) {
-
-
-	}
-
-	//------------------------------------------------------------------------------------
-
-	// TAB'S IN THE JAVA'FX VIEW
-
-	@FXML
-	private Tab addTab;
-
-	@FXML
-	private Tab searchTab;
-
-	@FXML
-	private Tab editTab;
-
-	@FXML
-	private Tab generateTab;
-
-	//------------------------------------------------------------------------------------
-
-	// WINDOW 1 (ADD PERSON)
-
-	@FXML
-	private TextField nameTextAdd;
-
-	@FXML
-	private TextField lastNameTextAdd;
-
-	@FXML
-	private ToggleGroup gender;
-
-	@FXML
-	private RadioButton manRBAdd;
-
-	@FXML
-	private RadioButton womanRBAdd;
-
-	@FXML
-	private DatePicker dateTextAdd;
-
-	@FXML
-	private TextField heightTextAdd;
-
-	@FXML
-	private Button addButton;
-
-	@FXML
-	private ChoiceBox<String> nacionalityTextAdd;
-
-	//------------------------------------------------------------------------------------
-
-	// WINDOW 2
-
-	@FXML
-	private ToggleGroup optionSearch;
-
-	@FXML
-	private TextField nameTextSearch;
-
-	@FXML
-	private RadioButton cnSearch;
-
-	@FXML
-	private RadioButton nSearch;
-
-	@FXML
-	private RadioButton lnSearch;
-
-	@FXML
-	private RadioButton csearch;
-
-	//------------------------------------------------------------------------------------
-
-	// WINDOW 3
-
-	@FXML
-	private Label showLabelNameEdit;
-
-	@FXML
-	private Button editButton;
-
-	@FXML
-	private Button removeButton;
-
-	//------------------------------------------------------------------------------------
-
-	// WINDOW 4
-
-	@FXML
-	private TextField numberGenerateText;
-
-	@FXML
-	private Button generateButton;
-
-	@FXML
-	private Rectangle box;
-
-	//------------------------------------------------------------------------------------
-
-	// PUBLIC METHOD TO ADD A NEW PERSON IN THE SYSTEM
-
-	@FXML
-	public void add(ActionEvent event) {
-		String name = nameTextAdd.getText();
-		if(name.equals("")) {
-			warning();
-		}
-
-		String ln = lastNameTextAdd.getText();
-		if(ln.equals("")) {
-			warning();
-		}
-		Sex s = null;
-		if(womanRBAdd.isSelected()==true)
-			s = Sex.FEMALE;
-		else if(manRBAdd.isSelected()==true)
-			s = Sex.MALE;
-		else {
-			warning();
-		}
-		String h = heightTextAdd.getText();
-		Double height = 0.0;
-		if(h.equals("")) {
-			warning();
-		}
-		else {
-			height = Double.parseDouble(h);
-		}
-		String nat = nacionalityTextAdd.getValue();
-		if(nat.equals("")) {
-			warning();
-		}
-
-		String birth = dateTextAdd.toString();
-		LocalDate ld=null;
-		if(birth.equals("")) {
-			warning();
-		}
-		else {
-			String[] aux = birth.split("-");
-			int year = Integer.parseInt(aux[0]);
-			int month = Integer.parseInt(aux[1]);
-			int day = Integer.parseInt(aux[2]);
-			ld = LocalDate.of(year, month, day);
-		}
 		
-		dbm.create(name, ln, s, ld, height, nat);
+		dbm = new DataBaseManager();
+		
+		dbm.read();
+		
+		addController = new AddController(dbm);
+		
+		searchController = new SearchController(this,dbm);
 
+		editController = new EditController(this,dbm);
+		
+		generateController = new GenerateController(dbm);
 
-	}
-
-	public void warning() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Alert");
-		alert.setHeaderText("Empty field");
-		alert.setContentText("Please fill all the fields to continue the registration");
-		alert.showAndWait();
 	}
 
 	//------------------------------------------------------------------------------------
 
-	// PUBLIC METHOD TO EDIT A PERSON IN THE SYSTEM
+    @FXML
+    private Tab addTab;
 
-	@FXML
-	public void edit(ActionEvent event) throws IOException {
+    @FXML
+    private AnchorPane addAnchorPane;
 
-		Node source = (Node) event.getSource();
+    @FXML
+    private Tab searchTab;
 
-		Stage stage = (Stage) source.getScene().getWindow();
+    @FXML
+    private AnchorPane searchAnchorPane;
 
-		stage.close();
+    @FXML
+    private Tab editTab;
 
-		Stage primaryStage = new Stage();
+    @FXML
+    private AnchorPane editAnchorPane;
+
+    @FXML
+    private Tab generateTab;
+
+    @FXML
+    private AnchorPane generateAnchorPane;	
+
+	//------------------------------------------------------------------------------------
+
+	// PUBLIC METHOD TO LOAD THE EDIT TAB
+
+	
+	public void loadEditTab() throws IOException {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditPanel.fxml"));
 
-		fxmlLoader.setController(controller);
+		fxmlLoader.setController(editController);
 
-		Parent root = fxmlLoader.load();
-
-		Scene scene = new Scene(root);
-
-		primaryStage.setScene(scene);
-
-		primaryStage.setTitle("Edit a person");
-
-		primaryStage.show();
+		editAnchorPane.getChildren().add(fxmlLoader.load());
 
 	}
 
 	//------------------------------------------------------------------------------------
 
-	// PUBLIC METHOD TO REMOVE A PERSONA FROM THE SYSTEM
+	// PUBLIC METHOD TO LOAD THE ADD TAB
+	
+	public void loadAddTab() throws IOException {
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddPanel.fxml"));
 
+		fxmlLoader.setController(addController);
+
+		addAnchorPane.getChildren().add(fxmlLoader.load());
+
+	}
+
+	//------------------------------------------------------------------------------------
+
+	// PUBLIC METHOD TO LOAD THE GENERATE TAB
+
+	public void loadGenerateTab() throws IOException {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GeneratePanel.fxml"));
+
+		fxmlLoader.setController(generateController);
+
+		generateAnchorPane.getChildren().add(fxmlLoader.load());
+
+	}
+	
+	//------------------------------------------------------------------------------------
+
+	// PUBLIC METHOD TO LOAD THE GENERATE TAB
+	
+	public void loadSearchTab() throws IOException {
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SearchPanel.fxml"));
+
+		fxmlLoader.setController(searchController);
+
+		searchAnchorPane.getChildren().add(fxmlLoader.load());
+		
+	}
+
+	//------------------------------------------------------------------------------------
+
+	// LOAD TABS METHOD
+	
 	@FXML
-	public void remove(ActionEvent event) {
-
-
-
-	}
-
-	//------------------------------------------------------------------------------------
-
-	// PUBLIC METHOD TO GENERATE N PEOPLE IN THE SYSTEM
-
-	@FXML
-	public void generate(ActionEvent event) {
-
-
-
-	}
-
-	//------------------------------------------------------------------------------------
-
-	// INITIALIZE METHOD
-
-	public void initialize() {
-
-		// A
-
-		nacionalityTextAdd.getItems().add("Anguila");
-		nacionalityTextAdd.getItems().add("Antigua y Barbuda");
-		nacionalityTextAdd.getItems().add("Argentina");
-		nacionalityTextAdd.getItems().add("Aruba");
-
-		// B
-
-		nacionalityTextAdd.getItems().add("Bahamas");
-		nacionalityTextAdd.getItems().add("Barbados");
-		nacionalityTextAdd.getItems().add("Belice");
-		nacionalityTextAdd.getItems().add("Bermudas");
-		nacionalityTextAdd.getItems().add("Bolivia");
-		nacionalityTextAdd.getItems().add("Brasil");
-
-		// C
-
-		nacionalityTextAdd.getItems().add("Canada");
-		nacionalityTextAdd.getItems().add("Chile");
-		nacionalityTextAdd.getItems().add("Colombia");
-		nacionalityTextAdd.getItems().add("Costa Rica");
-		nacionalityTextAdd.getItems().add("Cuba");
-
-		// D
-
-		nacionalityTextAdd.getItems().add("Dominica");
-
-		// E
-
-		nacionalityTextAdd.getItems().add("Ecuador");
-		nacionalityTextAdd.getItems().add("El Salvador");
-		nacionalityTextAdd.getItems().add("Estados Unidos");
-
-		// G
-
-		nacionalityTextAdd.getItems().add("Granada");
-		nacionalityTextAdd.getItems().add("Groelandia");
-		nacionalityTextAdd.getItems().add("Guam");
-		nacionalityTextAdd.getItems().add("Guatemala");
-		nacionalityTextAdd.getItems().add("Guyana");
-
-		// H
-
-		nacionalityTextAdd.getItems().add("Haiti");
-		nacionalityTextAdd.getItems().add("Honduras");
-
-		// I
-
-		nacionalityTextAdd.getItems().add("Islas Caiman");
-		nacionalityTextAdd.getItems().add("Islas Turcas y Caicos");
-		nacionalityTextAdd.getItems().add("Islas Virgenes Estadounidenses");
-		nacionalityTextAdd.getItems().add("Islas Virgenes Britanicas");
-
-		// J
-
-		nacionalityTextAdd.getItems().add("Jamaica");
-
-		// M
-
-		nacionalityTextAdd.getItems().add("Malvinas");
-		nacionalityTextAdd.getItems().add("Mexico");
-		nacionalityTextAdd.getItems().add("Montserrat");
-
-		// N
-
-		nacionalityTextAdd.getItems().add("Nicaragua");
-
-		// P
-
-		nacionalityTextAdd.getItems().add("Panama");
-		nacionalityTextAdd.getItems().add("Paraguay");
-		nacionalityTextAdd.getItems().add("Peru");
-		nacionalityTextAdd.getItems().add("Puerto rico");
-
-		// R
-
-		nacionalityTextAdd.getItems().add("Republica Dominicana");
-
-		// S
-
-		nacionalityTextAdd.getItems().add("San Cristobal y Nieves");
-		nacionalityTextAdd.getItems().add("San Vicente y Granadines");
-		nacionalityTextAdd.getItems().add("Santa Lucia");
-		nacionalityTextAdd.getItems().add("Surinam");
-
-		// T
-
-		nacionalityTextAdd.getItems().add("Trinidad y Tobago");
-
-		// U
-
-		nacionalityTextAdd.getItems().add("Uruguay");
-
-		// V
-
-		nacionalityTextAdd.getItems().add("Venezuela");
-
-	}
-
+    void initialize() throws IOException {
+		
+		loadAddTab();
+		
+		loadSearchTab();
+		
+		loadEditTab();
+		
+		loadGenerateTab();
+		
+    }
+	
 	//------------------------------------------------------------------------------------
 
 }

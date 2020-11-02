@@ -19,9 +19,9 @@ public class RandomFieldsGenerator {
 
 	//Constants of the RandomFieldsGenerator class
 
-	private static final int MIN_HEIGHT = 140;
+	private static final double MIN_HEIGHT = 140;
 
-	private static final int MAX_HEIGHT = 200;
+	private static final double MAX_HEIGHT = 200;
 	
 	//------------------------------------------------------------------------------------
 	
@@ -131,7 +131,7 @@ public class RandomFieldsGenerator {
 		
 		do {
 			
-			id = (int) (Math.random()*(DataBaseManager.MAX_PEOPLE_NUMBER + 1));
+			id = (int) Math.round((Math.random()*(DataBaseManager.MAX_PEOPLE_NUMBER+0.0)));
 			
 		} while(idsHashTable.search(id) == null);
 
@@ -153,9 +153,9 @@ public class RandomFieldsGenerator {
 	
 	// Height method
 
-	public int height() {
+	public double height() {
 		
-		return (int) (Math.random()*(MAX_HEIGHT-MIN_HEIGHT+1) + MIN_HEIGHT);
+		return (Math.random()*(MAX_HEIGHT-MIN_HEIGHT+1) + MIN_HEIGHT);
 		
 	}
 	

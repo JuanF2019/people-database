@@ -6,8 +6,8 @@ public class Pair<K, V> {
 	private V value;
 	
 	public Pair(K key, V value) {
-		key = this.key;
-		value = this.value;
+		this.key = key;
+		this.value = value;
 	}
 
 	public void setKey(K key) { this.key = key; }

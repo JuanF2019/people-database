@@ -10,107 +10,166 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="436.0" fitWidth="770.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@image-2.jpg" />
-         </image>
-      </ImageView>
-      <Label layoutX="254.0" layoutY="14.0" text="Seleccione los datos que desea cambiar" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <CheckBox fx:id="nameCB" layoutX="171.0" layoutY="73.0" mnemonicParsing="false" text="Nombre" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </CheckBox>
-      <CheckBox fx:id="lastNameCB" layoutX="340.0" layoutY="73.0" mnemonicParsing="false" text="Apellido" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </CheckBox>
-      <CheckBox fx:id="genderCB" layoutX="516.0" layoutY="73.0" mnemonicParsing="false" text="Sexo" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </CheckBox>
-      <CheckBox fx:id="dateCB" layoutX="140.0" layoutY="122.0" mnemonicParsing="false" text="Fecha nacimiento" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </CheckBox>
-      <CheckBox fx:id="heightCB" layoutX="340.0" layoutY="122.0" mnemonicParsing="false" text="Estatura" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </CheckBox>
-      <CheckBox fx:id="nacionalityCB" layoutX="488.0" layoutY="122.0" mnemonicParsing="false" text="Nacionalidad" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </CheckBox>
-      <Button fx:id="comeBackButton" layoutX="14.0" layoutY="382.0" mnemonicParsing="false" onAction="#comeBack" style="-fx-background-color: gray;" text="Regresar" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Line endX="639.0" layoutX="115.0" layoutY="170.0" startX="-100.0" stroke="#eeff00" />
-      <Label layoutX="110.0" layoutY="204.0" text="Nombre:" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="nameEditText" disable="true" layoutX="182.0" layoutY="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
-      <Label layoutX="110.0" layoutY="280.0" text="Apellido:" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="lastNameEditText" disable="true" layoutX="182.0" layoutY="277.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
-      <Label layoutX="487.0" layoutY="194.0" text="Sexo" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="manRBEdit" disable="true" layoutX="412.0" layoutY="228.0" mnemonicParsing="false" text="Masculino" textFill="WHITE">
-         <toggleGroup>
-            <ToggleGroup fx:id="gender" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="womanRBEdit" disable="true" layoutX="519.0" layoutY="228.0" mnemonicParsing="false" text="Femenino" textFill="WHITE" toggleGroup="$gender" />
-      <Label layoutX="354.0" layoutY="280.0" text="Fecha nacimiento" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <DatePicker fx:id="dateEditText" disable="true" layoutX="487.0" layoutY="278.0" />
-      <Label layoutX="111.0" layoutY="357.0" text="Estatura:" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="heighEditText" disable="true" layoutX="182.0" layoutY="354.0" promptText="cm" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
-      <Label layoutX="367.0" layoutY="357.0" text="Nacionalidad:" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="nacionalityEditText" disable="true" layoutX="499.0" layoutY="355.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" />
-      <Button fx:id="updateButton" layoutX="671.0" layoutY="382.0" mnemonicParsing="false" onAction="#update" style="-fx-background-color: gray;" text="Actualizar" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="validateButton" layoutX="680.0" layoutY="79.0" mnemonicParsing="false" onAction="#validate" style="-fx-background-color: gray;" text="Validar" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
+      <StackPane prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: #CACFD2;">
+         <children>
+            <ImageView fitHeight="451.0" fitWidth="701.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../img/image-2.jpg" />
+               </image>
+            </ImageView>
+            <VBox>
+               <children>
+                  <HBox prefHeight="270.0" prefWidth="701.0">
+                     <children>
+                        <AnchorPane prefHeight="148.0" prefWidth="699.0">
+                           <children>
+                              <HBox alignment="CENTER" layoutX="57.0" layoutY="54.0" spacing="100.0">
+                                 <children>
+                                    <CheckBox fx:id="nameCheckBox" mnemonicParsing="false" text="Name" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="surnameCheckBox" mnemonicParsing="false" text="Surname" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="sexCheckBox" mnemonicParsing="false" text="Sex" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" layoutX="48.0" layoutY="96.0" spacing="100.0">
+                                 <children>
+                                    <CheckBox fx:id="birthdayCheckBox" mnemonicParsing="false" text="Birthday" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="heightCheckBox" mnemonicParsing="false" text="Height" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="nationalityCheckBox" mnemonicParsing="false" text="Nationality" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                              <Button layoutX="578.0" layoutY="65.0" mnemonicParsing="false" onAction="#validate" style="-fx-background-color: gray;" text="Validate" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="27.0" layoutY="14.0" text="Select data to edit" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold Italic" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="573.0" endY="-10.0" layoutX="126.0" layoutY="149.0" startX="-126.0" startY="-10.0" stroke="#0cd376" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="425.0" prefWidth="701.0">
+                     <children>
+                        <AnchorPane prefHeight="518.0" prefWidth="701.0">
+                           <children>
+                              <TextField fx:id="editNameTextField" disable="true" layoutX="98.0" layoutY="51.0" />
+                              <TextField fx:id="editHeightTextField" disable="true" layoutX="98.0" layoutY="233.0" promptText="cm" />
+                              <TextField fx:id="editSurnameTextField" disable="true" layoutX="98.0" layoutY="137.0" />
+                              <RadioButton fx:id="editMaleRButton" disable="true" layoutX="352.0" layoutY="53.0" mnemonicParsing="false" text="Male" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Italic" size="15.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="editSexToogleGroup" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="editFemaleRButton" disable="true" layoutX="439.0" layoutY="53.0" mnemonicParsing="false" text="Female" textFill="WHITE" toggleGroup="$editSexToogleGroup">
+                                 <font>
+                                    <Font name="System Italic" size="15.0" />
+                                 </font>
+                              </RadioButton>
+                              <DatePicker fx:id="editBirthdayDatePicker" disable="true" layoutX="351.0" layoutY="137.0" />
+                              <ChoiceBox fx:id="editNationalityTextField" disable="true" layoutX="352.0" layoutY="233.0" prefHeight="25.0" prefWidth="173.0" />
+                              <Button fx:id="saveButton" disable="true" layoutX="568.0" layoutY="162.0" mnemonicParsing="false" onAction="#saveChanges" style="-fx-background-color: gray;" text="Save Changes" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="deleteButton" layoutX="568.0" layoutY="243.0" mnemonicParsing="false" onAction="#deleteCurrentPerson" style="-fx-background-color: gray;" text="Delete Person" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="resetButton" disable="true" layoutX="575.0" layoutY="204.0" mnemonicParsing="false" onAction="#resetFields" style="-fx-background-color: gray;" text="Reset Fields" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <ImageView fx:id="image" fitHeight="115.0" fitWidth="200.0" layoutX="564.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../img/image-3.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="32.0" layoutY="53.0" text="Name:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="16.0" layoutY="139.0" text="Surname:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="28.0" layoutY="235.0" text="Height:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="272.0" layoutY="139.0" text="Birthday:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="305.0" layoutY="53.0" text="Sex:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="265.0" layoutY="235.0" text="Nationality" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="28.0" layoutY="-1.0" text="Information:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold Italic" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="-3.0" endY="190.0" layoutX="540.0" layoutY="111.0" startX="-3.0" startY="-120.0" stroke="#0cd376" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
    </children>
-</Pane>
+</AnchorPane>
