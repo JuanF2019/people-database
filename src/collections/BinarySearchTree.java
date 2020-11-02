@@ -200,9 +200,9 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 					
 				}
 				else {
-					if(value == null || currentNode.getValues().get(1).equals(value)) {
+					if(value == null || currentNode.getValues().get(0).equals(value)) {
 						
-						Node<K,V> returnNode = new Node<>(currentNode.getKey(),currentNode.getValues().get(1));
+						Node<K,V> returnNode = new Node<>(currentNode.getKey(),currentNode.getValues().get(0));
 
 						returnNode.setParent(parent);
 
@@ -272,7 +272,7 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 
 							Node<K,V> rightMin = getMin(currentNode.getRight());
 
-							returnNode = new Node<>(currentNode.getKey(),currentNode.getValues().get(1));
+							returnNode = new Node<>(currentNode.getKey(),currentNode.getValues().get(0));
 
 							currentNode.setKey(rightMin.getKey());
 
