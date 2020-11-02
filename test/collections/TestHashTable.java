@@ -15,7 +15,7 @@ class TestHashTable<K,V> {
 
 	// Relation with the class Hash Table
 
-	HashTable <K,V> hashTable;
+	HashTable <Integer, Integer> hashTable;
 
 	//------------------------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ class TestHashTable<K,V> {
 
 	void setup1() {
 
-		hashTable = new HashTable<K, V>();
+		hashTable = new HashTable<>();
 
 	}
 
@@ -38,11 +38,9 @@ class TestHashTable<K,V> {
 
 		for(int i = 0 ; i < 1000000 ; i ++) {
 
-			@SuppressWarnings("unchecked")
-			K key = (K) new Integer((int) (Math.random()*1000));
+			int key = (int) Math.random() * 1000;
 
-			@SuppressWarnings("unchecked")
-			V value = (V) new Integer((int) Math.random()*1000);
+			int value = (int) Math.random() * 1000;
 
 			hashTable.insert(key, value);
 
@@ -63,17 +61,15 @@ class TestHashTable<K,V> {
 
 		for(int i = 0 ; i < 5 ; i ++) {
 
-			@SuppressWarnings("unchecked")
-			K key = (K) new Integer(10);
+			int key = 1;
 
-			@SuppressWarnings("unchecked")
-			V value = (V) new String("Name and last name");
+			int value = (int) Math.random() * 1000;
 
 			hashTable.insert(key, value);
 
 		}
 
-		assertTrue(hashTable.getAll().length == 5);
+		assertTrue(hashTable.size() == 5);
 
 	}
 
@@ -86,17 +82,13 @@ class TestHashTable<K,V> {
 
 		setup1();
 
-		@SuppressWarnings("unchecked")
-		K key1 = (K) new Integer(10);
+		int key1 = 1;
 
-		@SuppressWarnings("unchecked")
-		V value1 = (V) new String("Name and last name");
+		int value1 = (int) Math.random() * 1000;
 
-		@SuppressWarnings("unchecked")
-		K key2 = (K) new Integer(20);
+		int key2 = 2;
 
-		@SuppressWarnings("unchecked")
-		V value2 = (V) new String("Nationality and Height");
+		int value2 = (int) Math.random() * 1000;
 
 		hashTable.insert(key1, value1);
 
@@ -117,8 +109,7 @@ class TestHashTable<K,V> {
 
 		setup1();
 
-		@SuppressWarnings("unchecked")
-		K key = (K) new Integer(10);
+		int key = (int) Math.random() * 1000;
 
 		assertNull(hashTable.delete(key));
 
@@ -133,11 +124,9 @@ class TestHashTable<K,V> {
 
 		setup1();
 
-		@SuppressWarnings("unchecked")
-		K key = (K) new Integer(10);
+		int key = (int) Math.random() * 1000;
 
-		@SuppressWarnings("unchecked")
-		V value = (V) new String("Name and last name");
+		int value = (int) Math.random() * 1000;
 
 		hashTable.insert(key, value);
 
@@ -162,11 +151,9 @@ class TestHashTable<K,V> {
 
 		for(int i = 0 ; i < 1000000 ; i ++) {
 
-			@SuppressWarnings("unchecked")
-			K key = (K) new Integer((int) (Math.random()*100));
+			int key = (int) Math.random() * 1000;
 
-			@SuppressWarnings("unchecked")
-			V value = (V) new Integer((int) Math.random()*100);
+			int value = (int) Math.random() * 1000;
 
 			hashTable.insert(key, value);
 
@@ -176,8 +163,7 @@ class TestHashTable<K,V> {
 
 		for(int a = 0 ; a < 100000 ; a ++) {
 
-			@SuppressWarnings("unchecked")
-			K key = (K) new Integer((int) (Math.random()*100));
+			int key = (int) Math.random() * 1000;
 
 			hashTable.delete(key);
 
@@ -201,17 +187,15 @@ class TestHashTable<K,V> {
 
 		setup1();
 
-		@SuppressWarnings("unchecked")
-		K key = (K) new Integer(10);
+		int key = (int) Math.random() * 1000;
 
-		@SuppressWarnings("unchecked")
-		V value = (V) new String("Santiago Rodas");
+		int value = (int) Math.random() * 1000;
 
 		hashTable.insert(key, value);
 
 		assertEquals(hashTable.size(), 1);
 
-		assertTrue(hashTable.search(key).equals("Santiago Rodas"));
+		assertNotNull(hashTable.search(key));
 
 	}
 
@@ -229,11 +213,9 @@ class TestHashTable<K,V> {
 
 		for(int i = 0 ; i < 3 ; i ++) {
 
-			@SuppressWarnings("unchecked")
-			K key = (K) new Integer(i);
+			int key = (int) Math.random() * 1000;
 
-			@SuppressWarnings("unchecked")
-			V value = (V) new String("Alejandra Diaz");
+			int value = (int) Math.random() * 1000;
 
 			hashTable.insert(key, value);
 
@@ -243,15 +225,11 @@ class TestHashTable<K,V> {
 
 		// We create two keys to search the information on the system
 
-		@SuppressWarnings("unchecked")
-		K key1 = (K) new Integer(2);
+		int key = (int) Math.random() * 1000;
 
-		@SuppressWarnings("unchecked")
-		K key2 = (K) new Integer(1);
+		assertNull(hashTable.search(8000000));
 
-		assertTrue(hashTable.search(key1).equals("Alejandra Diaz"));
-
-		assertFalse(hashTable.search(key2).equals("Santiago Rodas"));
+		assertNotNull(hashTable.search(key));
 
 	}
 
@@ -267,8 +245,7 @@ class TestHashTable<K,V> {
 
 		setup1();
 
-		@SuppressWarnings("unchecked")
-		K key = (K) new Integer(1);
+		int key = (int) Math.random() * 1000;
 
 		assertNull(hashTable.search(key));
 

@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class TestBinarySearchTree<K,V> {
+class TestBinarySearchTree<K, V> {
 	
 	//--------------------------------------------------------------------------------
 	
 	// RELATION WITH THE BINARY SEARCH TREE CLASS
 	
-	BinarySearchTree binarySearchTree;
+	BinarySearchTree<Integer, Integer> binarySearch;
 	
 	//--------------------------------------------------------------------------------
 	
@@ -24,7 +24,7 @@ class TestBinarySearchTree<K,V> {
 	
 	void setup1() {
 		
-		binarySearchTree = new BinarySearchTree<>();
+		binarySearch = new BinarySearchTree<>();
 		
 	}
 	
@@ -33,7 +33,15 @@ class TestBinarySearchTree<K,V> {
 	@Test
 	void testAdd1() {
 		
+		setup1();
 		
+		int key = 1;
+		
+		int value = 125;
+		
+		binarySearch.add(key, value);
+		
+		assertNotNull(binarySearch.getRoot());
 		
 	}
 	
@@ -41,6 +49,18 @@ class TestBinarySearchTree<K,V> {
 	
 	@Test
 	void testAdd2() {
+		
+		setup1();
+		
+		for(int i = 0 ; i < 1000000 ; i ++) {
+			
+			int key = (int) Math.random()*1000;
+			
+			int value = (int) Math.random()*1000;
+			
+			binarySearch.add(key, value);
+			
+		}
 		
 		
 		
@@ -51,7 +71,7 @@ class TestBinarySearchTree<K,V> {
 	@Test
 	void testAdd3() {
 		
-		
+		setup1();
 		
 	}
 	
