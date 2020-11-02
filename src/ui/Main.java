@@ -24,7 +24,7 @@ public class Main extends Application {
 	
 	// CONTRUCTOR METHOD OF THE MAIN CLASS
 	
-	public Main() {
+	public Main() throws Exception {
 		
 		controller = new PrincipalController();
 		

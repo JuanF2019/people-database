@@ -116,14 +116,20 @@ public class DataBaseManager {
 	//Operations of class DataBaseManager
 	
 	//Creates new Person receives all parameters
-	public void create(String name, String ln, Sex s, LocalDate ld, Double height, String nat) {
+	public boolean create(String name, String ln, Sex s, LocalDate ld, Double height, String nat) {
 		
-		Person p = new Person(name, ln, randomFieldsGenerator.id(), s, ld, height, nat);
-		
-		savePerson(p);
-		
-		savedPeopleNumber++;
-		
+		if(savedPeopleNumber == MAX_PEOPLE_NUMBER) {
+			return false;
+		}
+		else {
+			Person p = new Person(name, ln, randomFieldsGenerator.id(), s, ld, height, nat);
+			
+			savePerson(p);
+			
+			savedPeopleNumber++;
+			
+			return true;
+		}		
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -166,46 +172,51 @@ public class DataBaseManager {
 		
 		try {
 			
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PEOPLE_DATA_PATH));	
-						
-			Object[] rawPeople = (Object[]) ois.readObject();
+			File file = new File(PEOPLE_DATA_PATH);
 			
-			for (Object object : rawPeople) {
+			if(file.exists()) {
+				FileInputStream fis = new FileInputStream(file);
 				
-				Person person = (Person) object;
+				ObjectInputStream ois = new ObjectInputStream(fis);	
+							
 				
-				String name = person.getName();
+				Object[] rawPeople = (Object[]) ois.readObject();
 				
-				String surname =person.getSurname();
+				for (Object object : rawPeople) {
+					
+					Person person = (Person) object;
+					
+					String name = person.getName();
+					
+					String surname =person.getSurname();
+					
+					String fullName = name + " " + surname;
+					
+					int id = person.getId();
+					
+					namesTree.add(name, person);
+					
+					surnamesTree.add(surname, person);
+					
+					fullNamesTree.add(fullName, person);
+					
+					idsHashTable.insert(id, person);
+					
+					namesTrie.add(name);
+					
+					surnamesTrie.add(surname);
+					
+					fullNamesTrie.add(fullName);
+					
+				}
 				
-				String fullName = name + " " + surname;
-				
-				int id = person.getId();
-				
-				namesTree.add(name, person);
-				
-				surnamesTree.add(surname, person);
-				
-				fullNamesTree.add(fullName, person);
-				
-				idsHashTable.insert(id, person);
-				
-				namesTrie.add(name);
-				
-				surnamesTrie.add(surname);
-				
-				fullNamesTrie.add(fullName);
-				
+				ois.close();
 			}
-			
-			ois.close();
-			
 			return true;
 			
-		} catch (Exception e) {
-			
-			return false;
-			
+		}
+		catch (Exception e) {
+			return false;			
 		}
 		
 	}
@@ -219,7 +230,7 @@ public class DataBaseManager {
 		ArrayList<Pair<Integer,Double>> loadedAges = loadAges();
 		
 		if(loadedAges == null)
-			return false;
+			return false;		
 		
 		ArrayList<String> loadedNames = loadNames();
 		
@@ -268,9 +279,9 @@ public class DataBaseManager {
 									
 				splitLine = line.split(",");
 						
-				int maxAge = Integer.parseInt(splitLine[1]);
+				int maxAge = Integer.parseInt(splitLine[0]);
 					
-				acumulatedProbability += Integer.parseInt(splitLine[2]);
+				acumulatedProbability += Double.parseDouble(splitLine[1]);
 					
 				ages.add(new Pair<Integer,Double>(maxAge, Double.valueOf(acumulatedProbability)));
 				
@@ -375,8 +386,6 @@ public class DataBaseManager {
 			
 			br = new BufferedReader(new FileReader(new File(GENERATION_DATA_PATH + "countries_population.csv")));
 			
-			br.readLine();//Ignores first line
-			
 			double acumulatedSum = 0;
 			
 			String line = br.readLine();
@@ -389,29 +398,28 @@ public class DataBaseManager {
 					
 				String country = splitLine[0];
 				
-				int population = Integer.parseInt(splitLine[1]);
+				double population = Double.parseDouble(splitLine[1]);
 					
 				acumulatedSum += population;
 					
 				loadedCountries.add(new Pair<String,Double>(country, Double.valueOf(population)));
+				
 				countries.add(country);
 											
 				line = br.readLine();				
 								
 			}
 			
-			double accumulatedProbability = 0;
+			double accumulatedProbability = 0.0;
 			
-			double probability = 0;;
+			double probability = 0.0;
 			
-			for (int i = 0 ; i < loadedCountries.size() ; i++) {
-				
-				Pair<String,Double> pair = loadedCountries.get(i);
-				
-				probability = pair.getValue()/acumulatedSum;
+			for (Pair<String,Double> pair: loadedCountries) {
+								
+				probability = pair.getValue().doubleValue()/acumulatedSum;
 				
 				accumulatedProbability += probability;
-								
+									
 				pair.setValue(Double.valueOf(accumulatedProbability));
 				
 			}
@@ -679,7 +687,7 @@ public class DataBaseManager {
 		
 		LocalDate birthday = randomFieldsGenerator.birthday();
 		
-		int height = randomFieldsGenerator.height();
+		double height = randomFieldsGenerator.height();
 		
 		String nationality = randomFieldsGenerator.nationality();	
 		

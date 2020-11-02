@@ -6,15 +6,11 @@
 
 package ui;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -22,319 +18,250 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.stage.Stage;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import model.DataBaseManager;
 import model.Sex;
 
 public class EditController {
 	
 	//------------------------------------------------------------------------------------
-	
-	// RELATION'S WITH ANOTHER CLASS
-	
-	private PrincipalController controller;
-	
-	private DataBaseManager dbm;
 
+	// RELATIONS
+	
+	private PrincipalController principalController;
+	
+	private DataBaseManager dbm;	
+	
 	//------------------------------------------------------------------------------------
 
-	// CONSTRUCTOR METHOD OF THE EDIT CONTROLLER
-
-	public EditController(DataBaseManager dbm) {
-
-		controller = new PrincipalController("People database");
-		
-		this.dbm = dbm;
-
-	}
-
-	//------------------------------------------------------------------------------------
-
-	// UP PART TO THE WINDOW
-
-	@FXML
-	private CheckBox nameCB;
-
-	@FXML
-	private CheckBox lastNameCB;
-
-	@FXML
-	private CheckBox genderCB;
-
-	@FXML
-	private CheckBox dateCB;
-
-	@FXML
-	private CheckBox heightCB;
-
-	@FXML
-	private CheckBox nacionalityCB;
-
-	//------------------------------------------------------------------------------------
-
-	// DOWN PART TO THE WINDOW
+	// UP PART OF THE WINDOW
 	
     @FXML
-    private ToggleGroup gender;
+    private CheckBox nameCheckBox;
 
-	@FXML
-	private TextField nameEditText;
+    @FXML
+    private CheckBox surnameCheckBox;
 
-	@FXML
-	private TextField lastNameEditText;
+    @FXML
+    private CheckBox sexCheckBox;
 
-	@FXML
-	private RadioButton manRBEdit;
+    @FXML
+    private CheckBox birthdayCheckBox;
 
-	@FXML
-	private RadioButton womanRBEdit;
+    @FXML
+    private CheckBox heightCheckBox;
 
-	@FXML
-	private DatePicker dateEditText;
+    @FXML
+    private CheckBox nationalityCheckBox;
+    
+    //------------------------------------------------------------------------------------
 
-	@FXML
-	private TextField heighEditText;
+  	// BOTTOM LEFT PART OF THE WINDOW
 
-	@FXML
-	private ChoiceBox<String> nacionalityEditText;
+    @FXML
+    private TextField editNameTextField;
 
-	//------------------------------------------------------------------------------------
+    @FXML
+    private TextField editHeightTextField;
 
-	// BUTTON'S OF THE WINDOW
+    @FXML
+    private TextField editSurnameTextField;
 
-	@FXML
-	private Button comeBackButton;
+    @FXML
+    private RadioButton editMaleRButton;
 
-	@FXML
-	private Button updateButton;
-	
-	@FXML
-	private Button validateButton;
+    @FXML
+    private ToggleGroup editSexToogleGroup;
 
-	//------------------------------------------------------------------------------------
+    @FXML
+    private RadioButton editFemaleRButton;
 
-	// COME BACK METHOD TO THE WINDOW
+    @FXML
+    private DatePicker editBirthdayDatePicker;
 
-	@FXML
-	public void comeBack(ActionEvent event) throws IOException {
+    @FXML
+    private ChoiceBox<String> editNationalityTextField;
 
-		Node source = (Node) event.getSource();
+    //------------------------------------------------------------------------------------
 
-		Stage stage = (Stage) source.getScene().getWindow();
+  	// BOTTOM RIGHT PART OF THE WINDOW
+    
+    @FXML
+    private Button saveButton;
 
-		stage.close();
+    @FXML
+    private Button deleteButton;
 
-		Stage primaryStage = new Stage();
+    @FXML
+    private Button resetButton;
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PrincipalPanel.fxml"));
+    @FXML
+    private ImageView image;
+    
+    //------------------------------------------------------------------------------------
 
-		fxmlLoader.setController(controller);
+  	// CONSTRUCTOR METHOD
 
-		Parent root = fxmlLoader.load();
-
-		Scene scene = new Scene(root);
-
-		primaryStage.setScene(scene);
-
-		primaryStage.setTitle("People database");
-
-		primaryStage.show();
-
+    public EditController(PrincipalController principalController, DataBaseManager dbm) {
+    	
+    	this.principalController = principalController;
+		
+		this.dbm = dbm;
+		
 	}
 
-	//------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
 
-	// UPDATE METHOD TO THE WINDOW
-
-	//[name,surname,sex,birthday,height,nationality]
+  	//DELETE CURRENT PERSON METHOD
 	@FXML
-	public void update(ActionEvent event) {
-		
-		Sex newSex;
-		
-		String newName = nameEditText.getText();
-		String newSurname = lastNameEditText.getText();
-		
-		if(womanRBEdit.isSelected())
-			newSex = Sex.FEMALE;
-		else if(manRBEdit.isSelected())
-			newSex = Sex.MALE;
-		else
-			newSex = null;
-		
-		LocalDate newBirthday = dateEditText.getValue();		//Pendiente validadr
-		
-		Double newHeight = Double.parseDouble(heighEditText.getText()); //Pendiente validar
-		
-		String newNationality = nacionalityEditText.getValue();
-		
-		dbm.update(newName, newSurname, newSex, newBirthday, newHeight, newNationality);
-	}
+    void deleteCurrentPerson(ActionEvent event) {
+		notImplemented();
+    }
 
 	//------------------------------------------------------------------------------------
-	
-	@FXML
-	public void validate(ActionEvent event) {
-		
-		if(nameCB.isSelected()) {
-			
-			nameEditText.setDisable(false);
-			
-			nameCB.setDisable(true);
-			
-		}
-		
-		if(lastNameCB.isSelected()) {
-			
-			lastNameEditText.setDisable(false);
-			
-			lastNameCB.setDisable(true);
-			
-		}
 
-		if(genderCB.isSelected()) {
-			
-			manRBEdit.setDisable(false);
-			
-			womanRBEdit.setDisable(false);
-			
-			genderCB.setDisable(true);
-			
-		}
-		
-		if(dateCB.isSelected()) {
-			
-			dateEditText.setDisable(false);
-			
-			dateCB.setDisable(true);
-			
-		}
-		
-		if(heightCB.isSelected()) {
-			
-			heighEditText.setDisable(false);
-			
-			heightCB.setDisable(true);
-			
-		}
+	//RESET FIELDS METHOD
+    @FXML
+    void resetFields(ActionEvent event) {
+    	notImplemented();
+    }
 
-		if(nacionalityCB.isSelected()) {
-			
-			nacionalityEditText.setDisable(false);
-			
-			nacionalityCB.setDisable(true);
-			
-		}
-		
+    //------------------------------------------------------------------------------------
 
+  	//SAVE CHANGES METHOD
+    
+    @FXML
+    void saveChanges(ActionEvent event) {
+    	String name = editNameTextField.getText();		
+		String trimName = editNameTextField.getText().trim();
+			
+		String surname = editSurnameTextField.getText();		
+		String trimSurname = editSurnameTextField.getText().trim();
+			
+		Sex s = null;
+		if(editMaleRButton.isSelected())
+			s = Sex.FEMALE;
+		
+		else if(editFemaleRButton.isSelected())
+			s = Sex.MALE;
+			
+		double height;
+			
+		try {
+			height = Double.parseDouble(editHeightTextField.getText());
+		}
+		catch(NumberFormatException ex) {
+			height = 0;
+		}
+					
+		String nat = editNationalityTextField.getValue();
+					
+		LocalDate birthday = editBirthdayDatePicker.getValue();
+			
+		if(trimName.isEmpty() || trimSurname.isEmpty() || s == null || height <= 0 || nat == null || nat.isEmpty() || birthday == null || birthday.isAfter(LocalDate.now())) {
+			generalWarning();
+		}
+		else {
+			boolean created = dbm.create(name, surname, s, birthday, height, nat);
+				
+			if(created) {
+				success();
+			}
+		}
+    }
+    
+    //------------------------------------------------------------------------------------
+    
+  	//ALERTS METHODS
+    
+    public void generalWarning() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Empty field");
+		alert.setContentText("Please be sure all the fields are fullfilled correctly.");
+		alert.showAndWait();
+	}
+		
+	public void success() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Person added succesfully");
+		alert.setContentText("The person was added succesfully");
+		alert.showAndWait();
 	}
 	
-	//------------------------------------------------------------------------------------
-	
-	// INITIALIZE METHOD
-	
-	public void initialize() {
-		
-		// A
-		
-		nacionalityEditText.getItems().add("Anguila");
-		nacionalityEditText.getItems().add("Antigua y Barbuda");
-		nacionalityEditText.getItems().add("Argentina");
-		nacionalityEditText.getItems().add("Aruba");
-		
-		// B
-		
-		nacionalityEditText.getItems().add("Bahamas");
-		nacionalityEditText.getItems().add("Barbados");
-		nacionalityEditText.getItems().add("Belice");
-		nacionalityEditText.getItems().add("Bermudas");
-		nacionalityEditText.getItems().add("Bolivia");
-		nacionalityEditText.getItems().add("Brasil");
-		
-		// C
-		
-		nacionalityEditText.getItems().add("Canada");
-		nacionalityEditText.getItems().add("Chile");
-		nacionalityEditText.getItems().add("Colombia");
-		nacionalityEditText.getItems().add("Costa Rica");
-		nacionalityEditText.getItems().add("Cuba");
-
-		// D
-		
-		nacionalityEditText.getItems().add("Dominica");
-		
-		// E
-		
-		nacionalityEditText.getItems().add("Ecuador");
-		nacionalityEditText.getItems().add("El Salvador");
-		nacionalityEditText.getItems().add("Estados Unidos");
-		
-		// G
-
-		nacionalityEditText.getItems().add("Granada");
-		nacionalityEditText.getItems().add("Groelandia");
-		nacionalityEditText.getItems().add("Guam");
-		nacionalityEditText.getItems().add("Guatemala");
-		nacionalityEditText.getItems().add("Guyana");
-		
-		// H
-		
-		nacionalityEditText.getItems().add("Haiti");
-		nacionalityEditText.getItems().add("Honduras");
-		
-		// I
-		
-		nacionalityEditText.getItems().add("Islas Caiman");
-		nacionalityEditText.getItems().add("Islas Turcas y Caicos");
-		nacionalityEditText.getItems().add("Islas Virgenes Estadounidenses");
-		nacionalityEditText.getItems().add("Islas Virgenes Britanicas");
-		
-		// J
-		
-		nacionalityEditText.getItems().add("Jamaica");
-		
-		// M
-		
-		nacionalityEditText.getItems().add("Malvinas");
-		nacionalityEditText.getItems().add("Mexico");
-		nacionalityEditText.getItems().add("Montserrat");
-		
-		// N
-		
-		nacionalityEditText.getItems().add("Nicaragua");
-		
-		// P
-		
-		nacionalityEditText.getItems().add("Panama");
-		nacionalityEditText.getItems().add("Paraguay");
-		nacionalityEditText.getItems().add("Peru");
-		nacionalityEditText.getItems().add("Puerto rico");
-		
-		// R
-		
-		nacionalityEditText.getItems().add("Republica Dominicana");
-		
-		// S
-		
-		nacionalityEditText.getItems().add("San Cristobal y Nieves");
-		nacionalityEditText.getItems().add("San Vicente y Granadines");
-		nacionalityEditText.getItems().add("Santa Lucia");
-		nacionalityEditText.getItems().add("Surinam");
-		
-		// T
-		
-		nacionalityEditText.getItems().add("Trinidad y Tobago");
-		
-		// U
-		
-		nacionalityEditText.getItems().add("Uruguay");
-		
-		// V
-		
-		nacionalityEditText.getItems().add("Venezuela");
-		
+	public void notImplemented() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Function not yet implemented");
+		alert.showAndWait();
 	}
-	
-	//------------------------------------------------------------------------------------
 
+    //------------------------------------------------------------------------------------
+    
+  	//VALIDATE METHOD
+    
+    @FXML
+    void validate(ActionEvent event) {
+		if(nameCheckBox.isSelected()) {
+			
+			editNameTextField.setDisable(false);
+			
+			nameCheckBox.setDisable(true);
+			
+		}
+		
+		if(surnameCheckBox.isSelected()) {
+			
+			editSurnameTextField.setDisable(false);
+			
+			surnameCheckBox.setDisable(true);
+			
+		}
+
+		if(sexCheckBox.isSelected()) {
+			
+			editMaleRButton.setDisable(false);
+			
+			editFemaleRButton.setDisable(false);
+			
+			sexCheckBox.setDisable(true);
+			
+		}
+		
+		if(birthdayCheckBox.isSelected()) {
+			
+			editBirthdayDatePicker.setDisable(false);
+			
+			birthdayCheckBox.setDisable(true);
+			
+		}
+		
+		if(heightCheckBox.isSelected()) {
+			
+			editHeightTextField.setDisable(false);
+			
+			heightCheckBox.setDisable(true);
+			
+		}
+
+		if(nationalityCheckBox.isSelected()) {
+			
+			editNameTextField.setDisable(false);
+			
+			nationalityCheckBox.setDisable(true);
+			
+		}    	
+    }
+    
+    //------------------------------------------------------------------------------------
+	
+  	// INITIALIZE METHOD
+  	
+  	public void initialize() {
+  		
+  		editNationalityTextField.getItems().addAll(dbm.getCountries());
+  		
+  	}
 }
