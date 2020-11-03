@@ -11,30 +11,51 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
                      <children>
                         <ImageView fitHeight="450.0" fitWidth="700.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../../img/image-1.jpg" />
+                              <Image url="@../../img/image-4.jpg" />
                            </image>
                         </ImageView>
-                        <RadioButton fx:id="fnSearch" layoutX="102.0" layoutY="266.0" mnemonicParsing="false" onAction="#updateSearchCriteria" text="Fullname" textFill="WHITE">
+                        <RadioButton fx:id="fnSearch" layoutX="79.0" layoutY="289.0" mnemonicParsing="false" onAction="#updateSearchCriteria" text="Fullname" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="optionSearch" />
                            </toggleGroup>
+         <font>
+            <Font size="15.0" />
+         </font>
                         </RadioButton>
-                        <RadioButton fx:id="nSearch" layoutX="102.0" layoutY="151.0" mnemonicParsing="false" onAction="#updateSearchCriteria" selected="true" text="Name" textFill="WHITE" toggleGroup="$optionSearch" />
-                        <RadioButton fx:id="sSearch" layoutX="102.0" layoutY="208.0" mnemonicParsing="false" onAction="#updateSearchCriteria" text="Surname" textFill="WHITE" toggleGroup="$optionSearch" />
-                        <RadioButton fx:id="cSearch" layoutX="102.0" layoutY="318.0" mnemonicParsing="false" onAction="#updateSearchCriteria" text="Code" textFill="WHITE" toggleGroup="$optionSearch" />
-      <Button layoutX="466.0" layoutY="85.0" mnemonicParsing="false" onAction="#retrievePerson" text="Retrieve Person" />
-      <Label layoutX="272.0" layoutY="24.0" text="Search Person" textFill="WHITE">
+                        <RadioButton fx:id="nSearch" layoutX="79.0" layoutY="174.0" mnemonicParsing="false" onAction="#updateSearchCriteria" selected="true" text="Name" textFill="WHITE" toggleGroup="$optionSearch">
+         <font>
+            <Font size="15.0" />
+         </font></RadioButton>
+                        <RadioButton fx:id="sSearch" layoutX="79.0" layoutY="231.0" mnemonicParsing="false" onAction="#updateSearchCriteria" text="Surname" textFill="WHITE" toggleGroup="$optionSearch">
+         <font>
+            <Font size="15.0" />
+         </font></RadioButton>
+                        <RadioButton fx:id="cSearch" layoutX="79.0" layoutY="341.0" mnemonicParsing="false" onAction="#updateSearchCriteria" text="Code" textFill="WHITE" toggleGroup="$optionSearch">
+         <font>
+            <Font size="15.0" />
+         </font></RadioButton>
+      <Button layoutX="518.0" layoutY="108.0" mnemonicParsing="false" onAction="#retrievePerson" style="-fx-background-color: gray;" text="Retrieve Person" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Label layoutX="268.0" layoutY="62.0" text="Search Person" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="90.0" layoutY="89.0" text="Current Predictions" textFill="WHITE" />
-      <Label layoutX="200.0" layoutY="89.0" text="0" textFill="WHITE" />
-      <TextField fx:id="searchTextField" layoutX="241.0" layoutY="85.0" prefHeight="25.0" prefWidth="200.0" />
-      <ListView fx:id="predictionsListViewer" layoutX="241.0" layoutY="108.0" prefHeight="243.0" prefWidth="200.0" />
+      <Label layoutX="59.0" layoutY="87.0" text="Current Predictions" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label layoutX="118.0" layoutY="125.0" text="0" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <TextField fx:id="searchTextField" layoutX="247.0" layoutY="123.0" prefHeight="25.0" prefWidth="200.0" />
+      <ListView fx:id="predictionsListViewer" layoutX="247.0" layoutY="146.0" prefHeight="243.0" prefWidth="200.0" />
                      </children>
                   </AnchorPane>

@@ -1,3 +1,9 @@
+/*
+ * ALGORITMOS Y ESTRUCTURAS DE DATOS
+ * TAREA INTEGRADORA 2
+ * MARTINEZ - DIAZ - RODAS
+ */
+
 package ui;
 
 import java.time.LocalDate;
@@ -19,7 +25,15 @@ import model.Sex;
 
 public class AddController {
 	
+	//------------------------------------------------------------------------------------
+	
+	// RELATION WITH THE CLASS DATABASE MANAGER
+	
 	private DataBaseManager dbm;
+	
+	//------------------------------------------------------------------------------------
+	
+	// THINGS TO USE IN JAVA'FX
 	
 	@FXML
 	private TextField nameTextAdd;
@@ -47,23 +61,34 @@ public class AddController {
 	 
 	@FXML
 	private ChoiceBox<String> nacionalityTextAdd;
+	
+	//------------------------------------------------------------------------------------
+	
+	// CONSTRUCTOR METHOD
 	 
 	public AddController(DataBaseManager dbm) {
 		
 		this.dbm = dbm;
 	
 	}
-	 
+	
+	//------------------------------------------------------------------------------------
+	
+	// ADD METHOD
 	 
 	@FXML
 	void add(ActionEvent event) {
+		
 		String name = nameTextAdd.getText();		
+		
 		String trimName = nameTextAdd.getText().trim();
 			
 		String surname = lastNameTextAdd.getText();		
+		
 		String trimSurname = lastNameTextAdd.getText().trim();
 			
 		Sex s = null;
+		
 		if(womanRBAdd.isSelected())
 			s = Sex.FEMALE;
 		
@@ -73,10 +98,13 @@ public class AddController {
 		double height;
 			
 		try {
+			
 			height = Double.parseDouble(heightTextAdd.getText());
-		}
-		catch(NumberFormatException ex) {
+			
+		} catch(NumberFormatException ex) {
+			
 			height = 0;
+			
 		}
 					
 		String nat = nacionalityTextAdd.getValue();
@@ -84,19 +112,30 @@ public class AddController {
 		LocalDate birthday = dateTextAdd.getValue();
 			
 		if(trimName.isEmpty() || trimSurname.isEmpty() || s == null || height <= 0 || nat == null || nat.isEmpty() || birthday == null || birthday.isAfter(LocalDate.now())) {
+			
 			generalWarning();
-		}
-		else {
+			
+		} else {
+			
 			boolean created = dbm.create(name, surname, s, birthday, height, nat);
 				
 			if(created) {
+				
 				success();
-			}
-			else {
+				
+			} else {
+				
 				notSuccess();
+				
 			}
+			
 		}
+		
 	}	
+	
+	//------------------------------------------------------------------------------------
+	
+	// GENERAL WARNING METHOD
 	 
 	public void generalWarning() {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -105,6 +144,10 @@ public class AddController {
 		alert.setContentText("Please be sure all the fields are fullfilled correctly.");
 		alert.showAndWait();
 	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// SUCESS METHOD
 		
 	public void success() {
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -113,18 +156,33 @@ public class AddController {
 		alert.setContentText("The person was added succesfully");
 		alert.showAndWait();
 	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// NOT SUCCESS METHOD
 		
 	public void notSuccess() {
+		
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Could not add person");
 		alert.setContentText("Reached maximum number of people");
 		alert.showAndWait();
+		
 	}
 	
+	//------------------------------------------------------------------------------------
+	
+	// INITIALIZE METHOD
+	
 	public void initialize() {
+		
 		ArrayList<String> countries = dbm.getCountries();
 		
 		nacionalityTextAdd.getItems().addAll(countries);
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
 }
