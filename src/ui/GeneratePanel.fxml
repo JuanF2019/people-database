@@ -8,20 +8,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="450.0" fitWidth="700.0" pickOnBounds="true">
          <image>
-            <Image url="@../../img/image-1.jpg" />
+            <Image url="@../../img/image-5.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="189.0" layoutY="140.0" text="Digite el numero de personas que desea generar" textFill="WHITE">
+      <Label layoutX="187.0" layoutY="125.0" text="Type the number of people you want to generate" textFill="#323232">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="numberGenerateText" layoutX="275.0" layoutY="216.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white;" text="2147483647" />
-      <Button fx:id="generateButton" layoutX="314.0" layoutY="313.0" mnemonicParsing="false" onAction="#generate" style="-fx-background-color: gray;" text="Generar" textFill="WHITE">
+      <TextField fx:id="numberGenerateText" layoutX="275.0" layoutY="198.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-text-fill: gray;" text="2147483647" />
+      <Button fx:id="generateButton" layoutX="310.0" layoutY="295.0" mnemonicParsing="false" onAction="#generate" style="-fx-background-color: gray;" text="Generate" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

@@ -1,3 +1,9 @@
+/*
+ * ALGORITMOS Y ESTRUCTURAS DE DATOS
+ * TAREA INTEGRADORA 2
+ * MARTINEZ - DIAZ - RODAS
+ */
+
 package ui;
 
 import javafx.event.ActionEvent;
@@ -12,13 +18,13 @@ public class GenerateController {
 	
     //------------------------------------------------------------------------------------
     
-  	//RELATIONS
+  	// RELATIONS
 	
 	private DataBaseManager dbm;
 	
     //------------------------------------------------------------------------------------
     
-  	//WINDOW ELEMENTS
+  	// WINDOW ELEMENTS
 	
 	@FXML
 	private TextField numberGenerateText;
@@ -28,29 +34,38 @@ public class GenerateController {
 
     //------------------------------------------------------------------------------------
     
-  	//CONSTRUCTOR METHOD
+  	// CONSTRUCTOR METHOD
 	
 	public GenerateController(DataBaseManager dbm) {
+		
 		this.dbm = dbm;
+		
 	}
 
     //------------------------------------------------------------------------------------
     
-  	//GENERATE METHOD
+  	// GENERATE METHOD
 	
 	@FXML
 	void generate(ActionEvent event) {
+		
 		notImplemented();
+		
 	}
 	
     //------------------------------------------------------------------------------------
     
-  	//ALERTS METHODS
+  	// NOT IMPLEMENTED METHOD
 	
 	public void notImplemented() {
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Function not yet implemented");
 		alert.showAndWait();
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
 }

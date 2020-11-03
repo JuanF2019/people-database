@@ -1,9 +1,12 @@
+/*
+ * ALGORITMOS Y ESTRUCTURAS DE DATOS
+ * TAREA INTEGRADORA 2
+ * MARTINEZ - DIAZ - RODAS
+ */
+
 package ui;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,14 +16,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceDialog;
 import model.DataBaseManager;
 import model.Person;
 import model.SearchCriteria;
-import model.Sex;
+
 
 public class SearchController {
 	
@@ -96,7 +98,8 @@ public class SearchController {
     			predictionsListViewer.getItems().addAll(dbm.getPredictions(prefix, searchCriteria));
     		}   
     		
-    	}   	
+    	}  
+    	
     }    
     
     
@@ -111,24 +114,19 @@ public class SearchController {
     	
     		searchCriteria = SearchCriteria.NAME;
     		
-    	}
-    	
-    	else if(sSearch.isSelected()) {
+    	} else if(sSearch.isSelected()) {
     	
     		searchCriteria = SearchCriteria.SURNAME;
     		
-    	}
-    	
-    	else if(fnSearch.isSelected()) {
+    	} else if(fnSearch.isSelected()) {
     	
     		searchCriteria = SearchCriteria.FULL_NAME;
     		
-    	}
-    	
-    	else {
+    	} else {
     	
     		searchCriteria = SearchCriteria.ID;
     	}
+    	
     }
     
     //------------------------------------------------------------------------------------
@@ -166,15 +164,13 @@ public class SearchController {
     			
     			success();
     			
-    		}
-    		else {
+    		} else {
     			
     			unexpectedError();
     			
     		}
     	    	
-    	}
-    	else if(people.size() == 1) {
+    	} else if(people.size() == 1) {
     		
     		p = people.get(0);
     		
@@ -184,8 +180,7 @@ public class SearchController {
     		
     		success();
     		
-    	}
-    	else {
+    	} else {
     		
     		notFound();
     		
@@ -199,10 +194,13 @@ public class SearchController {
     
 	@FXML
 	void initialize() {		
+		
 		searchTextField.textProperty().addListener(new ChangeListener<String>() {
 
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				
 				updatePredictions();
+				
 			}
 		
 		});
@@ -210,44 +208,70 @@ public class SearchController {
 		predictionsListViewer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				
 				searchTextField.setText(newValue);
+				
 			}
 		
 		});
+		
 	}
 	
 	//------------------------------------------------------------------------------------
     
-  	//ALERTS METHODS
+  	// NOT FOUND METHOD
 	
 	public void notFound() {
+		
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Person not found");
 		alert.setContentText("The person with the given data was not found");
 		alert.showAndWait();
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// UNEXPECTED ERROR METHOD
 			
 	public void unexpectedError() {
+		
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText("Unexpected Error");
 		alert.setContentText("Please contact the software engineer!");
 		alert.showAndWait();
+		
 	}
 	
+	//------------------------------------------------------------------------------------
+	
+	// SUCCESS METHOD
+	
 	public void success() {
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Person selected succesfully");
 		alert.setContentText("The person can now be edited in the edit tab");
 		alert.showAndWait();
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// NOT IMPLEMENTED METHOD
 		
 	public void notImplemented() {
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Function not yet implemented");
 		alert.showAndWait();
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
 }
