@@ -27,6 +27,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 	private static final long serialVersionUID = 953054602220219747L;
 
 	protected int weight;
+	
+	protected int heightBST;
 
 	//--------------------------------------------------------------------------------
 
@@ -35,6 +37,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 	public BinarySearchTree(){
 
 		weight = 0;
+		
+		heightBST = 0;
 
 	}		
 
@@ -63,6 +67,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 			root = new Node<K,V>(key,value);	
 
 			weight++;
+			
+			heightBST++;
 
 			return root;
 
@@ -101,6 +107,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 				addedNode.setParent(currentNode);
 
 				weight++;
+				
+				heightBST++;
 
 				return addedNode;	
 
@@ -130,6 +138,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 				addedNode.setParent(currentNode);
 
 				weight++;	
+				
+				heightBST++;
 
 				return addedNode;	
 
@@ -430,6 +440,14 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		return root.getHeight();
 	}	
 
+	public int getHeightBST() {
+		return heightBST;
+	}
+	
+	public void setBSTHeight(int heightBST) {
+		this.heightBST = heightBST;
+	}
+	
 	//------------------------------------------------------------------------------------
 	
 	// IS EMPTY METHOD

@@ -73,6 +73,19 @@ class TestBinarySearchTree<K, V> {
 		
 		setup1();
 		
+		for(int i = 0 ; i < 200000 ; i ++) {
+
+			Integer key =  new Integer((int) (Math.random()*2000));
+
+			Integer value = new Integer((int) Math.random()*2000);
+
+			binarySearch.add(key, value);
+
+			assertTrue(binarySearch.add(key, value));
+
+		}
+		System.out.println(binarySearch.getHeightBST());
+		System.out.println(binarySearch.getWeight());
 	}
 	
 	//--------------------------------------------------------------------------------
