@@ -133,6 +133,18 @@ public class PrincipalController {
 		searchAnchorPane.getChildren().add(fxmlLoader.load());
 		
 	}
+	
+	//------------------------------------------------------------------------------------
+
+	// METHOD TO UPDATE EDIT TAB VISIBILITY
+		
+	public void updateEdit(boolean visible) {
+		
+		editTab.setDisable(!visible);
+		
+		editController.setVisible(visible);	
+		
+	}
 
 	//------------------------------------------------------------------------------------
 
@@ -150,6 +162,7 @@ public class PrincipalController {
 		loadGenerateTab();
 		
     }
+	
 	
 	//------------------------------------------------------------------------------------
 

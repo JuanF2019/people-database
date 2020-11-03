@@ -694,6 +694,10 @@ public class DataBaseManager {
 		return new Person(name, surname, id, sex, birthday, height, nationality);
 		
 	}
+
+	public Person getCurrentPerson() {
+		return currentPerson;
+	}
 	
 	//------------------------------------------------------------------------------------
 

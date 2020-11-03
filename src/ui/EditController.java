@@ -21,6 +21,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import model.DataBaseManager;
+import model.Person;
 import model.Sex;
 
 public class EditController {
@@ -81,7 +82,7 @@ public class EditController {
     private DatePicker editBirthdayDatePicker;
 
     @FXML
-    private ChoiceBox<String> editNationalityTextField;
+    private ChoiceBox<String> editNationalityChoiceBox;
 
     //------------------------------------------------------------------------------------
 
@@ -116,7 +117,18 @@ public class EditController {
   	//DELETE CURRENT PERSON METHOD
 	@FXML
     void deleteCurrentPerson(ActionEvent event) {
-		notImplemented();
+		if(dbm.delete()) {
+			
+			successDelete();
+			
+			principalController.updateEdit(false);
+			
+		}
+		else {
+			
+			unexpectedError();
+			
+		}		
     }
 
 	//------------------------------------------------------------------------------------
@@ -124,7 +136,26 @@ public class EditController {
 	//RESET FIELDS METHOD
     @FXML
     void resetFields(ActionEvent event) {
-    	notImplemented();
+    	Person p = dbm.getCurrentPerson();
+    	
+    	if(p!=null) {
+    		editNameTextField.setText(p.getName());
+    		editSurnameTextField.setText(p.getSurname());
+    		editHeightTextField.setText(Double.toString(p.getHeight()));
+    		
+    		if(p.getSex() == Sex.MALE) {
+    			editMaleRButton.setSelected(true);
+    		}
+    		else{
+    			editFemaleRButton.setSelected(true);
+    		}
+    		
+    		editBirthdayDatePicker.setValue(p.getBirthday());
+    		editNationalityChoiceBox.setValue(p.getNationality());
+    	}
+    	else {
+    		unexpectedError();
+    	}   	
     }
 
     //------------------------------------------------------------------------------------
@@ -155,7 +186,7 @@ public class EditController {
 			height = 0;
 		}
 					
-		String nat = editNationalityTextField.getValue();
+		String nat = editNationalityChoiceBox.getValue();
 					
 		LocalDate birthday = editBirthdayDatePicker.getValue();
 			
@@ -186,8 +217,14 @@ public class EditController {
 	public void success() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Alert");
-		alert.setHeaderText("Person added succesfully");
-		alert.setContentText("The person was added succesfully");
+		alert.setHeaderText("Changes saved succesfully");
+		alert.showAndWait();
+	}
+	
+	public void successDelete() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Person removed succesfully");
 		alert.showAndWait();
 	}
 	
@@ -198,27 +235,54 @@ public class EditController {
 		alert.showAndWait();
 	}
 
+	public void unexpectedError() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("Unexpected Error");
+		alert.setContentText("Please contact the software engineer!");
+		alert.showAndWait();
+	}
+	
     //------------------------------------------------------------------------------------
     
   	//VALIDATE METHOD
     
     @FXML
-    void validate(ActionEvent event) {
+    void validate(ActionEvent event) throws NullPointerException{
+    	
+    	Person p = dbm.getCurrentPerson();       	
+    	
+    	//NAME
+    	
 		if(nameCheckBox.isSelected()) {
 			
 			editNameTextField.setDisable(false);
 			
-			nameCheckBox.setDisable(true);
+		}
+		else {
+			
+			editNameTextField.setDisable(true);
+			
+			editNameTextField.setText(p.getName());
 			
 		}
+		
+		//SURNAME
 		
 		if(surnameCheckBox.isSelected()) {
 			
 			editSurnameTextField.setDisable(false);
 			
-			surnameCheckBox.setDisable(true);
+		}
+		else {
+			
+			editSurnameTextField.setDisable(true);
+			
+			editSurnameTextField.setText(p.getSurname());
 			
 		}
+		
+		//SEX
 
 		if(sexCheckBox.isSelected()) {
 			
@@ -226,33 +290,67 @@ public class EditController {
 			
 			editFemaleRButton.setDisable(false);
 			
-			sexCheckBox.setDisable(true);
-			
 		}
+		else {
+			editMaleRButton.setDisable(true);
+			
+			editFemaleRButton.setDisable(true);
+			
+			if(p.getSex() == Sex.MALE) {
+				
+				editMaleRButton.setSelected(true);
+				
+			}
+			else{
+				
+				editFemaleRButton.setSelected(true);
+			}
+		}
+		
+		//BIRTHDAY
 		
 		if(birthdayCheckBox.isSelected()) {
 			
 			editBirthdayDatePicker.setDisable(false);
 			
-			birthdayCheckBox.setDisable(true);
+		}
+		else {
+			
+			editBirthdayDatePicker.setDisable(true);
+			
+			editBirthdayDatePicker.setValue(p.getBirthday());
 			
 		}
+		
+		//HEIGHT
 		
 		if(heightCheckBox.isSelected()) {
 			
 			editHeightTextField.setDisable(false);
 			
-			heightCheckBox.setDisable(true);
+		}		
+		else {
+			
+			editHeightTextField.setDisable(true);
+			
+			editHeightTextField.setText(Double.toString(p.getHeight()));
 			
 		}
 
+		//NATIONALITY
+		
 		if(nationalityCheckBox.isSelected()) {
 			
-			editNameTextField.setDisable(false);
+			editNationalityChoiceBox.setDisable(false);
 			
-			nationalityCheckBox.setDisable(true);
+		}    
+		else {
 			
-		}    	
+			editNationalityChoiceBox.setDisable(true);
+			
+			editNationalityChoiceBox.setValue(p.getNationality());
+			
+		}
     }
     
     //------------------------------------------------------------------------------------
@@ -261,7 +359,76 @@ public class EditController {
   	
   	public void initialize() {
   		
-  		editNationalityTextField.getItems().addAll(dbm.getCountries());
+  		editNationalityChoiceBox.getItems().addAll(dbm.getCountries());
   		
   	}
+
+  	//------------------------------------------------------------------------------------
+	
+  	// SET VISIBLE METHOD, UPDATES VISIBILITY OF COMPONENTS, IT ONLY GETS VISIBLE WHEN THERE IS A CURRENT PERSON
+  	
+	public void setVisible(boolean visible) {
+		
+		if(visible) {
+			
+			resetFields(new ActionEvent());
+			
+		}
+		else {
+			
+			clearAndDisableFields();
+			
+		}
+		
+		resetValidationCheckBoxes();
+		
+	}
+    //------------------------------------------------------------------------------------
+	
+  	// RESET VALIDATION CHECK BOXES METHOD
+	
+	private void resetValidationCheckBoxes() {
+		
+		nameCheckBox.setSelected(false);
+		
+		surnameCheckBox.setSelected(false);
+		
+		sexCheckBox.setSelected(false);
+		
+		heightCheckBox.setSelected(false);
+		
+		birthdayCheckBox.setSelected(false);
+		
+		nationalityCheckBox.setSelected(false);
+		
+	}
+    //------------------------------------------------------------------------------------
+	
+  	// CLEAR AND DISABLE FIELDS METHOD
+	
+	private void clearAndDisableFields() {
+		
+		editNameTextField.setText("");
+		editNameTextField.setDisable(true);
+		
+		editSurnameTextField.setText("");
+		editSurnameTextField.setDisable(true);
+		
+		editHeightTextField.setText("");
+		editHeightTextField.setDisable(true);		
+		
+		editNationalityChoiceBox.setValue("");
+		editNationalityChoiceBox.setDisable(true);
+		
+		editBirthdayDatePicker.setValue(null);
+		editBirthdayDatePicker.setDisable(true);
+		
+		editMaleRButton.setSelected(false);
+		editMaleRButton.setDisable(true);
+		
+		editFemaleRButton.setSelected(false);
+		editFemaleRButton.setDisable(true);
+		
+	}
+	
 }
