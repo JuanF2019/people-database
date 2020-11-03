@@ -51,6 +51,7 @@ class TestAVLTree {
 		assertTrue(avl.add(x, y));
 		assertFalse(avl.isEmpty());
 		assertTrue(avl.getHeight()==1);
+		assertTrue(avl.getWeight()==1);
 	}
 
 	//------------------------------------------------------------------------------------
@@ -63,7 +64,7 @@ class TestAVLTree {
 		assertTrue(avl.add(22, 30));
 		assertTrue(avl.add(13, 4));
 		assertFalse(avl.isEmpty());
-		System.out.println(avl.getHeight());
+		assertTrue(avl.getWeight()==9);
 	}
 
 	//------------------------------------------------------------------------------------
@@ -78,12 +79,11 @@ class TestAVLTree {
 
 			Integer value = new Integer((int) Math.random()*2000);
 
-			avl.add(key, value);
-
 			assertTrue(avl.add(key, value));
 
 		}
-
+		
+		assertTrue(avl.getWeight()==200000);
 
 	}
 
@@ -106,6 +106,7 @@ class TestAVLTree {
 		assertTrue(avl.remove(24, 21));
 		assertTrue(avl.remove(17, 5));
 		assertTrue(avl.getHeight()==2);
+		assertTrue(avl.getWeight()==2);
 	}
 
 	//------------------------------------------------------------------------------------
