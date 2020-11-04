@@ -38,9 +38,9 @@ class TestBinarySearchTree<K, V> {
 		
 		for(int i = 0 ; i < 50000 ; i ++) {
 			
-			int key = (int) Math.random() * 100;
+			int key = 1;
 			
-			int value = (int) Math.random() * 100;
+			int value = 5;
 			
 			binarySearch.add(key, value);
 			
@@ -148,9 +148,9 @@ class TestBinarySearchTree<K, V> {
 		
 		for(int i = 0 ; i < 5000 ; i ++) {
 			
-			int key = (int) Math.random() * 1000;
+			int key = 1;
 			
-			int value = (int) Math.random() * 1000;
+			int value = 5;
 			
 			binarySearch.remove(key, value);
 			
