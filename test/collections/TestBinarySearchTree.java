@@ -30,6 +30,28 @@ class TestBinarySearchTree<K, V> {
 	
 	//--------------------------------------------------------------------------------
 	
+	// SETUP2
+	
+	void setup2() {
+		
+		setup1();
+		
+		for(int i = 0 ; i < 50000 ; i ++) {
+			
+			int key = (int) Math.random() * 100;
+			
+			int value = (int) Math.random() * 100;
+			
+			binarySearch.add(key, value);
+			
+		}
+		
+	}
+	
+	//--------------------------------------------------------------------------------
+	
+	// We added only one elements to the system. So, the root is not null.
+	
 	@Test
 	void testAdd1() {
 		
@@ -47,51 +69,73 @@ class TestBinarySearchTree<K, V> {
 	
 	//--------------------------------------------------------------------------------
 	
+	// We added one million of elements. After that, compare the information.
+	
 	@Test
 	void testAdd2() {
 		
 		setup1();
 		
-		for(int i = 0 ; i < 1000000 ; i ++) {
+		for(int i = 0 ; i < 100000 ; i ++) {
 			
-			int key = (int) Math.random()*1000;
+			int key = (int) Math.random() * 1000;
 			
-			int value = (int) Math.random()*1000;
+			int value = (int) Math.random() * 1000;
 			
 			binarySearch.add(key, value);
 			
 		}
 		
-		
+		assertTrue(binarySearch.getWeight() == 100000);
 		
 	}
 	
 	//--------------------------------------------------------------------------------
+	
+	// We added two elements with the same key. So, the weight is two.
+	
+	// TEST ADD 3
 	
 	@Test
 	void testAdd3() {
 		
 		setup1();
 		
-		for(int i = 0 ; i < 200000 ; i ++) {
-
-			Integer key =  new Integer((int) (Math.random()*2000));
-
-			Integer value = new Integer((int) Math.random()*2000);
-
-			assertTrue(binarySearch.add(key, value));
-
-		}
-		System.out.println(binarySearch.getHeight());
-		System.out.println(binarySearch.getWeight());
+		int key = 1;
+		
+		int value1 = 100;
+		
+		int value2 = 200;
+		
+		binarySearch.add(key, value1);
+		
+		binarySearch.add(key, value2);
+		
+		assertEquals(binarySearch.getWeight(), 2);
+		
 	}
 	
 	//--------------------------------------------------------------------------------
 	
+	/*
+	 * We added one element. After that, we remove the same element. So, the weight 
+	 * have to be 0.
+	 */
+	
 	@Test
 	void testRemove1() {
 		
+		setup1();
 		
+		int key = (int) Math.random() * 10;
+		
+		int value = (int) Math.random() * 10;
+		
+		binarySearch.add(key, value);
+		
+		assertTrue(binarySearch.remove(key, value));
+		
+		assertEquals(binarySearch.getWeight(), 0);
 		
 	}
 	
@@ -100,7 +144,19 @@ class TestBinarySearchTree<K, V> {
 	@Test
 	void testRemove2() {
 		
+		setup2();
 		
+		for(int i = 0 ; i < 5000 ; i ++) {
+			
+			int key = (int) Math.random() * 1000;
+			
+			int value = (int) Math.random() * 1000;
+			
+			binarySearch.remove(key, value);
+			
+		}
+		
+		assertTrue(binarySearch.getWeight() < 50000);
 		
 	}
 	
