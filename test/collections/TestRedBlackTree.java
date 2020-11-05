@@ -11,127 +11,173 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class TestRedBlackTree {
-	
+
 	//------------------------------------------------------------------------------------
-	
-	RedBlackTree redBlackTree;
-	
+
+	private RedBlackTree redBlackTree;
+
 	//------------------------------------------------------------------------------------
-	
+
 	void setup1() {
-		
-		redBlackTree = new RedBlackTree();
-		
+
+		redBlackTree = new RedBlackTree<Integer,Integer>();
+
+	}
+
+	void setup2() {
+
+		redBlackTree = new RedBlackTree<String,String>();
+
 	}
 	
+	void setup3() {
+
+		redBlackTree = new RedBlackTree<Integer,Integer>();
+		
+		redBlackTree.add(81, 9);
+		redBlackTree.add(72, 18);
+		redBlackTree.add(63, 27);
+		redBlackTree.add(54, 36);
+		redBlackTree.add(45, 45);
+
+	}
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testAdd1() {
-		
-		
-		
+
+		setup1();
+		redBlackTree.add(13, 78);
+		assertTrue(redBlackTree.getWeight()==1);
+		assertTrue(redBlackTree.getHeight()==1);
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testAdd2() {
+
+		setup1();
 		
+		assertTrue(redBlackTree.add(16, 5));
+		assertTrue(redBlackTree.add(2, 93));
+		assertTrue(redBlackTree.add(44, 8));
+		assertTrue(redBlackTree.add(31, 60));
+		assertTrue(redBlackTree.add(7, 59));
+		assertTrue(redBlackTree.add(25, 1));
 		
+//		redBlackTree.add("B", "G");
+//		redBlackTree.add("U", "U");
+//		redBlackTree.add("L", "I");
+//		redBlackTree.add("L", "L");
+//		redBlackTree.add("E", "T");
+//		redBlackTree.add("T", "Y");
+//		
+//		redBlackTree.inOrder();
 		
+		//assertEquals(redBlackTree.inOrder(),"BELLTU");
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testAdd3() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testAddFixUp1() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testAddFixUp2() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testAddFixUp3() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testRemove1() {
-		
-		
-		
+
+		setup1();
+
+		assertFalse(redBlackTree.remove(65, 22));
+		assertTrue(redBlackTree.isEmpty()==true);
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testRemove2() {
+
+		setup3();
 		
-		
+		assertTrue(redBlackTree.remove(81, 99));
+		assertTrue(redBlackTree.remove(72, 18));
+		assertTrue(redBlackTree.remove(63, 27));
+		assertTrue(redBlackTree.remove(54, 36));
+		assertTrue(redBlackTree.remove(45, 45));
 		
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testRemove3() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testRemoveFixUp1() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testRemoveFixUp2() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 	@Test
 	void testRemoveFixUp3() {
-		
-		
-		
+
+
+
 	}
-	
+
 	//------------------------------------------------------------------------------------
-	
+
 }
