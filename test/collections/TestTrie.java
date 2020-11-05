@@ -7,6 +7,8 @@
 package collections;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.junit.jupiter.api.Test;
@@ -68,6 +70,21 @@ class TestTrie {
 		
 	}
 	
+	void setUp5() {
+		
+		trie = new Trie();
+		
+		for(int i = 0 ; i < 10000; i++) {
+			String word = "";
+			
+			word += Character.toString((char)(Math.random()*Trie.ASCII_CHARACTER_COUNT));
+			word += Character.toString((char)(Math.random()*Trie.ASCII_CHARACTER_COUNT));
+			word += Character.toString((char)(Math.random()*Trie.ASCII_CHARACTER_COUNT));
+			word += Character.toString((char)(Math.random()*Trie.ASCII_CHARACTER_COUNT));
+			
+			trie.add(word);
+		}
+	}
 	//------------------------------------------------------------------------------------
 		
 	@Test
@@ -395,17 +412,25 @@ class TestTrie {
 	
 	@Test
 	void testSearch1() {
+		setUp1();
 		
-		
-		
+
+		assertFalse(trie.search("Pedro"));
+		assertFalse(trie.search("Camilo"));
+		assertFalse(trie.search("Felipe"));		
 	}
 	
 	//------------------------------------------------------------------------------------
 	
 	@Test
 	void testSearch2() {
-		
-		
+		setUp2();
+
+		assertTrue(trie.search("Anita"));
+		assertTrue(trie.search("Felix"));
+		assertFalse(trie.search("Felipe"));
+		assertFalse(trie.search("Sara"));
+		assertFalse(trie.search("Carolina"));
 		
 	}
 	
@@ -413,36 +438,72 @@ class TestTrie {
 	
 	@Test
 	void testSearch3() {
+		setUp3();
 		
-		
-		
+		assertFalse(trie.search("AA"));
+		assertTrue(trie.search("CA"));
+		assertTrue(trie.search("CAI"));
+		assertTrue(trie.search("ABBD"));
+		assertFalse(trie.search("AABC"));
 	}
 	
 	//------------------------------------------------------------------------------------
 	
 	@Test
 	void testGetPredictions1() {
+		setUp1();
 		
-		
-		
+		assertTrue(trie.getPredictions("AAA").isEmpty());		
+		assertTrue(trie.getPredictions("IDK").isEmpty());
 	}
 	
 	//------------------------------------------------------------------------------------
 	
 	@Test
 	void testGetPredictions2() {
+		setUp3();
 		
+		String[] list0 = {"AAAA","AAA","AABB","AB","ABBD","CA","CAI","CHI"};
+		String[] list1 = {"AAAA","AABB","ABBD"};
+		String[] list2 = {"AAAA","AABB"};
 		
+		ArrayList<String> predictions = trie.getPredictions("");
+		System.out.println(predictions);
 		
+		for (String word : list0) {
+			assertTrue(predictions.contains(word));
+		}
+		
+		predictions = trie.getPredictions("A");
+		System.out.println(predictions);
+		
+		for (String word : list1) {
+			assertTrue(predictions.contains(word));
+		}		
+		
+		predictions = trie.getPredictions("AA");
+		System.out.println(predictions);
+		
+		for (String word : list2) {
+			assertTrue(predictions.contains(word));
+		}
+			
+		assertTrue(trie.getPredictions("ZEE").isEmpty());
 	}
 	
 	//------------------------------------------------------------------------------------
 	
 	@Test
 	void testGetPredictions3() {
+		setUp5();
 		
+		ArrayList<String> predictions = trie.getPredictions("");
+		System.out.println(predictions);
+		assertTrue(predictions.size() <= 100);
 		
-		
+		predictions = trie.getPredictions("A");
+		System.out.println(predictions);
+		assertTrue(predictions.size() <= 100);
 	}
 	
 	//------------------------------------------------------------------------------------

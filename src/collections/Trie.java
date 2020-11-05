@@ -18,6 +18,8 @@ public class Trie implements TrieInterface, Serializable {
 	private static final long serialVersionUID = -8221686898088440044L;
 
 	public static final int ASCII_CHARACTER_COUNT = 128;
+
+	private static final int MAX_PREDICTIONS = 100;
 	
 	private TrieNode root;	
 	
@@ -190,67 +192,44 @@ public class Trie implements TrieInterface, Serializable {
 	
 	//------------------------------------------------------------------------------------
 	
-	// GET PREDICTIONS METHOD FROM THE TRIE CLASS
+	//GET PREDICTIONS METHOD
 	
-	public ArrayList<String> getPredictions(String prefix) {
-		
-		TrieNode currentNode = root;
-		
-		for(int level = 0; level < prefix.length(); level++) {
-			
-			int index = prefix.charAt(level);
-			
-			TrieNode[] children =  currentNode.getChildren();	
-			
-			
-			if(children[index] == null)
-				return null;
-			
-			currentNode = children[index];
-			
-		}		
-		
-		return getPredictionsRecursive(prefix,currentNode,new ArrayList<String>());
-		
+	public ArrayList<String> getPredictions(String prefix){
+		return getPredictions(prefix,root,prefix.length(),0,new ArrayList<String>());
 	}
 	
-	//------------------------------------------------------------------------------------
-
-	private ArrayList<String> getPredictionsRecursive(String prefix, TrieNode currentNode, ArrayList<String> predictions) {
-		
-		if(currentNode.getEndOfWords() > 0) {
-			
-			for (int i = 0; i < currentNode.getEndOfWords(); i++) {
-				
-				predictions.add(prefix + currentNode.getCharacter());
-				
+	
+	private ArrayList<String> getPredictions(String prefix, TrieNode currentNode, int length, int level, ArrayList<String> predictions){
+		if(predictions.size() < MAX_PREDICTIONS){
+			if(currentNode == null) {
+				return predictions;
 			}
-			
-			return predictions;
-			
-		} else {
-			
-			TrieNode[] children = currentNode.getChildren();
-			
-			
-			for (int i = 0; i < children.length; i++) {
-				
-				if(children[i] != null) {
 					
-					predictions = getPredictionsRecursive(prefix + currentNode.getCharacter(),children[i],predictions);
+			if(level == length) {
 				
+				if(currentNode.getEndOfWords() > 0 ) {
+					predictions.add(prefix);
 				}
 				
-			}
+				TrieNode[] children = currentNode.getChildren();
+				
+				for (int i = 0; i < children.length; i++) {
+					getPredictions(prefix + Character.toString((char)i), children[i], length + 1, level + 1, predictions);
+				}
+				
+				return predictions;			
+			}		
 			
-			return predictions;
-			
-		}
+			getPredictions(prefix,currentNode.getChildren()[prefix.charAt(level)],length,level+1, predictions);		
 		
+			return predictions;
+		}
+		return predictions;
 	}
 
 	//------------------------------------------------------------------------------------
 
+	//GET ROOT METHOD (FOR TESTING)
 	
 	public TrieNode getRoot() {
 		return root;
