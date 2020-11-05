@@ -1,4 +1,12 @@
+/*
+ * ALGORITMOS Y ESTRUCTURAS DE DATOS
+ * TAREA INTEGRADORA 2
+ * MARTINEZ - DIAZ - RODAS
+ */
+
 package thread;
+
+import ui.PrincipalController;
 
 //this is a skeleton of a thread that updates the value of
 //the progress bar, making it look like it is charging.
@@ -8,23 +16,34 @@ package thread;
 //the value of the time or whatever measure is going to be used
 //to calculate the thing on the thread
 
-import ui.PrincipalController;
 
 public class ProgressBarThread extends Thread {
 	
+	//------------------------------------------------------------------------------------
+	
+	//Attributes of the ProgressBarThread class
+
 	private PrincipalController controller;
 
+	//------------------------------------------------------------------------------------
+
+	// Constructor method
+	
 	public ProgressBarThread(PrincipalController controller) {
 		this.controller = controller;
 		setDaemon(true);
 	}
 	
-	/*
+	//------------------------------------------------------------------------------------
+
+	//Run method
+	
+	
 	@Override
 	public void run() {
-		double time = 0.01;
+		long time = 0;
 		while(time<=1) {
-			time+= 0.01;
+			time+= 0.005;
 			controller.updateProgressBar(time);
 			try {
 				sleep(10);
@@ -35,6 +54,8 @@ public class ProgressBarThread extends Thread {
 		}
 
 	}
-	*/
+	 
+	
+	//------------------------------------------------------------------------------------
 
 }

@@ -44,6 +44,8 @@ public class DataBaseManager {
 	
 	private ArrayList<String> countries;
 	
+	private long generationTime;
+	
 	//------------------------------------------------------------------------------------
 
 	//Relations of the DataBaseManager class
@@ -98,6 +100,10 @@ public class DataBaseManager {
 
 	public int getSavedPeopleNumber() {
 		return savedPeopleNumber;
+	}
+	
+	public long getGenerationTime() {
+		return generationTime;
 	}
 
 	public ArrayList<String> getCountries(){
@@ -631,6 +637,8 @@ public class DataBaseManager {
 		
 		if(MAX_PEOPLE_NUMBER - savedPeopleNumber - n >= 0) {
 			
+			long t1 = System.currentTimeMillis();
+			
 			for (int i = 0; i < n; i++) {
 				
 				Person newPerson = generatePerson();
@@ -660,6 +668,10 @@ public class DataBaseManager {
 			}
 			
 			savedPeopleNumber += n;
+			
+			long t2 = System.currentTimeMillis();
+			
+			generationTime = (t2-t1)/1000;
 			
 			return true;
 			

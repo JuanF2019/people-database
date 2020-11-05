@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import model.DataBaseManager;
@@ -48,7 +49,7 @@ public class PrincipalController {
 
 		editController = new EditController(this,dbm);
 
-		generateController = new GenerateController(dbm);
+		generateController = new GenerateController(dbm, this);
 
 	}
 
@@ -80,6 +81,9 @@ public class PrincipalController {
 
 	@FXML
 	private Button saveInformationButton;
+	
+    @FXML
+    private ProgressBar progressBar;
 
 	//------------------------------------------------------------------------------------
 
@@ -177,6 +181,14 @@ public class PrincipalController {
 
 	}
 
+	//------------------------------------------------------------------------------------
+	
+	//UPDATES THE PROGRESS BAR
+	
+	public void updateProgressBar(long time) {
+		progressBar.setProgress(time);
+	}
+	
 	//------------------------------------------------------------------------------------
 
 }

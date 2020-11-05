@@ -91,7 +91,7 @@
                <children>
                   <Button fx:id="saveInformationButton" layoutX="114.0" layoutY="-3.0" mnemonicParsing="false" onAction="#saveInformation" text="Save information" />
                </children></Pane>
-            <ProgressBar prefHeight="18.0" prefWidth="150.0" progress="1.0" style="-fx-background-color: #BDC3C7;" />
+            <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="150.0" progress="1.0" style="-fx-background-color: #BDC3C7;" />
          </items>
       </SplitPane>
    </children>
