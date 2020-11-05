@@ -8,17 +8,18 @@ package thread;
 //the value of the time or whatever measure is going to be used
 //to calculate the thing on the thread
 
-import ui.Controller;
+import ui.PrincipalController;
 
 public class ProgressBarThread extends Thread {
 	
-	private Controller controller;
+	private PrincipalController controller;
 
-	public ProgressBarThread(Controller controller) {
+	public ProgressBarThread(PrincipalController controller) {
 		this.controller = controller;
 		setDaemon(true);
 	}
 	
+	/*
 	@Override
 	public void run() {
 		double time = 0.01;
@@ -34,6 +35,6 @@ public class ProgressBarThread extends Thread {
 		}
 
 	}
-
+	*/
 
 }
