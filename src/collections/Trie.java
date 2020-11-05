@@ -79,112 +79,77 @@ public class Trie implements TrieInterface, Serializable {
 		}
 		
 	}
-
+	
 	//------------------------------------------------------------------------------------
 	
-	// REMOVE METHOD FROM THE TRIE CLASS
+	// REMOVE METHOD FROM THE TRIE CLASS	
 	
-	public boolean remove(String s) {
+	public boolean remove(String word) {		
+		if(remove(word,root,word.length(),0)) {
+			storedWords--;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	//ADAPTED FROM GEEKS FOR GEEKS
+	private boolean remove(String word, TrieNode currentNode, int length, int level) {
 		
-		if(storedWords > 0 && s.length() > 0) {
-			
-			TrieNode currentNode = root;	
-			
-			TrieNode[] children = root.getChildren();
-			
-			int level;
-			
-			//Checks if word exists and gets to last node
-			
-			for(level = 0; level < s.length(); level++) {
-				
-				int index = s.charAt(level);
-				
-				children =  currentNode.getChildren();	
-				
-				
-				if(children[index] == null) 
-					return false;
-				
-				currentNode = children[index];	
-				
-			}
-			
-			//Case 0: If there multiple additions of the word or currentNode is not end of word
-			
-			if(currentNode.getEndOfWords() == 0) {
-				
-				return false;
-				
-			}
+		if(currentNode == null) {
+			return false;
+		}
+		
+		if(level == length){
 			
 			if(currentNode.getEndOfWords() > 1) {
 				
-				currentNode.setEndOfWords(currentNode.getEndOfWords() - 1);
-				
-				storedWords--;
-				
+				currentNode.setEndOfWords(currentNode.getEndOfWords()-1);
 				return true;
 				
-			}			
-			
-			//Case 1: last word node has at least one child
-			
-			for(TrieNode tN: children) {
+			}
+			else if(currentNode.getEndOfWords() == 1) {
 				
-				if(tN != null) {
-					
-					currentNode.setEndOfWords(currentNode.getEndOfWords() - 1);	
-					
-					storedWords--;
-					
+				if(hasChildren(currentNode)) {
+					currentNode.setEndOfWords(0);
 					return true;
-					
-				}
+				}		
+				else {
+					currentNode.getParent().getChildren()[word.charAt(level-1)] = null;
+					return true;
+				}		
 				
 			}
-			
-			//Case 2: last word node has no children, disconnects until parent has children different from this
-			//At this point currentNode will never be root
-			
-			boolean hasChildren = false;	
-			
-			currentNode = currentNode.getParent();	
-			
-			level--;
-			
-			while(level >= 0 && !hasChildren) {
+			else {
 				
-				children = currentNode.getChildren();
+				return false;
 				
-				children[s.charAt(level+1)] = null;
-				
-				for (int i = 0; i < children.length && !hasChildren; i++) {
-					
-					if(children[i] != null) {
-						
-						hasChildren = true;
-						
-					}
-					
-				}						
-				
-				currentNode = currentNode.getParent();
-				
-				level--;
-				
-			}
-			
-			storedWords--;
-			
-			return true;
-			
-		} else {
-			
-			return false;
+			}				
+		}
+		
+		boolean removed = remove(word,currentNode.getChildren()[word.charAt(level)],length,level + 1);
+		
+		if(removed && currentNode != root && !hasChildren(currentNode) && currentNode.getEndOfWords() == 0) {
+			currentNode.getParent().getChildren()[word.charAt(level-1)] = null;
 			
 		}
 		
+		return removed;
+	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// HAS CHILDREN METHOD FROM THE TRIE CLASS
+	
+	private boolean hasChildren(TrieNode nd) {
+		TrieNode[] children = nd.getChildren();
+		for(TrieNode child : children) {
+			if(child != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -283,7 +248,17 @@ public class Trie implements TrieInterface, Serializable {
 		}
 		
 	}
+
+	//------------------------------------------------------------------------------------
+
+	
+	public TrieNode getRoot() {
+		return root;
+	}
 	
 	//------------------------------------------------------------------------------------
 	
+	public int getStoredWordsCount() {
+		return storedWords;
+	}
 }
