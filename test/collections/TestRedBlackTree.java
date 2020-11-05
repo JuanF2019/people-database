@@ -14,7 +14,7 @@ class TestRedBlackTree {
 
 	//------------------------------------------------------------------------------------
 
-	private RedBlackTree redBlackTree;
+	private RedBlackTree<Integer,Integer> redBlackTree;
 
 	//------------------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ class TestRedBlackTree {
 
 	void setup2() {
 
-		redBlackTree = new RedBlackTree<String,String>();
+	//	redBlackTree = new RedBlackTree<String,String>();
 
 	}
 	

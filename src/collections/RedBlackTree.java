@@ -36,44 +36,43 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 
 	public boolean add(K key, V value) {
 
-		Node<K,V> addedNode = super.addBase(key, value);		
+		RedBlackTreeNode<K,V> addedNode = new RedBlackTreeNode<K,V>(key,value);
+		add(addedNode);		
 
-		if(!(addedNode instanceof RedBlackTreeNode<?,?>)) {
+		//Replaces Node with RedBlackTreeNode
+		RedBlackTreeNode<K,V> replacementNode = new RedBlackTreeNode<>(addedNode.getKey(), null);
 
-			//Replaces Node with RedBlackTreeNode
-			RedBlackTreeNode<K,V> replacementNode = new RedBlackTreeNode<>(addedNode.getKey(), null);
+		replacementNode.setValues(addedNode.getValues());
 
-			replacementNode.setValues(addedNode.getValues());
+		//Left and right are null, always when adding
+		RedBlackTreeNode<K,V> parent = (RedBlackTreeNode<K,V>)addedNode.getParent();
 
-			//Left and right are null, always when adding
-			RedBlackTreeNode<K,V> parent = (RedBlackTreeNode<K,V>)addedNode.getParent();
+		replacementNode.setParent(parent);	
 
-			replacementNode.setParent(parent);	
+		replacementNode.setLeft(nillNode);
 
-			replacementNode.setLeft(nillNode);
+		replacementNode.setRight(nillNode);
 
-			replacementNode.setRight(nillNode);
+		if(parent!=null) {
 
-			if(parent!=null) {
+			if(parent.getLeft() == addedNode) {
 
-				if(parent.getLeft() == addedNode) {
+				parent.setLeft(replacementNode);
 
-					parent.setLeft(replacementNode);
+			}
+			else {
 
-				}
-				else {
-
-					parent.setRight(replacementNode);
-
-				}
-
-				addFixUp(replacementNode);					
-
-				return true;
+				parent.setRight(replacementNode);
 
 			}
 
+			addFixUp(replacementNode);					
+
+			return true;
+
 		}
+
+
 
 		return true;		
 	}
@@ -85,7 +84,7 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 
 	public void addFixUp(RedBlackTreeNode<K,V> z){
 
-		while(((RedBlackTreeNode<K,V>)z.getParent()).getColor() == Color.RED) {
+		while(z!=root && ((RedBlackTreeNode<K,V>)z.getParent()).getColor() == Color.RED) {
 
 			RedBlackTreeNode<K,V> uncle;
 
