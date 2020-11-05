@@ -35,10 +35,20 @@ class TestRedBlackTree {
 		redBlackTree = new RedBlackTree<Integer,Integer>();
 		
 		redBlackTree.add(81, 9);
+		System.out.println(redBlackTree.inOrder());
 		redBlackTree.add(72, 18);
+		System.out.println(redBlackTree.inOrder());
 		redBlackTree.add(63, 27);
+		System.out.println(redBlackTree.inOrder());
 		redBlackTree.add(54, 36);
+		System.out.println(redBlackTree.inOrder());
 		redBlackTree.add(45, 45);
+		System.out.println(redBlackTree.inOrder());
+		
+		RedBlackTreeNode<Integer,Integer> root = (RedBlackTreeNode<Integer, Integer>) redBlackTree.getRoot();
+		
+		
+		System.out.println("End setUp3");
 
 	}
 
@@ -60,7 +70,7 @@ class TestRedBlackTree {
 
 		setup1();
 		
-		assertTrue(redBlackTree.add(16, 5));
+		assertTrue(redBlackTree.add(16, 5));		
 		assertTrue(redBlackTree.add(2, 93));
 		assertTrue(redBlackTree.add(44, 8));
 		assertTrue(redBlackTree.add(31, 60));
@@ -134,7 +144,9 @@ class TestRedBlackTree {
 
 		setup3();
 		
-		assertTrue(redBlackTree.remove(81, 99));
+		System.out.println(redBlackTree.inOrder());
+		assertTrue(redBlackTree.remove(81, 9));
+		System.out.println(redBlackTree.inOrder());
 		assertTrue(redBlackTree.remove(72, 18));
 		assertTrue(redBlackTree.remove(63, 27));
 		assertTrue(redBlackTree.remove(54, 36));

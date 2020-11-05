@@ -78,12 +78,11 @@ class TestAVLTree {
 			Integer key =  new Integer((int) (Math.random()*2000));
 
 			Integer value = new Integer((int) Math.random()*2000);
-
+			
 			assertTrue(avl.add(key, value));
-
 		}
 		
-		assertTrue(avl.getWeight()==200000);
+		assertEquals(200000,avl.getWeight());
 
 	}
 
@@ -130,7 +129,7 @@ class TestAVLTree {
 			assertTrue(avl.remove(a, a+1));
 
 		}
-		assertTrue(avl.isEmpty()==true);
+		assertTrue(avl.isEmpty());
 	}
 
 	//------------------------------------------------------------------------------------

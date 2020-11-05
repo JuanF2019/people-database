@@ -48,6 +48,20 @@ class TestBinarySearchTree<K, V> {
 		
 	}
 	
+	void setUp3() {
+		
+		binarySearch = new BinarySearchTree<>();
+		
+		binarySearch.add(50, 0);
+		binarySearch.add(25, 0);
+		binarySearch.add(75, 0);
+		binarySearch.add(37, 0);
+		binarySearch.add(14, 0);
+		binarySearch.add(63, 0);
+		binarySearch.add(80, 0);
+		
+	}
+	
 	//--------------------------------------------------------------------------------
 	
 	// We added only one elements to the system. So, the root is not null.
@@ -164,8 +178,19 @@ class TestBinarySearchTree<K, V> {
 	
 	@Test
 	void testRemove3() {
+		setUp3();
 		
+		assertTrue(binarySearch.remove(50, 0));
+		assertTrue(binarySearch.remove(25, 0));
 		
+		assertEquals(5,binarySearch.getWeight());
+		
+		Node<Integer,Integer> root = binarySearch.getRoot();
+		
+		assertEquals(5,binarySearch.getWeight());
+		assertEquals(63, root.getKey());
+		assertNull(root.getRight().getLeft());
+		assertNull(root.getLeft().getRight());
 		
 	}
 	

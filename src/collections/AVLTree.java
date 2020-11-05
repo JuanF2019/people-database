@@ -34,35 +34,16 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 		AVLTreeNode<K,V> addedNode = new AVLTreeNode<>(key,value);
 
 		add(addedNode);		
-
-
-		//Replaces Node with AVLTreeNode			
-		AVLTreeNode<K,V> replacementNode = new AVLTreeNode<K,V>(addedNode.getKey(), null);
-
-		replacementNode.setValues(addedNode.getValues());
-
-		if(addedNode == root) {
-			root = replacementNode;	
-
-		} 
+				
+		if(addedNode == root || addedNode.getParent() == null) {//Added a value with repeated key or added root
+			
+			return true;
+			
+		}
 		else {
 
-			AVLTreeNode<K,V> parent = (AVLTreeNode<K,V>)addedNode.getParent();
-
-			replacementNode.setParent(parent);
-
-			if(parent.getLeft() == addedNode) {
-
-				parent.setLeft(replacementNode);
-
-			} else {
-
-				parent.setRight(replacementNode);
-
-			}
-
 			//Checks for balance and balance if necessary
-			AVLTreeNode<K,V> currentNode = (AVLTreeNode<K,V>)replacementNode.getParent();
+			AVLTreeNode<K,V> currentNode = (AVLTreeNode<K,V>)addedNode.getParent();
 
 			while(currentNode != null) {
 
@@ -72,13 +53,11 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 
 				currentNode = (AVLTreeNode<K, V>) currentNode.getParent();
 
-			}			
-
+			}		
+			
+			return true;
 		}
-
-
-
-		return true;
+		
 	}
 
 	//------------------------------------------------------------------------------------
