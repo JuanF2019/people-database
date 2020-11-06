@@ -194,9 +194,6 @@ public class DataBaseManager {
 		surnamesTrie.add(newPerson.getSurname());
 
 		fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
-		
-		System.out.println("Tree weight: " + namesTree.getWeight());
-		System.out.println("Trie stored words: " + ((Trie)namesTrie).getStoredWordsCount());
 	}
 
 	//------------------------------------------------------------------------------------
@@ -226,8 +223,6 @@ public class DataBaseManager {
 
 				Object[] people = (Object[]) ois.readObject();
 				
-				System.out.println(people.length);
-				
 				for (int i = 0; i < people.length; i++) {
 					savePerson((Person) people[i]);
 				} 								
@@ -238,8 +233,9 @@ public class DataBaseManager {
 			}
 			return true;			
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		}
+		catch (Exception e) {
+			
 			return false;
 
 		}
@@ -507,9 +503,6 @@ public class DataBaseManager {
 			fullNamesTree.add(newFullName, currentPerson);
 
 			fullNamesTrie.add(newFullName);		
-			
-			System.out.println("Tree weight: " + namesTree.getWeight());
-			System.out.println("Trie stored words: " + ((Trie)namesTrie).getStoredWordsCount());
 
 		}
 
@@ -686,9 +679,7 @@ public class DataBaseManager {
 					
 					Person newPerson = generatePerson(countryName);
 
-					savePerson(newPerson);
-					
-					System.out.println(i+j);					
+					savePerson(newPerson);				
 					
 				}
 

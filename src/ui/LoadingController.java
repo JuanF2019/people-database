@@ -71,14 +71,21 @@ public class LoadingController {
 
 		dbm = new DataBaseManager();
 
+		new Thread() {
+			
+			public void run() {
+				dbm.read();
+				
+				readyLoading();
+			}
+			
+		}.start();
 	}
 	
 	//------------------------------------------------------------------------------------
 	
-	public void initialize() {
-		
-		dbm.read();
-		
+	public void readyLoading() {		
+				
 		startButton.setDisable(false);
 		
 		text.setVisible(false);
