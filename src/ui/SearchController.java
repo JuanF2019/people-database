@@ -169,7 +169,7 @@ public class SearchController {
     		dialog.setTitle("Multiple people found!");
     		
     		dialog.setContentText("Multiple people with the same criteria had been found!\n"
-    				+ "Please Type the number of one of the following\n:"
+    				+ "Please select one of the following:\n"
     				+ "(By default the first one will be selected)\n");   
     		
     		Person result = dialog.showAndWait().get();
@@ -178,7 +178,7 @@ public class SearchController {
     			
     			dbm.setCurrentPerson(result);
     			
-    			//principalController.updateEdit(true);
+    			principalController.updateEdit(true);
     			
     			success();
     			
@@ -225,9 +225,7 @@ public class SearchController {
 					
 					predictionsListViewer.setVisible(true);
 					updatePredictions();
-				}
-				
-					
+				}		
 				
 			}
 		

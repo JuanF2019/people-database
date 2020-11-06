@@ -62,7 +62,7 @@ public class DataBaseManager {
 
 	public static final String GENERATION_DATA_PATH = "data/generation_data/";
 
-	public static final String PEOPLE_DATA_PATH = "data/people_data/people.dat";
+	public static final String PEOPLE_DATA_PATH = "data/people_data/";
 
 	//------------------------------------------------------------------------------------
 
@@ -184,7 +184,7 @@ public class DataBaseManager {
 
 		surnamesTree.add(newPerson.getSurname(), newPerson);
 
-		//fullNamesTree.add(newPerson.getName() + " " + newPerson.getSurname(), newPerson);
+		fullNamesTree.add(newPerson.getName() + " " + newPerson.getSurname(), newPerson);
 
 		idsHashTable.insert(newPerson.getId(), newPerson);
 
@@ -192,8 +192,10 @@ public class DataBaseManager {
 
 		surnamesTrie.add(newPerson.getSurname());
 
-		//fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
-
+		fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
+		
+		System.out.println("Tree weight: " + namesTree.getWeight());
+		System.out.println("Trie stored words: " + ((Trie)namesTrie).getStoredWordsCount());
 	}
 
 	//------------------------------------------------------------------------------------
@@ -202,7 +204,7 @@ public class DataBaseManager {
 
 	public boolean read() {
 
-		return readPeopleData() && readGenerationData();
+		return readPeopleData() & readGenerationData();
 
 	}
 
@@ -214,52 +216,29 @@ public class DataBaseManager {
 
 		try {
 
-			File file = new File(PEOPLE_DATA_PATH);
-
+			File file = new File(PEOPLE_DATA_PATH + "people.dat");
+			
+						
 			if(file.exists()) {
+				
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));	
 
-				FileInputStream fis = new FileInputStream(file);
-
-				ObjectInputStream ois = new ObjectInputStream(fis);	
-
-				Object[] rawPeople = (Object[]) ois.readObject();
-
-				for (Object object : rawPeople) {
-
-					Person person = (Person) object;
-
-					String name = person.getName();
-
-					String surname =person.getSurname();
-
-					String fullName = name + " " + surname;
-
-					long id = person.getId();
-
-					namesTree.add(name, person);
-
-					surnamesTree.add(surname, person);
-
-					fullNamesTree.add(fullName, person);
-
-					idsHashTable.insert(id, person);
-
-					namesTrie.add(name);
-
-					surnamesTrie.add(surname);
-
-					fullNamesTrie.add(fullName);
-
-				}
-
-				ois.close();
-
+				Object[] people = (Object[]) ois.readObject();
+				
+				System.out.println(people.length);
+				
+				for (int i = 0; i < people.length; i++) {
+					savePerson((Person) people[i]);
+				} 								
+				
+				ois.close();				
+				
+				return true;				
 			}
-
-			return true;
+			return true;			
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			return false;
 
 		}
@@ -527,6 +506,9 @@ public class DataBaseManager {
 			fullNamesTree.add(newFullName, currentPerson);
 
 			fullNamesTrie.add(newFullName);		
+			
+			System.out.println("Tree weight: " + namesTree.getWeight());
+			System.out.println("Trie stored words: " + ((Trie)namesTrie).getStoredWordsCount());
 
 		}
 
@@ -545,13 +527,16 @@ public class DataBaseManager {
 	//Serialize data
 
 	public void write() throws FileNotFoundException, IOException {
+		
+		new File(PEOPLE_DATA_PATH + "people.dat").createNewFile();
+		
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PEOPLE_DATA_PATH + "people.dat"));
 
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PEOPLE_DATA_PATH));
-
-		//oos.writeObject(idsHashTable.());
-
+		oos.writeObject(idsHashTable.getAll());
+		
 		oos.close();
-
+		
+		
 	}
 
 	//------------------------------------------------------------------------------------

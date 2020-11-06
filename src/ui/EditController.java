@@ -217,13 +217,9 @@ public class EditController {
 
 		} else {
 
-			boolean created = dbm.create(name, surname, s, birthday, height, nat);
+			dbm.update(name, surname, s, birthday, height, nat);
 
-			if(created) {
-
-				success();
-
-			}
+			success();		
 
 		}
 

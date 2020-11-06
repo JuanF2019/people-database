@@ -6,12 +6,16 @@
 
 package ui;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
@@ -180,7 +184,26 @@ public class PrincipalController {
 
 	@FXML
 	void saveInformation(ActionEvent event) {
-
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setHeaderText("Do you want to save the information to disk?");
+		alert.setContentText("Note: This process may take a while");
+		alert.showAndWait();
+		
+		ButtonType result = alert.getResult();
+		
+		if(result == ButtonType.OK) {
+			try {
+				dbm.write();
+			}
+			catch (IOException e) {
+				alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText("There was an error saving data");
+				alert.setContentText("Please contact support");
+				alert.showAndWait();
+			}
+			
+		}
+		
 	}
 
 	//------------------------------------------------------------------------------------
