@@ -292,7 +292,7 @@ class TestBinarySearchTree<K, V> {
 	/*
 	 * 1. We use the setup4
 	 * 2. We compare the String
-	 * 3. Have to be different to null.
+	 * 3. Have to be different to empty String.
 	 */
 	
 	@Test
@@ -309,7 +309,7 @@ class TestBinarySearchTree<K, V> {
 	/*
 	 * 1. We use the setup4
 	 * 2. We compare the String
-	 * 3. Have to be different to null.
+	 * 3. Have to be different to empty String.
 	 */
 	
 	@Test
@@ -326,7 +326,7 @@ class TestBinarySearchTree<K, V> {
 	/*
 	 * 1. We use the setup4
 	 * 2. We compare the String
-	 * 3. Have to be different to null.
+	 * 3. Have to be different to empty String.
 	 */
 	
 	@Test
