@@ -41,11 +41,9 @@ public class PrincipalController {
 
 	// CONSTRUCTOR METHOD
 
-	public PrincipalController() {
-
-		dbm = new DataBaseManager();
-
-		dbm.read();
+	public PrincipalController(DataBaseManager dbm) {
+		
+		this.dbm = dbm;
 
 		addController = new AddController(dbm);
 
