@@ -138,11 +138,13 @@ public class AddController {
 	// GENERAL WARNING METHOD
 	 
 	public void generalWarning() {
+		
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Empty field");
 		alert.setContentText("Please be sure all the fields are fullfilled correctly.");
 		alert.showAndWait();
+		
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -150,11 +152,13 @@ public class AddController {
 	// SUCESS METHOD
 		
 	public void success() {
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Person added succesfully");
 		alert.setContentText("The person was added succesfully");
 		alert.showAndWait();
+		
 	}
 	
 	//------------------------------------------------------------------------------------

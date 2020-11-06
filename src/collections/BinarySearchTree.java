@@ -52,6 +52,7 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 		add(newNode);
 
 		return true;
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -69,7 +70,9 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 			root = newNode;	
 
 		}	
+		
 		weight++;
+		
 	}	
 
 	//------------------------------------------------------------------------------------
@@ -77,7 +80,9 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 	// ADD RECURSIVE METHOD
 
 	private void add(Node<K,V> currentNode, Node<K,V> newNode){
+		
 		if(currentNode.getKey() != null) {
+			
 			if(newNode.getKey().compareTo(currentNode.getKey()) > 0) {
 	
 				Node<K,V> right = currentNode.getRight();
@@ -117,8 +122,11 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 			} else {
 	
 				currentNode.getValues().add(newNode.getValues().get(0));
+			
 			}
+			
 		}
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -179,21 +187,20 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 						
 						return currentNode;
 						
-					}
-					else {
+					} else {
 						
 						return null;
 						
 					}
 				
-				}
-				else {
+				} else {
+					
 					if(value == null || currentNode.getValues().get(0).equals(value)) {
 
 						Node<K,V> returnNode;
 						
 						if((currentNode.getLeft() == null || currentNode.getLeft().getKey() == null) 
-								&& (currentNode.getRight() == null || currentNode.getRight().getKey() == null)) {
+							&& (currentNode.getRight() == null || currentNode.getRight().getKey() == null)) {
 
 							if(currentNode == root) {
 
@@ -278,12 +285,14 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 						weight--;	
 
 						return returnNode;	
-					}
-					else {
+						
+					} else {
+						
 						return null;
+						
 					}
+					
 				}
-
 
 			}
 
@@ -324,15 +333,14 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 			if(node!= null) {
 
 				return node.getValues();
-			}
-			else {
+				
+			} else {
 
 				return null;
 
 			}
 
-		} 
-		else {	
+		} else {	
 
 			return null;
 
@@ -365,15 +373,14 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 				}
 
 				return null;
-			}
-			else {
+				
+			} else {
 
 				return null;
 
 			}
 
-		} 
-		else {	
+		} else {	
 
 			return null;
 
@@ -413,13 +420,17 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements BinarySearch
 
 	//--------------------------------------------------------------------------------
 
-	// GET'S METHOD
+	// GET WEIGHT METHOD
 
 	public int getWeight() {	
 		
 		return weight;		
 		
 	}
+	
+	//--------------------------------------------------------------------------------
+	
+	// GET HEIGHT METHOD
 
 	public int getHeight() {
 		

@@ -9,6 +9,8 @@ package model;
 public enum SearchCriteria {
 	
 	//------------------------------------------------------------------------------------
+	
+	// ENUMERATION
 
 	NAME,
 	SURNAME,

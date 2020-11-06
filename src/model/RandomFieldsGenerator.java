@@ -50,6 +50,7 @@ public class RandomFieldsGenerator {
 	public RandomFieldsGenerator(ArrayList<String> ln, ArrayList<String> ls, ArrayList<Pair<String,Double>> lc, ArrayList<Pair<Integer,Double>> a, HashTable<Integer,Person> idsHT) {
 		
 		loadedNames = ln;
+		
 		loadedSurnames = ls;
 		
 		loadedCountries = lc;

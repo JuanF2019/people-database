@@ -39,8 +39,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 			
 			return true;
 			
-		}
-		else {
+		} else {
 
 			//Checks for balance and balance if necessary
 			AVLTreeNode<K,V> currentNode = (AVLTreeNode<K,V>)addedNode.getParent();
@@ -56,6 +55,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 			}		
 			
 			return true;
+			
 		}
 		
 	}
@@ -262,6 +262,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 				right.getLeft().setParent(node);
 
 			}
+			
 			right.setParent(parent);	//Sets null if node is root
 
 			right.setLeft(node);

@@ -45,9 +45,10 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 		addedNode.setRight(nillNode);
 		
 		if(addedNode == root || addedNode.getParent() == null) {
+			
 			return true;
-		}
-		else {
+			
+		} else {
 
 			addFixUp(addedNode);					
 
@@ -165,7 +166,6 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 				//Sends right or left, as real removed node was replaced in tree with its successor, in case is a leaf it points to nill node
 				removeFixUp((removedNode.getLeft() == nillNode)? ((RedBlackTreeNode<K, V>)removedNode.getRight()):((RedBlackTreeNode<K, V>)removedNode.getLeft()));			
 				
-				
 			}
 			
 			return true;
@@ -192,7 +192,6 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 
 				sibling = (RedBlackTreeNode<K,V>) x.getParent().getRight();
 
-
 				//Case 1: x sibling is red
 				if(sibling.getColor() == Color.RED) {
 
@@ -210,7 +209,7 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 
 				if(((RedBlackTreeNode<K, V>) sibling.getLeft()).getColor() == Color.BLACK 
 
-						&& ((RedBlackTreeNode<K, V>) sibling.getRight()).getColor() == Color.BLACK) {
+					&& ((RedBlackTreeNode<K, V>) sibling.getRight()).getColor() == Color.BLACK) {
 
 					sibling.setColor(Color.RED);
 
@@ -265,7 +264,7 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 				//Case 2: x sibling is black and sibling's children are black
 				if(((RedBlackTreeNode<K, V>) sibling.getRight()).getColor() == Color.BLACK 
 
-						&& ((RedBlackTreeNode<K, V>) sibling.getLeft()).getColor() == Color.BLACK) {
+					&& ((RedBlackTreeNode<K, V>) sibling.getLeft()).getColor() == Color.BLACK) {
 
 					sibling.setColor(Color.RED);
 
@@ -446,5 +445,7 @@ public class RedBlackTree<K extends Comparable<K>,V> extends BinarySearchTree<K,
 		}	
 
 	}	
+	
+	//------------------------------------------------------------------------------------
 
 }

@@ -37,7 +37,7 @@ public class Person implements Serializable{
 	// Constructor method of the Person class
 
 	public Person(String name, String surname, int id, 
-			Sex sex, LocalDate birthday, double height, String nationality) {
+	Sex sex, LocalDate birthday, double height, String nationality) {
 		
 		this.name = name;
 		
@@ -143,4 +143,5 @@ public class Person implements Serializable{
 	}
 
 	//------------------------------------------------------------------------------------
+	
 }

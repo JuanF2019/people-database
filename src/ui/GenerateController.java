@@ -63,17 +63,20 @@ public class GenerateController {
 			if(g==true) {
 				
 				if(dbm.getGenerationTime()>1) {
+					
 					pbt = new ProgressBarThread(pc);
+					
 					pbt.start();
 				}
 
 				success();
 
-			}
-			else {
+			} else {
 				
 				notSuccess();
+				
 			}
+			
 		}
 
 		warning();
@@ -113,11 +116,13 @@ public class GenerateController {
 	// WARNING METHOD
 
 	public void warning() {
+		
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Empty field");
 		alert.setContentText("Please be sure all the fields are fullfilled correctly.");
 		alert.showAndWait();
+		
 	}
 
 	//------------------------------------------------------------------------------------
