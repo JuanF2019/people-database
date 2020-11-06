@@ -18,7 +18,7 @@ public class Main extends Application {
 	
 	// RELATION'S WITH ANOTHER CLASS
 	
-	private PrincipalController controller;
+	private LoadingController controller;
 	
 	//------------------------------------------------------------------------------------
 	
@@ -26,7 +26,7 @@ public class Main extends Application {
 	
 	public Main() throws Exception {
 		
-		controller = new PrincipalController();
+		controller = new LoadingController();
 		
 	}
 	
@@ -39,7 +39,7 @@ public class Main extends Application {
 
 		try {
 			
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PrincipalPanel.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loadingPanel.fxml"));
 
 			fxmlLoader.setController(controller);
 			

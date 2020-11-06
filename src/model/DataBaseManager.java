@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.SplittableRandom;
 
 public class DataBaseManager {
+	
 	//------------------------------------------------------------------------------------
 
 	//Constants of the RandomFieldsGenerator class
