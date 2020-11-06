@@ -48,17 +48,47 @@ class TestBinarySearchTree<K, V> {
 		
 	}
 	
-	void setUp3() {
+	//--------------------------------------------------------------------------------
+	
+	// SETUP3
+	
+	void setup3() {
 		
 		binarySearch = new BinarySearchTree<>();
 		
 		binarySearch.add(50, 0);
+		
 		binarySearch.add(25, 0);
+		
 		binarySearch.add(75, 0);
+		
 		binarySearch.add(37, 0);
+		
 		binarySearch.add(14, 0);
+		
 		binarySearch.add(63, 0);
+		
 		binarySearch.add(80, 0);
+		
+	}
+	
+	//--------------------------------------------------------------------------------
+	
+	// SETUP4
+	
+	void setup4() {
+		
+		setup1();
+		
+		binarySearch.add(1, 15);
+		
+		binarySearch.add(2, 30);
+		
+		binarySearch.add(3, 45);
+		
+		binarySearch.add(4, 60);
+		
+		binarySearch.add(5, 75);
 		
 	}
 	
@@ -155,6 +185,11 @@ class TestBinarySearchTree<K, V> {
 	
 	//--------------------------------------------------------------------------------
 	
+	/*
+	 * We use "setup2" to add 50 thousand of elements, and after that remove only
+	 * 5 thousand. So, the original weight is higher than the another one.
+	 */
+	
 	@Test
 	void testRemove2() {
 		
@@ -176,11 +211,18 @@ class TestBinarySearchTree<K, V> {
 	
 	//--------------------------------------------------------------------------------
 	
+	/*
+	 * We use "setup3" to add seven elements. 
+	 * We will compare the information.
+	 */
+	
 	@Test
 	void testRemove3() {
-		setUp3();
+		
+		setup3();
 		
 		assertTrue(binarySearch.remove(50, 0));
+		
 		assertTrue(binarySearch.remove(25, 0));
 		
 		assertEquals(5,binarySearch.getWeight());
@@ -188,62 +230,111 @@ class TestBinarySearchTree<K, V> {
 		Node<Integer,Integer> root = binarySearch.getRoot();
 		
 		assertEquals(5,binarySearch.getWeight());
+		
 		assertEquals(63, root.getKey());
+		
 		assertNull(root.getRight().getLeft());
+		
 		assertNull(root.getLeft().getRight());
 		
 	}
 	
 	//--------------------------------------------------------------------------------
 	
+	/* 
+	 * 1. We use the setup3
+	 * 2. With assert false, we compare the information in the search method.
+	 */
+	
 	@Test
 	void testSearch1() {
 		
+		setup3();
 		
+		assertFalse(binarySearch.search(14, 0) == 10);
 		
 	}
 	
 	//--------------------------------------------------------------------------------
+	
+	/* 
+	 * 1. We use the setup3
+	 * 2. With assert false, we compare the information in the search method.
+	 */
 	
 	@Test
 	void testSearch2() {
 		
+		setup3();
 		
+		assertNull(binarySearch.search(105));
 		
 	}
 	
 	//--------------------------------------------------------------------------------
+	
+	/* 
+	 * 1. We use the setup3
+	 * 2. With assert false, we compare the information in the search method.
+	 */
 	
 	@Test
 	void testSearch3() {
 		
+		setup3();
 		
+		assertNotNull(binarySearch.search(75));
 		
 	}
 	
 	//--------------------------------------------------------------------------------
+	
+	/*
+	 * 1. We use the setup4
+	 * 2. We compare the String
+	 * 3. Have to be different to null.
+	 */
 	
 	@Test
 	void testPreOrder() {
 		
+		setup4();
+		
+		assertTrue(binarySearch.preOrder() != "");
 		
 	}
 	
 	//--------------------------------------------------------------------------------
+	
+	/*
+	 * 1. We use the setup4
+	 * 2. We compare the String
+	 * 3. Have to be different to null.
+	 */
 	
 	@Test
 	void testInOrder() {
 		
+		setup4();
 		
+		assertTrue(binarySearch.inOrder() != "");
 		
 	}
 	
 	//--------------------------------------------------------------------------------
 	
+	/*
+	 * 1. We use the setup4
+	 * 2. We compare the String
+	 * 3. Have to be different to null.
+	 */
+	
 	@Test
 	void testPostOrden() {
 		
+		setup4();
 		
+		assertTrue(binarySearch.postOrder() != "");
 		
 	}
 	

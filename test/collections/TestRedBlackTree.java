@@ -23,12 +23,16 @@ class TestRedBlackTree {
 		redBlackTree = new RedBlackTree<Integer,Integer>();
 
 	}
+	
+	//------------------------------------------------------------------------------------
 
 	void setup2() {
 
 	//	redBlackTree = new RedBlackTree<String,String>();
 
 	}
+	
+	//------------------------------------------------------------------------------------
 	
 	void setup3() {
 
@@ -58,9 +62,12 @@ class TestRedBlackTree {
 	void testAdd1() {
 
 		setup1();
+		
 		redBlackTree.add(13, 78);
+		
 		assertTrue(redBlackTree.getWeight()==1);
 		assertTrue(redBlackTree.getHeight()==1);
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -134,7 +141,9 @@ class TestRedBlackTree {
 		setup1();
 
 		assertFalse(redBlackTree.remove(65, 22));
+		
 		assertTrue(redBlackTree.isEmpty()==true);
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -145,8 +154,11 @@ class TestRedBlackTree {
 		setup3();
 		
 		System.out.println(redBlackTree.inOrder());
+		
 		assertTrue(redBlackTree.remove(81, 9));
+		
 		System.out.println(redBlackTree.inOrder());
+		
 		assertTrue(redBlackTree.remove(72, 18));
 		assertTrue(redBlackTree.remove(63, 27));
 		assertTrue(redBlackTree.remove(54, 36));
