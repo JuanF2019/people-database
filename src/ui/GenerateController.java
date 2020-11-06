@@ -55,36 +55,40 @@ public class GenerateController {
 	// GENERATE METHOD
 
 	@FXML
-	void generate(ActionEvent event) {
+	void generate(ActionEvent event) throws InterruptedException {
 
 		if(!numberGenerateText.getText().equals("")) {
-			
+
 			try {
-				
+
 				final int peopleNumber = Integer.parseInt(numberGenerateText.getText());
-				
+
 				boolean g = false;
-				
+
 				new Thread() {
 					public void run(){
-						
+
 						dbm.generatePeople(peopleNumber);
-						
+
 					}
 				}.start();
-				
+
+				pbt = new ProgressBarThread(pc);
+				pbt.start();
+
+
 				/*
 				if(g) success();
 				else notSuccess();
-				*/
+				 */
 			}
 			catch(NumberFormatException ex) {
-				
+
 				notSuccess();
-				
+
 			}
-			
-			
+
+
 		}
 		else {
 			warning();
@@ -105,7 +109,7 @@ public class GenerateController {
 		alert.showAndWait();
 
 	}
-	
+
 	//------------------------------------------------------------------------------------
 
 	// NOT SUCCESS METHOD
@@ -119,19 +123,19 @@ public class GenerateController {
 		alert.showAndWait();
 
 	}
-	
+
 	//------------------------------------------------------------------------------------
 
 	// WARNING METHOD
 
 	public void warning() {
-		
+
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Empty field");
 		alert.setContentText("Please be sure all the fields are fullfilled correctly and a number is typed.");
 		alert.showAndWait();
-		
+
 	}
 
 	//------------------------------------------------------------------------------------

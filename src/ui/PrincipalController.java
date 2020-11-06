@@ -168,6 +168,8 @@ public class PrincipalController {
 		loadEditTab();
 
 		loadGenerateTab();
+		
+		progressBar.setProgress(0);
 
 	}
 
@@ -185,7 +187,7 @@ public class PrincipalController {
 	
 	//UPDATES THE PROGRESS BAR
 	
-	public void updateProgressBar(long time) {
+	public void updateProgressBar(double time) {
 		progressBar.setProgress(time);
 	}
 	

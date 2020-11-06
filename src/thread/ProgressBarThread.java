@@ -25,6 +25,8 @@ public class ProgressBarThread extends Thread {
 	//Attributes of the ProgressBarThread class
 
 	private PrincipalController controller;
+	
+	private double time;
 
 	//------------------------------------------------------------------------------------
 
@@ -46,11 +48,9 @@ public class ProgressBarThread extends Thread {
 	@Override
 	public void run() {
 
-		long time = 0;
-
 		while(time<=1) {
 
-				time+= 0.005;
+				time+= 0.001;
 	
 				controller.updateProgressBar(time);
 	

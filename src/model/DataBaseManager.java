@@ -133,7 +133,7 @@ public class DataBaseManager {
 	public long getGenerationTime() {
 		return generationTime;
 	}
-
+	
 	public ArrayList<String> getCountries(){
 		return countries;
 	}
