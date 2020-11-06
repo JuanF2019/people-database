@@ -680,10 +680,19 @@ public class DataBaseManager {
 			
 			long t1 = System.currentTimeMillis();
 		
+			int countryAmount = 0;
+			String countryName = "";
+			
 			for (int i = 0; i < n; i++) {
-				int countryAmount = (int) Math.round(loadedCountries.get(currentCountry).getValue()*n);
 				
-				String countryName = loadedCountries.get(currentCountry).getKey();
+				if(currentCountry == loadedCountries.size()) {
+					countryAmount = n - i;
+					countryName = loadedCountries.get(currentCountry-1).getKey();
+				}
+				else {
+					countryAmount = (int) Math.round(loadedCountries.get(currentCountry).getValue()*n);
+					countryName = loadedCountries.get(currentCountry).getKey();
+				}			
 				
 				int j;
 				
@@ -697,9 +706,9 @@ public class DataBaseManager {
 					
 				}
 
+				currentCountry++;
+				
 				i += j - 1;		
-				System.out.println(i);
-
 			}
 
 			savedPeopleNumber += n;
