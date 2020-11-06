@@ -22,7 +22,7 @@ public class Person implements Serializable{
 
 	private String surname;
 
-	private int id;
+	private long id;
 
 	private Sex sex;
 
@@ -36,7 +36,7 @@ public class Person implements Serializable{
 
 	// Constructor method of the Person class
 
-	public Person(String name, String surname, int id, 
+	public Person(String name, String surname, long id, 
 	Sex sex, LocalDate birthday, double height, String nationality) {
 		
 		this.name = name;
@@ -67,7 +67,7 @@ public class Person implements Serializable{
 		return surname;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -99,7 +99,7 @@ public class Person implements Serializable{
 		this.surname = surname;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -120,16 +120,6 @@ public class Person implements Serializable{
 	}
 
 	//------------------------------------------------------------------------------------
-
-	//Operations of class Person
-
-	//Clones the person
-
-	public Person clone() {
-		return new Person(name,surname,id,sex,birthday,height,nationality);
-	}
-
-	//------------------------------------------------------------------------------------
 	
 	public boolean equals(Person anotherPerson) {
 			
@@ -141,7 +131,13 @@ public class Person implements Serializable{
 				height == anotherPerson.height &&
 				nationality.equals(anotherPerson.nationality);
 	}
-
+		
+	//------------------------------------------------------------------------------------
+	
+	public String toString() {
+		return "Full Name: " + name + " " + surname + " Code: " + id;
+	}
+	
 	//------------------------------------------------------------------------------------
 	
 }

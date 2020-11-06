@@ -20,7 +20,6 @@ public class TestDataBaseManager {
 
 	private DataBaseManager dbm;
 	
-	private RandomFieldsGenerator rfg;
 	
 	//------------------------------------------------------------------------------------
 	
@@ -31,8 +30,6 @@ public class TestDataBaseManager {
 		dbm = new DataBaseManager();
 		
 		dbm.readGenerationData();
-		
-		rfg = dbm.getRandomFieldsGenerator();
 		
 	}
 	
@@ -62,13 +59,18 @@ public class TestDataBaseManager {
 		
 		LocalDate date = LocalDate.now();
 		
+		dbm.generatePeople(100000000);
+		
+		/*
 		for(int i = 0 ; i < Integer.MAX_VALUE ; i ++) {
 			
-			dbm.create("Alejandra", "Diaz", Sex.FEMALE, date, 175.0, "Colombia");
+			Person p = new Person("Alejandrra", "Diaz",i, Sex.FEMALE, date, 178.0, "Colombia");
+			
+			dbm.addPerson(p);
 			
 			System.out.println(i + 1);
 			
-		}
+		}*/
 		
 		assertFalse(dbm.create("Juan", "Martinez", Sex.MALE, date, 177.0, "Colombia"));
 		

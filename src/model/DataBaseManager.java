@@ -19,8 +19,38 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.SplittableRandom;
 
 public class DataBaseManager {
+	//------------------------------------------------------------------------------------
+
+	//Constants of the RandomFieldsGenerator class
+
+	private static final double MIN_HEIGHT = 140;
+
+	private static final double MAX_HEIGHT = 200;
+	
+	//------------------------------------------------------------------------------------
+	
+	//Attributes of the RandomFieldsGenerator class
+
+	private ArrayList<String> loadedNames;
+
+	private ArrayList<String> loadedSurnames;
+
+	//------------------------------------------------------------------------------------
+	
+	//Relations of the RandomFieldsGenerator class
+	
+	//Saves country name and accumulative probability
+	private ArrayList<Pair<String,Double>> loadedCountries;	
+
+	//Age stored represents the maximum age and accumulative probability
+	private ArrayList<Pair<Integer,Double>> loadedAges;
+	
+	private SplittableRandom sr;
+	
+	//------------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------------
 
@@ -62,13 +92,9 @@ public class DataBaseManager {
 
 	private BinarySearchTreeInterface<String,Person> fullNamesTree;
 
-	private HashTableInterface<Integer,Person> idsHashTable;
+	private HashTableInterface<Long,Person> idsHashTable;
 
 	private Person currentPerson;
-
-	private RandomFieldsGenerator randomFieldsGenerator;
-
-
 
 	//------------------------------------------------------------------------------------
 
@@ -91,6 +117,8 @@ public class DataBaseManager {
 		fullNamesTree = new AVLTree<>();
 
 		countries = new ArrayList<>();
+		
+		sr = new SplittableRandom();
 
 	}
 
@@ -129,8 +157,8 @@ public class DataBaseManager {
 			return false;
 
 		} else {
-
-			Person p = new Person(name, ln, randomFieldsGenerator.id(), s, ld, height, nat);
+			
+			Person p = new Person(name, ln, id(), s, ld, height, nat);
 
 			savePerson(p);
 
@@ -142,6 +170,10 @@ public class DataBaseManager {
 
 	}
 
+	public void addPerson(Person p) {
+		savePerson(p);
+	}
+	
 	//------------------------------------------------------------------------------------
 
 	// Save person on the system
@@ -152,7 +184,7 @@ public class DataBaseManager {
 
 		surnamesTree.add(newPerson.getSurname(), newPerson);
 
-		fullNamesTree.add(newPerson.getName() + " " + newPerson.getSurname(), newPerson);
+		//fullNamesTree.add(newPerson.getName() + " " + newPerson.getSurname(), newPerson);
 
 		idsHashTable.insert(newPerson.getId(), newPerson);
 
@@ -160,7 +192,7 @@ public class DataBaseManager {
 
 		surnamesTrie.add(newPerson.getSurname());
 
-		fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
+		//fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
 
 	}
 
@@ -202,7 +234,7 @@ public class DataBaseManager {
 
 					String fullName = name + " " + surname;
 
-					int id = person.getId();
+					long id = person.getId();
 
 					namesTree.add(name, person);
 
@@ -240,27 +272,27 @@ public class DataBaseManager {
 
 	public boolean readGenerationData() {
 
-		ArrayList<Pair<Integer,Double>> loadedAges = loadAges();
+		loadedAges = loadAges();
 
 		if(loadedAges == null)
 			return false;		
 
-		ArrayList<String> loadedNames = loadNames();
+		loadedNames = loadNames();
 
 		if(loadedNames == null)
 			return false;
 
-		ArrayList<String> loadedSurnames = loadSurnames();
+		loadedSurnames = loadSurnames();
 
 		if(loadedSurnames == null)
 			return false;
 
-		ArrayList<Pair<String,Double>> loadedCountries = loadCountries();
+		
+		
+		loadedCountries = loadCountries();
 
 		if(loadedCountries == null)
 			return false;
-
-		randomFieldsGenerator = new RandomFieldsGenerator(loadedSurnames, loadedSurnames, loadedCountries, loadedAges, (HashTable<Integer,Person>)idsHashTable);
 
 		return true;
 
@@ -423,17 +455,13 @@ public class DataBaseManager {
 
 			}
 
-			double accumulatedProbability = 0.0;
-
 			double probability = 0.0;
 
 			for (Pair<String,Double> pair: loadedCountries) {
 
 				probability = pair.getValue().doubleValue()/acumulatedSum;
 
-				accumulatedProbability += probability;
-
-				pair.setValue(Double.valueOf(accumulatedProbability));
+				pair.setValue(Double.valueOf(probability));
 
 			}
 
@@ -520,7 +548,7 @@ public class DataBaseManager {
 
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PEOPLE_DATA_PATH));
 
-		oos.writeObject(idsHashTable.getAll());
+		//oos.writeObject(idsHashTable.());
 
 		oos.close();
 
@@ -540,7 +568,7 @@ public class DataBaseManager {
 
 			String fullName = name + " " + surname;
 
-			int id = currentPerson.getId();
+			long id = currentPerson.getId();
 
 			namesTree.remove(name, currentPerson);
 
@@ -595,7 +623,12 @@ public class DataBaseManager {
 
 		case ID:
 			persons = new ArrayList<Person>();
-			persons.add(idsHashTable.search(Integer.parseInt(data)));
+			Person p = idsHashTable.search(Long.parseLong(data));
+			
+			if(p!= null) {
+				persons.add(p);
+			}
+			
 			break;
 
 		}
@@ -637,39 +670,35 @@ public class DataBaseManager {
 
 	//------------------------------------------------------------------------------------
 
-	// Generate people method
-
+	// Generate people method	
+	
 	public boolean generatePeople(int n) {
 
 		if(MAX_PEOPLE_NUMBER - savedPeopleNumber - n >= 0) {
 
+			int currentCountry = 0;
+			
 			long t1 = System.currentTimeMillis();
-
+		
 			for (int i = 0; i < n; i++) {
+				int countryAmount = (int) Math.round(loadedCountries.get(currentCountry).getValue()*n);
+				
+				String countryName = loadedCountries.get(currentCountry).getKey();
+				
+				int j;
+				
+				for (j = 0; j < countryAmount; j++) {
+					
+					Person newPerson = generatePerson(countryName);
 
-				Person newPerson = generatePerson();
+					savePerson(newPerson);
+					
+					System.out.println(i+j);					
+					
+				}
 
-				String name = newPerson.getName();
-
-				String surname = newPerson.getSurname();
-
-				int id = newPerson.getId();
-
-				namesTrie.add(name);
-
-				namesTree.add(name, newPerson);
-
-				surnamesTrie.add(surname);
-
-				surnamesTree.add(surname, newPerson);
-
-				String fullName = name + " " + surname;
-
-				fullNamesTrie.add(fullName);
-
-				fullNamesTree.add(fullName,newPerson);
-
-				idsHashTable.insert(id,newPerson);
+				i += j - 1;		
+				System.out.println(i);
 
 			}
 
@@ -693,25 +722,25 @@ public class DataBaseManager {
 
 	// Generate person method
 
-	private Person generatePerson() {
+	private Person generatePerson(String countryName) {
 
-		String name = randomFieldsGenerator.name();
+		String name = name();
 
-		String surname = randomFieldsGenerator.surname();
+		String surname = surname();
 
-		int id = randomFieldsGenerator.id();
+		long id = id();
 
-		Sex sex = randomFieldsGenerator.sex();
+		Sex sex = sex();
 
-		LocalDate birthday = randomFieldsGenerator.birthday();
+		LocalDate birthday = birthday();
 
-		double height = randomFieldsGenerator.height();
+		double height = height();
 
-		String nationality = randomFieldsGenerator.nationality();	
+		String nationality = countryName;	
 
 		return new Person(name, surname, id, sex, birthday, height, nationality);
 
-	}
+	}	
 	
 	//------------------------------------------------------------------------------------
 	
@@ -720,15 +749,99 @@ public class DataBaseManager {
 	public Person getCurrentPerson() {
 		return currentPerson;
 	}
-	
+
+	//------------------------------------------------------------------------------------
+
 	//------------------------------------------------------------------------------------
 	
-	// GER RANDOM FIELDS GENERATOR
-
-	public RandomFieldsGenerator getRandomFieldsGenerator() {
-		return randomFieldsGenerator;		
+	//Operations of the RandomFieldsGenerator class
+	
+	public String name() {
+		return loadedNames.get((int)(sr.nextDouble()*loadedNames.size()));
 	}
-
+	
+	
+	public String surname() {
+		return loadedSurnames.get((int)(sr.nextDouble()*loadedSurnames.size()));
+	}
+	
 	//------------------------------------------------------------------------------------
+	
+	// Local date method
 
+	public LocalDate birthday() {
+		
+		double random = sr.nextDouble();
+
+		int minAge = - 1;
+		
+		int maxAge = 0;
+		
+		boolean check = false;
+
+		//
+		for (int i = 0; i < loadedAges.size() && !check; i++) {
+			
+			minAge = maxAge;
+			
+			maxAge = loadedAges.get(i).getKey();
+			
+			if(random < loadedAges.get(i).getValue()) {
+				
+				check = true;
+				
+			}
+			
+		}
+
+		int age = (int) Math.round(sr.nextDouble()*(maxAge - minAge + 1) + minAge);
+
+		LocalDate now = LocalDate.now();
+
+		LocalDate birthday = now.minusYears(age);
+
+		if(birthday.isLeapYear()) {
+			
+			birthday.minusDays((long)random);
+			
+		} else {
+			
+			birthday.minusDays((long)random);
+			
+		}
+
+		return birthday;
+	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// Id method
+
+	public long id() {
+		
+		return System.currentTimeMillis();
+		
+	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// Gender method
+
+	public Sex sex() {
+		
+		return(sr.nextDouble() < 0.5)? Sex.MALE:Sex.FEMALE;
+		
+	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// Height method
+
+	public double height() {
+		
+		return (sr.nextDouble()*(MAX_HEIGHT-MIN_HEIGHT+1) + MIN_HEIGHT);
+		
+	}
+	
+	//------------------------------------------------------------------------------------
 }

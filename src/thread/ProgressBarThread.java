@@ -50,21 +50,21 @@ public class ProgressBarThread extends Thread {
 
 		while(time<=1) {
 
-			time+= 0.005;
-
-			controller.updateProgressBar(time);
-
-			try {
-
-				sleep(10);
-
-			} catch (InterruptedException e) {
-
-				// TODO Auto-generated catch block
-
-				e.printStackTrace();
-
-			}
+				time+= 0.005;
+	
+				controller.updateProgressBar(time);
+	
+				try {
+	
+					sleep(10);
+	
+				} catch (InterruptedException e) {
+	
+					// TODO Auto-generated catch block
+	
+					e.printStackTrace();
+	
+				}
 
 		}
 

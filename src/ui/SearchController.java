@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -64,6 +65,9 @@ public class SearchController {
     @FXML
     private ComboBox<String> searchComboBox;
     
+    @FXML
+    private Label predictionCount;
+    
 	
     //------------------------------------------------------------------------------------
     
@@ -95,9 +99,16 @@ public class SearchController {
     		
     		if(predictions != null) {
     			
-    			predictionsListViewer.getItems().addAll(dbm.getPredictions(prefix, searchCriteria));
+    			for (int i = 0; i < predictions.size() && i < 100; i++) {
+    				
+					predictionsListViewer.getItems().add(predictions.get(i));
+					
+				}
+    			
+    			
     		}   
     		
+    		predictionCount.setText(Integer.toString(predictions.size()));
     	}  
     	
     }    
@@ -125,11 +136,14 @@ public class SearchController {
     	} else {
     	
     		searchCriteria = SearchCriteria.ID;
+    		predictionsListViewer.setVisible(false);
     	}
     	
     	searchTextField.clear();
     	
-    	predictionsListViewer.setItems(null);
+    	predictionsListViewer.getItems().clear();
+    	
+    	predictionsListViewer.getSelectionModel().clearSelection();
     	
     }
     
@@ -203,9 +217,17 @@ public class SearchController {
 
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				
-				System.out.println(newValue);
+				if(newValue == null || newValue.isEmpty() || searchCriteria == SearchCriteria.ID) {
+					predictionsListViewer.setVisible(false);
+					predictionCount.setText("0");
+				}
+				else {
+					
+					predictionsListViewer.setVisible(true);
+					updatePredictions();
+				}
 				
-				updatePredictions();		
+					
 				
 			}
 		
@@ -214,9 +236,7 @@ public class SearchController {
 		predictionsListViewer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				
-				System.out.println(newValue);
-				
+								
 				searchTextField.setText(newValue);
 				
 			}

@@ -6,6 +6,7 @@
 
 package ui;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -57,29 +58,37 @@ public class GenerateController {
 	void generate(ActionEvent event) {
 
 		if(!numberGenerateText.getText().equals("")) {
-
-			boolean g = dbm.generatePeople(Integer.parseInt(numberGenerateText.getText()));
-
-			if(g==true) {
+			
+			try {
 				
-				if(dbm.getGenerationTime()>1) {
-					
-					pbt = new ProgressBarThread(pc);
-					
-					pbt.start();
-				}
-
-				success();
-
-			} else {
+				final int peopleNumber = Integer.parseInt(numberGenerateText.getText());
+				
+				boolean g = false;
+				
+				new Thread() {
+					public void run(){
+						
+						dbm.generatePeople(peopleNumber);
+						
+					}
+				}.start();
+				
+				/*
+				if(g) success();
+				else notSuccess();
+				*/
+			}
+			catch(NumberFormatException ex) {
 				
 				notSuccess();
 				
 			}
 			
+			
 		}
-
-		warning();
+		else {
+			warning();
+		}	
 
 	}
 
@@ -120,7 +129,7 @@ public class GenerateController {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Empty field");
-		alert.setContentText("Please be sure all the fields are fullfilled correctly.");
+		alert.setContentText("Please be sure all the fields are fullfilled correctly and a number is typed.");
 		alert.showAndWait();
 		
 	}

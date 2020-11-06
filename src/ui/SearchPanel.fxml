@@ -51,11 +51,11 @@
          <font>
             <Font size="15.0" />
          </font></Label>
-      <Label layoutX="118.0" layoutY="125.0" text="0" textFill="WHITE">
+      <Label fx:id="predictionCount" layoutX="118.0" layoutY="125.0" text="0" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font></Label>
       <TextField fx:id="searchTextField" layoutX="247.0" layoutY="123.0" prefHeight="25.0" prefWidth="200.0" />
-      <ListView fx:id="predictionsListViewer" layoutX="247.0" layoutY="146.0" prefHeight="243.0" prefWidth="200.0" />
+      <ListView fx:id="predictionsListViewer" layoutX="247.0" layoutY="146.0" prefHeight="243.0" prefWidth="200.0" visible="false" />
                      </children>
                   </AnchorPane>

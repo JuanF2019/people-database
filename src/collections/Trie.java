@@ -19,8 +19,6 @@ public class Trie implements TrieInterface, Serializable {
 
 	public static final int ASCII_CHARACTER_COUNT = 128;
 
-	private static final int MAX_PREDICTIONS = 100;
-
 	private TrieNode root;	
 
 	private int storedWords;
@@ -229,41 +227,37 @@ public class Trie implements TrieInterface, Serializable {
 	//GET PREDICTIONS METHOD (PRIVATE)
 	
 	private ArrayList<String> getPredictions(String prefix, TrieNode currentNode, int length, int level, ArrayList<String> predictions){
-		
-		if(predictions.size() < MAX_PREDICTIONS){
-			
-			if(currentNode == null) {
-				
-				return predictions;
-			}	
-			
-			if(level == length) {
-
-				if(currentNode.getEndOfWords() > 0 ) {
 					
-					predictions.add(prefix);
-					
-				}
-
-				TrieNode[] children = currentNode.getChildren();
-
-				for (int i = 0; i < children.length; i++) {
-
-					getPredictions(prefix + Character.toString((char)i), children[i], length + 1, level + 1, predictions);
-
-				}
-
-				return predictions;	
+		if(currentNode == null) {
 				
-			}		
-
-			getPredictions(prefix,currentNode.getChildren()[prefix.charAt(level)],length,level+1, predictions);		
-
 			return predictions;
+		}	
 			
-		}
-		
+		if(level == length) {
+
+			if(currentNode.getEndOfWords() > 0 ) {
+					
+				predictions.add(prefix);
+					
+			}
+
+			TrieNode[] children = currentNode.getChildren();
+
+			for (int i = 0; i < children.length; i++) {
+
+				getPredictions(prefix + Character.toString((char)i), children[i], length + 1, level + 1, predictions);
+
+			}
+
+			return predictions;	
+				
+		}		
+
+		getPredictions(prefix,currentNode.getChildren()[prefix.charAt(level)],length,level+1, predictions);		
+
 		return predictions;
+			
+		
 		
 	}
 

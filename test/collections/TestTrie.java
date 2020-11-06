@@ -678,15 +678,11 @@ class TestTrie {
 
 		ArrayList<String> predictions = trie.getPredictions("");
 		
-		System.out.println(predictions);
-		
-		assertTrue(predictions.size() <= 100);
+		assertTrue(predictions.size() > 0);
 
 		predictions = trie.getPredictions("A");
 		
-		System.out.println(predictions);
-		
-		assertTrue(predictions.size() <= 100);
+		assertTrue(predictions.size() > 0);
 		
 	}
 
