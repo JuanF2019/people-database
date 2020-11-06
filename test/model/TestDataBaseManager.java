@@ -20,7 +20,6 @@ public class TestDataBaseManager {
 
 	private DataBaseManager dbm;
 	
-	
 	//------------------------------------------------------------------------------------
 	
 	// Setup 1
@@ -59,20 +58,28 @@ public class TestDataBaseManager {
 		
 		LocalDate date = LocalDate.now();
 		
-		dbm.generatePeople(100000000);
+		assertTrue(dbm.create("Alejandra", "Diaz", Sex.FEMALE, date, 178.0, "Colombia"));
 		
-		/*
-		for(int i = 0 ; i < Integer.MAX_VALUE ; i ++) {
-			
-			Person p = new Person("Alejandrra", "Diaz",i, Sex.FEMALE, date, 178.0, "Colombia");
-			
-			dbm.addPerson(p);
-			
-			System.out.println(i + 1);
-			
-		}*/
+		assertTrue(dbm.create("Juan", "Martinez", Sex.MALE, date, 177.0, "Colombia"));
 		
-		assertFalse(dbm.create("Juan", "Martinez", Sex.MALE, date, 177.0, "Colombia"));
+		assertTrue(dbm.create("Susana", "Yugueros", Sex.FEMALE, date, 165.0, "Colombia"));
+		
+		assertTrue(dbm.create("David", "Rodriguez", Sex.MALE, date, 170.0, "Colombia"));
+		
+		assertTrue(dbm.create("Erika", "Osorio", Sex.FEMALE, date, 172.0, "Colombia"));
+		
+	}
+	
+	//------------------------------------------------------------------------------------
+	
+	@Test
+	void testRead() {
+		
+		setup1();
+		
+		testCreate2();
+		
+		assertTrue(dbm.read());
 		
 	}
 	
