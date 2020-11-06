@@ -203,8 +203,7 @@ public class Trie implements TrieInterface, Serializable {
 		if(predictions.size() < MAX_PREDICTIONS){
 			if(currentNode == null) {
 				return predictions;
-			}
-					
+			}					
 			if(level == length) {
 				
 				if(currentNode.getEndOfWords() > 0 ) {
@@ -214,7 +213,9 @@ public class Trie implements TrieInterface, Serializable {
 				TrieNode[] children = currentNode.getChildren();
 				
 				for (int i = 0; i < children.length; i++) {
+					
 					getPredictions(prefix + Character.toString((char)i), children[i], length + 1, level + 1, predictions);
+					
 				}
 				
 				return predictions;			

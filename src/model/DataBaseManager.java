@@ -88,7 +88,7 @@ public class DataBaseManager {
 		
 		idsHashTable = new HashTable<>();
 		
-		fullNamesTree = new RedBlackTree<>();
+		fullNamesTree = new AVLTree<>();
 		
 		countries = new ArrayList<>();
 		
@@ -709,6 +709,10 @@ public class DataBaseManager {
 
 	public Person getCurrentPerson() {
 		return currentPerson;
+	}
+
+	public RandomFieldsGenerator getRandomFieldsGenerator() {
+		return randomFieldsGenerator;		
 	}
 	
 	//------------------------------------------------------------------------------------

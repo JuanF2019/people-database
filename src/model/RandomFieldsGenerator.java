@@ -133,7 +133,7 @@ public class RandomFieldsGenerator {
 			
 			id = (int) Math.round((Math.random()*(DataBaseManager.MAX_PEOPLE_NUMBER+0.0)));
 			
-		} while(idsHashTable.search(id) == null);
+		} while(idsHashTable.search(id) != null);
 
 		return id;
 		

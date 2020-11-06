@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="450.0" fitWidth="700.0" pickOnBounds="true">
          <image>
             <Image url="@../../img/image-5.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="187.0" layoutY="125.0" text="Type the number of people you want to generate" textFill="#323232">
+      <Label layoutX="187.0" layoutY="124.0" text="Type the number of people you want to generate" textFill="#323232">
          <font>
             <Font size="15.0" />
          </font>

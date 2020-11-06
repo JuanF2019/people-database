@@ -127,6 +127,10 @@ public class SearchController {
     		searchCriteria = SearchCriteria.ID;
     	}
     	
+    	searchTextField.clear();
+    	
+    	predictionsListViewer.setItems(null);
+    	
     }
     
     //------------------------------------------------------------------------------------
@@ -199,7 +203,9 @@ public class SearchController {
 
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				
-				updatePredictions();
+				System.out.println(newValue);
+				
+				updatePredictions();		
 				
 			}
 		
@@ -208,6 +214,8 @@ public class SearchController {
 		predictionsListViewer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				
+				System.out.println(newValue);
 				
 				searchTextField.setText(newValue);
 				
