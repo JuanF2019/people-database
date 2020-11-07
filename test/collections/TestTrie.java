@@ -74,6 +74,7 @@ class TestTrie {
 		trie = new Trie();
 
 		for(int i = 0; i< 2; i++) {
+			
 			trie.add("AAAA");
 			trie.add("AAA");
 			trie.add("AABB");
@@ -82,6 +83,7 @@ class TestTrie {
 			trie.add("CA");
 			trie.add("CAI");
 			trie.add("CHI");
+			
 		}
 
 	}
@@ -95,6 +97,7 @@ class TestTrie {
 		trie = new Trie();
 
 		for(int i = 0 ; i < 10000; i++) {
+			
 			String word = "";
 
 			word += Character.toString((char)(Math.random()*Trie.ASCII_CHARACTER_COUNT));
@@ -103,7 +106,9 @@ class TestTrie {
 			word += Character.toString((char)(Math.random()*Trie.ASCII_CHARACTER_COUNT));
 
 			trie.add(word);
+			
 		}
+		
 	}
 	//------------------------------------------------------------------------------------
 	
@@ -276,9 +281,6 @@ class TestTrie {
 		assertEquals(11,trie.getStoredWordsCount());	
 
 	}
-	
-	//System.out.println("temp: " + temp.getCharacter());
-	//System.out.println("char: " + chars[i]);
 	
 	//------------------------------------------------------------------------------------
 	
