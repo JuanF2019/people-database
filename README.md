@@ -8,7 +8,7 @@ Finally, if there is any kind of misunderstanding with the information, the desi
 ## Program Requirements
 
 * Java 8 and JavaFX 8.
-* Eclipse.
+* Eclipse (2020-06 or older).
 
 
 ## Using the program
