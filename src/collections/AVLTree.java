@@ -68,7 +68,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> im
 
 		int nodeBF = node.getBalanceFactor();
 
-		if(Math.abs(nodeBF) > 1 && node != null) {
+		if(Math.abs(nodeBF) > 1 ) {
 
 			if(nodeBF > 1 && node.getRight() != null) {
 
