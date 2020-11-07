@@ -128,6 +128,8 @@ public class EditController {
 
 	@FXML
 	void deleteCurrentPerson(ActionEvent event) {
+		
+		long t1 = System.currentTimeMillis();
 
 		if(dbm.delete()) {
 
@@ -140,6 +142,10 @@ public class EditController {
 			unexpectedError();
 
 		}	
+		
+		long t2 = System.currentTimeMillis();
+		
+		principalController.updateTime(t2-t1);
 
 	}
 
@@ -178,7 +184,8 @@ public class EditController {
 
 			unexpectedError();
 
-		} 
+		} 		
+		
 
 	}
 
@@ -188,6 +195,8 @@ public class EditController {
 
 	@FXML
 	void saveChanges(ActionEvent event) {
+		
+		long t1 = System.currentTimeMillis();
 
 		String name = editNameTextField.getText();
 
@@ -232,6 +241,10 @@ public class EditController {
 			success();			
 
 		}
+		
+		long t2 = System.currentTimeMillis();
+		
+		principalController.updateTime(t2-t1);
 
 	}
 
@@ -421,12 +434,14 @@ public class EditController {
 
 	//------------------------------------------------------------------------------------
 	
+	//SAVE IMAGE METHOD
+	
 	public void saveImage(String imageUrl) throws IOException {
 		URL url = new URL(imageUrl);
 		
 		URLConnection urlConn = url.openConnection();
 	    urlConn.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-	    String contentType = urlConn.getContentType();
+	    //String contentType = urlConn.getContentType();
 	    //System.out.println("contentType:" + contentType);
 	    
 		

@@ -56,7 +56,9 @@ public class GenerateController {
 
 	@FXML
 	void generate(ActionEvent event) throws InterruptedException {
-
+		
+		long t1 = System.currentTimeMillis();
+		
 		if(!numberGenerateText.getText().equals("")) {
 
 			try {
@@ -93,6 +95,10 @@ public class GenerateController {
 		else {
 			warning();
 		}	
+		
+		long t2 = System.currentTimeMillis();
+		
+		pc.updateTime(t2-t1);
 
 	}
 

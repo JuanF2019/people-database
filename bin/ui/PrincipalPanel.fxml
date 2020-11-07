@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -72,7 +72,7 @@
             <HBox alignment="CENTER" SplitPane.resizableWithParent="false">
                <children>
                   <Label text="Last operation took: " />
-                  <Label text="0 ms" textAlignment="CENTER">
+                  <Label fx:id="timeLabel" text="0 s" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>

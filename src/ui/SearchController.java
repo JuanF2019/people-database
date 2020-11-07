@@ -7,6 +7,8 @@
 package ui;
 
 import java.util.ArrayList;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -97,6 +99,8 @@ public class SearchController {
         	
     		predictionsListViewer.getItems().clear();
     		
+    		predictionsListViewer.getSelectionModel().clearSelection();
+    		
     		if(predictions != null) {
     			
     			for (int i = 0; i < predictions.size() && i < 100; i++) {
@@ -153,56 +157,69 @@ public class SearchController {
     
     @FXML
     void retrievePerson(ActionEvent event) {
-    	   	
-    	ArrayList<Person> people = dbm.search(searchCriteria, searchTextField.getText());
     	
-    	Person p = null;
-    	
-    	dbm.clearCurrentPerson();
-    	
-    	principalController.updateEdit(false);   	
-    	
-    	if(people.size() > 1) {
-    		
-    		ChoiceDialog<Person> dialog = new ChoiceDialog<Person>(people.get(0), people);
-    		
-    		dialog.setTitle("Multiple people found!");
-    		
-    		dialog.setContentText("Multiple people with the same criteria had been found!\n"
-    				+ "Please select one of the following:\n"
-    				+ "(By default the first one will be selected)\n");   
-    		
-    		Person result = dialog.showAndWait().get();
-    		
-    		if(result != null) {
-    			
-    			dbm.setCurrentPerson(result);
-    			
-    			principalController.updateEdit(true);
-    			
-    			success();
-    			
-    		} else {
-    			
-    			unexpectedError();
-    			
-    		}
+    	long t1 = System.currentTimeMillis();
     	    	
-    	} else if(people.size() == 1) {
-    		
-    		p = people.get(0);
-    		
-    		dbm.setCurrentPerson(p);
-    		
-    		principalController.updateEdit(true);
-    		
-    		success();
-    		
-    	} else {
-    		
-    		notFound();
-    		
-    	}
+	    ArrayList<Person> people = dbm.search(searchCriteria, searchTextField.getText());
+	    
+	    if(people != null) {
+	    	
+	    	Person p = null;
+	    	
+	    	dbm.clearCurrentPerson();
+	    	
+	    	principalController.updateEdit(false);   	
+	    	
+	    	if(people.size() > 1) {
+	    		
+	    		ChoiceDialog<Person> dialog = new ChoiceDialog<Person>(people.get(0), people);
+	    		
+	    		dialog.setTitle("Multiple people found!");
+	    		
+	    		dialog.setContentText("Multiple people with the same criteria had been found!\n"
+	    				+ "Please select one of the following:\n"
+	    				+ "(By default the first one will be selected)\n");   
+	    		
+	    		Person result = dialog.showAndWait().get();
+	    		
+	    		if(result != null) {
+	    			
+	    			dbm.setCurrentPerson(result);
+	    			
+	    			principalController.updateEdit(true);
+	    			
+	    			success();
+	    			
+	    		} else {
+	    			
+	    			unexpectedError();
+	    			
+	    		}
+	    	    	
+	    	} else if(people.size() == 1) {
+	    		
+	    		p = people.get(0);
+	    		
+	    		dbm.setCurrentPerson(p);
+	    		
+	    		principalController.updateEdit(true);
+	    		
+	    		success();
+	    		
+	    	} else {
+	    		
+	    		notFound();
+	    		
+	    	}
+	    }
+	    else {
+	    	
+	    	notFound();
+	    	
+	    }
+    	long t2 = System.currentTimeMillis();
+		
+		principalController.updateTime(t2-t1);
     	
     }
  
@@ -222,7 +239,7 @@ public class SearchController {
 					predictionCount.setText("0");
 				}
 				else {
-					
+						
 					predictionsListViewer.setVisible(true);
 					updatePredictions();
 				}		
@@ -231,18 +248,19 @@ public class SearchController {
 		
 		});
 		
+		
 		predictionsListViewer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-								
-				searchTextField.setText(newValue);
 				
-			}
+				searchTextField.setText(newValue);							
+				
+				predictionsListViewer.getSelectionModel().select(0);
+			}		
 		
 		});
 		
 	}
-	
 	//------------------------------------------------------------------------------------
     
   	// NOT FOUND METHOD

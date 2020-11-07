@@ -6,9 +6,7 @@
 
 package ui;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
@@ -45,7 +44,7 @@ public class PrincipalController {
 		
 		this.dbm = dbm;
 
-		addController = new AddController(dbm);
+		addController = new AddController(this, dbm);
 
 		searchController = new SearchController(this,dbm);
 
@@ -86,6 +85,9 @@ public class PrincipalController {
 	
     @FXML
     private ProgressBar progressBar;
+    
+    @FXML
+    private Label timeLabel;
 
 	//------------------------------------------------------------------------------------
 
@@ -215,6 +217,15 @@ public class PrincipalController {
 	
 	public void updateProgressBar(double time) {
 		progressBar.setProgress(time);
+	}
+
+	//------------------------------------------------------------------------------------
+	
+	//UPDATES THE TIME LABEL
+	
+	public void updateTime(long time) {
+		
+		timeLabel.setText(Long.toString(time) + " ms");
 	}
 	
 	//------------------------------------------------------------------------------------

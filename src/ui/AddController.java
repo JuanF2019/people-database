@@ -31,6 +31,8 @@ public class AddController {
 	
 	private DataBaseManager dbm;
 	
+	private PrincipalController pc;
+	
 	//------------------------------------------------------------------------------------
 	
 	// THINGS TO USE IN JAVA'FX
@@ -66,10 +68,11 @@ public class AddController {
 	
 	// CONSTRUCTOR METHOD
 	 
-	public AddController(DataBaseManager dbm) {
+	public AddController(PrincipalController pc, DataBaseManager dbm) {
 		
 		this.dbm = dbm;
-	
+		
+		this.pc = pc;
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -78,6 +81,8 @@ public class AddController {
 	 
 	@FXML
 	void add(ActionEvent event) {
+		
+		long t1 = System.currentTimeMillis();
 		
 		String name = nameTextAdd.getText();		
 		
@@ -130,6 +135,10 @@ public class AddController {
 			}
 			
 		}
+		
+		long t2 = System.currentTimeMillis();
+		
+		pc.updateTime(t2-t1);
 		
 	}	
 	
