@@ -61,25 +61,27 @@ public class GenerateController {
 				final int peopleNumber = Integer.parseInt(numberGenerateText.getText());
 
 				if(peopleNumber + dbm.getSavedPeopleNumber() <= DataBaseManager.MAX_PEOPLE_NUMBER) {
+					
 					GenerateThread gt = new GenerateThread(pc, this, dbm, peopleNumber);
 					
 					gt.start();
-				}
-				else {
+					
+				} else {
+					
 					notSuccess();
+					
 				}			
 				
-			}
-			catch(NumberFormatException ex) {
+			} catch(NumberFormatException ex) {
 
 				notSuccess();
 
 			}
 
-
-		}
-		else {
+		} else {
+			
 			warning();
+			
 		}	
 
 	}

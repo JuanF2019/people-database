@@ -111,10 +111,10 @@ public class SearchController {
     		}   
     		
     		predictionCount.setText(Integer.toString(predictions.size()));
+    		
     	}  
     	
     }    
-    
     
     //------------------------------------------------------------------------------------
     
@@ -209,12 +209,13 @@ public class SearchController {
 	    		notFound();
 	    		
 	    	}
-	    }
-	    else {
+	    	
+	    } else {
 	    	
 	    	notFound();
 	    	
 	    }
+	    
     	long t2 = System.currentTimeMillis();
 		
 		principalController.updateTime(t2-t1);
@@ -233,19 +234,22 @@ public class SearchController {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				
 				if(newValue == null || newValue.isEmpty() || searchCriteria == SearchCriteria.ID) {
+					
 					predictionsListViewer.setVisible(false);
+					
 					predictionCount.setText("0");
-				}
-				else {
+					
+				} else {
 						
 					predictionsListViewer.setVisible(true);
+					
 					updatePredictions();
+					
 				}		
 				
 			}
 		
 		});
-		
 		
 		predictionsListViewer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			
@@ -254,11 +258,13 @@ public class SearchController {
 				searchTextField.setText(newValue);							
 				
 				predictionsListViewer.getSelectionModel().select(0);
+				
 			}		
 		
 		});
 		
 	}
+	
 	//------------------------------------------------------------------------------------
     
   	// NOT FOUND METHOD

@@ -24,12 +24,16 @@ import thread.LoadingThread;
 public class LoadingController {
 	
 	//------------------------------------------------------------------------------------
+	
+	// Relation with another class
 
 	DataBaseManager dbm;
 
 	PrincipalController controller;
 	
 	//------------------------------------------------------------------------------------
+	
+	// Java'Fx
 
 	@FXML
 	private Label text;
@@ -69,15 +73,20 @@ public class LoadingController {
 	}
 	
 	//------------------------------------------------------------------------------------
+	
+	// Loading controller method
 
 	public LoadingController() {
 
 		dbm = new DataBaseManager();
 
 		new LoadingThread(this,dbm).start();
+		
 	}
 	
 	//------------------------------------------------------------------------------------
+	
+	// Is loading method
 	
 	public boolean isLoading() {
 		
@@ -85,15 +94,17 @@ public class LoadingController {
 			
 			return true;
 		
-		}
-		else {
+		} else {
 		
 			return false;
 		
 		}
+		
 	}
 
 	//------------------------------------------------------------------------------------
+	
+	// Ready loading method
 	
 	public void readyLoading() {		
 				
@@ -107,9 +118,16 @@ public class LoadingController {
 	
 	//------------------------------------------------------------------------------------
 	
+	// Error method
+	
 	public void error() {
+		
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setHeaderText("Error loading data");
 		alert.showAndWait();
+		
 	}
+	
+	//------------------------------------------------------------------------------------
+	
 }

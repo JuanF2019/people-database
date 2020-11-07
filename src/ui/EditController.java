@@ -188,7 +188,6 @@ public class EditController {
 
 		} 		
 		
-
 	}
 
 	//------------------------------------------------------------------------------------
@@ -439,17 +438,22 @@ public class EditController {
 	//SAVE IMAGE METHOD
 	
 	public void saveImage(String imageUrl) throws IOException {
+		
 		URL url = new URL(imageUrl);
 		
 		URLConnection urlConn = url.openConnection();
+		
 	    urlConn.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+	    
 	    //String contentType = urlConn.getContentType();
 	    //System.out.println("contentType:" + contentType);
 	    
-		
 		String fileName = url.getFile();
+		
 		String destName = "./src/ui" + fileName.substring(fileName.lastIndexOf("/"));
+		
 		//System.out.println(destName);
+		
 		pathImage = destName + ".jpg";
 	 
 		InputStream is = urlConn.getInputStream();
@@ -458,18 +462,25 @@ public class EditController {
 		OutputStream os = new FileOutputStream(pathImage);
 	 
 		byte[] b = new byte[2048];
+		
 		int length;
 	 
 		while ((length = is.read(b)) != -1) {
+			
 			os.write(b, 0, length);
+			
 		}
 	 
 		is.close();
+		
 		os.close();
 		
 		FileInputStream input = new FileInputStream(pathImage);
+		
 		Image pic = new Image(input);
+		
 		image.setImage(pic);
+		
 	}
 	
 	//------------------------------------------------------------------------------------

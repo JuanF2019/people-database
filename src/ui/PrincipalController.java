@@ -93,7 +93,6 @@ public class PrincipalController {
 
 	// PUBLIC METHOD TO LOAD THE EDIT TAB
 
-
 	public void loadEditTab() throws IOException {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditPanel.fxml"));
@@ -155,10 +154,13 @@ public class PrincipalController {
 		editTab.setDisable(!visible);
 
 		try {
+			
 			editController.setVisible(visible);
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		}	
 
 	}
@@ -189,6 +191,7 @@ public class PrincipalController {
 
 	@FXML
 	void saveInformation(ActionEvent event) {
+		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setHeaderText("Do you want to save the information to disk?");
 		alert.setContentText("Note: This process may take a while");
@@ -197,14 +200,18 @@ public class PrincipalController {
 		ButtonType result = alert.getResult();
 		
 		if(result == ButtonType.OK) {
+			
 			try {
+				
 				dbm.write();
-			}
-			catch (IOException e) {
+				
+			} catch (IOException e) {
+				
 				alert = new Alert(AlertType.ERROR);
 				alert.setHeaderText("There was an error saving data");
 				alert.setContentText("Please contact support");
 				alert.showAndWait();
+				
 			}
 			
 		}
@@ -216,7 +223,9 @@ public class PrincipalController {
 	//UPDATES THE PROGRESS BAR
 	
 	public void updateProgressBar(double progress) {
+		
 		progressBar.setProgress(progress);
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -226,14 +235,19 @@ public class PrincipalController {
 	public void updateTime(long time) {
 		
 		timeLabel.setText(Long.toString(time) + " ms");
+		
 	}	
 	
 	//------------------------------------------------------------------------------------
+	
+	// Reset search method
 
 	public void resetSearch() {
 		
 		searchController.updateSearchCriteria(new ActionEvent());
 		
 	}
+	
+	//------------------------------------------------------------------------------------
 	
 }

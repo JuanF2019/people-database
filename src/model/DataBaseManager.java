@@ -161,9 +161,15 @@ public class DataBaseManager {
 		}	
 
 	}
+	
+	//------------------------------------------------------------------------------------
+	
+	// Add method with a person parameter
 
 	public void addPerson(Person p) {
+		
 		savePerson(p);
+		
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -185,6 +191,7 @@ public class DataBaseManager {
 		surnamesTrie.add(newPerson.getSurname());
 
 		fullNamesTrie.add(newPerson.getName() + " " + newPerson.getSurname());
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -219,12 +226,13 @@ public class DataBaseManager {
 				
 				ois.close();				
 				
-				return true;				
+				return true;
+				
 			}
+			
 			return true;			
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			
 			return false;
 
@@ -252,7 +260,6 @@ public class DataBaseManager {
 
 		if(loadedSurnames == null)
 			return false;
-
 		
 		
 		loadedCountries = loadCountries();
@@ -602,7 +609,8 @@ public class DataBaseManager {
 
 		}
 
-		return persons;		
+		return persons;	
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -634,7 +642,9 @@ public class DataBaseManager {
 	// Clear current person method
 
 	public void clearCurrentPerson() {
+		
 		currentPerson = null;
+		
 	}
 
 	//------------------------------------------------------------------------------------
@@ -654,17 +664,23 @@ public class DataBaseManager {
 			long t1 = System.currentTimeMillis();
 		
 			int countryAmount = 0;
+			
 			String countryName = "";
 			
 			for (int i = 0; i < n; i++) {
 				
 				if(currentCountry == loadedCountries.size()) {
+					
 					countryAmount = n - i;
+					
 					countryName = loadedCountries.get(currentCountry-1).getKey();
-				}
-				else {
+					
+				} else {
+					
 					countryAmount = (int) Math.round(loadedCountries.get(currentCountry).getValue()*n);
+					
 					countryName = loadedCountries.get(currentCountry).getKey();
+					
 				}			
 				
 				int j;
@@ -683,7 +699,8 @@ public class DataBaseManager {
 
 				currentCountry++;
 				
-				i += j - 1;		
+				i += j - 1;	
+				
 			}
 
 			savedPeopleNumber += n;
@@ -739,10 +756,10 @@ public class DataBaseManager {
 	// GET CURRENT PERSON
 
 	public Person getCurrentPerson() {
+		
 		return currentPerson;
+		
 	}
-
-	//------------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------------
 	
@@ -771,7 +788,6 @@ public class DataBaseManager {
 		
 		boolean check = false;
 
-		//
 		for (int i = 0; i < loadedAges.size() && !check; i++) {
 			
 			minAge = maxAge;
@@ -803,6 +819,7 @@ public class DataBaseManager {
 		}
 
 		return birthday;
+		
 	}
 	
 	//------------------------------------------------------------------------------------
@@ -836,6 +853,8 @@ public class DataBaseManager {
 	}
 	
 	//------------------------------------------------------------------------------------
+	
+	// Is generating method
 
 	public boolean isGenerating() {
 		return generating;
@@ -843,15 +862,20 @@ public class DataBaseManager {
 	
 	//------------------------------------------------------------------------------------
 	
+	// Get current generation method
+	
 	public int getCurrentGeneration() {
 		return currentGeneration;
 	}
 	
 	//------------------------------------------------------------------------------------
+	
+	// Is last generation SUCCESFUL method
 
 	public boolean isLastGenerationSuccesful() {
 		return lastGenerationSuccesful;
 	}
 	
+	//------------------------------------------------------------------------------------
 	
 }
