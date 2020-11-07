@@ -7,7 +7,7 @@ Finally, if there is any kind of misunderstanding with the information, the desi
 
 ## Program Requirements
 
-* Java and JavaFX.
+* Java 8 and JavaFX 8.
 * Eclipse.
 
 
@@ -34,7 +34,7 @@ Finally, if there is any kind of misunderstanding with the information, the desi
 * https://github.com/JuanF2019/people-database/tree/master/test/collections
 
 
-## Tools for use
+## Tools used
 
 * Google Docs
 * Process Dashboard
