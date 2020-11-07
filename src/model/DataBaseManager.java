@@ -31,7 +31,7 @@ public class DataBaseManager {
 
 	private static final double MAX_HEIGHT = 200;
 
-	public static final int MAX_PEOPLE_NUMBER = Integer.MAX_VALUE;
+	public static final int MAX_PEOPLE_NUMBER = 700000;
 
 	public static final String PICTURE_URL = "https://thispersondoesnotexist.com/image";
 
