@@ -59,7 +59,7 @@ public class DataBaseManager {
 
 	public static final int MAX_PEOPLE_NUMBER = Integer.MAX_VALUE;
 
-	public static final String PICTURE_URL = "https://thispersondoesnotexist.com/";
+	public static final String PICTURE_URL = "https://thispersondoesnotexist.com/image";
 
 	public static final String GENERATION_DATA_PATH = "data/generation_data/";
 

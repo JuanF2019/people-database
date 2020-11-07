@@ -6,6 +6,13 @@
 
 package ui;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
@@ -19,6 +26,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.DataBaseManager;
 import model.Person;
@@ -55,6 +63,8 @@ public class EditController {
 
 	@FXML
 	private CheckBox nationalityCheckBox;
+	
+	private String pathImage;
 
 	//------------------------------------------------------------------------------------
 
@@ -406,22 +416,63 @@ public class EditController {
 	public void initialize() {
 
 		editNationalityChoiceBox.getItems().addAll(dbm.getCountries());
-
+		
 	}
 
+	//------------------------------------------------------------------------------------
+	
+	public void saveImage(String imageUrl) throws IOException {
+		URL url = new URL(imageUrl);
+		
+		URLConnection urlConn = url.openConnection();
+	    urlConn.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+	    String contentType = urlConn.getContentType();
+	    //System.out.println("contentType:" + contentType);
+	    
+		
+		String fileName = url.getFile();
+		String destName = "./src/ui" + fileName.substring(fileName.lastIndexOf("/"));
+		//System.out.println(destName);
+		pathImage = destName + ".jpg";
+	 
+		InputStream is = urlConn.getInputStream();
+		
+		//InputStream is = url.openStream();
+		OutputStream os = new FileOutputStream(pathImage);
+	 
+		byte[] b = new byte[2048];
+		int length;
+	 
+		while ((length = is.read(b)) != -1) {
+			os.write(b, 0, length);
+		}
+	 
+		is.close();
+		os.close();
+		
+		FileInputStream input = new FileInputStream(pathImage);
+		Image pic = new Image(input);
+		image.setImage(pic);
+	}
+	
 	//------------------------------------------------------------------------------------
 
 	// SET VISIBLE METHOD, UPDATES VISIBILITY OF COMPONENTS, IT ONLY GETS VISIBLE WHEN THERE IS A CURRENT PERSON
 
-	public void setVisible(boolean visible) {
+	public void setVisible(boolean visible) throws IOException {
 
 		if(visible) {
 
 			resetFields(new ActionEvent());
+			
+			saveImage(DataBaseManager.PICTURE_URL);
+			
 
 		} else {
 
 			clearAndDisableFields();
+			
+		//	image.setImage(new Image("people-database/img/image-3.PNG"));
 
 		}
 
