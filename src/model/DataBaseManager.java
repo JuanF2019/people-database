@@ -22,40 +22,14 @@ import java.util.ArrayList;
 import java.util.SplittableRandom;
 
 public class DataBaseManager {
-	
-	//------------------------------------------------------------------------------------
-
-	//Constants of the RandomFieldsGenerator class
-
-	private static final double MIN_HEIGHT = 140;
-
-	private static final double MAX_HEIGHT = 200;
-	
-	//------------------------------------------------------------------------------------
-	
-	//Attributes of the RandomFieldsGenerator class
-
-	private ArrayList<String> loadedNames;
-
-	private ArrayList<String> loadedSurnames;
-
-	//------------------------------------------------------------------------------------
-	
-	//Relations of the RandomFieldsGenerator class
-	
-	//Saves country name and accumulative probability
-	private ArrayList<Pair<String,Double>> loadedCountries;	
-
-	//Age stored represents the maximum age and accumulative probability
-	private ArrayList<Pair<Integer,Double>> loadedAges;
-	
-	private SplittableRandom sr;
-	
-	//------------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------------
 
 	//Constants of the DataBaseManager class
+	
+	private static final double MIN_HEIGHT = 140;
+
+	private static final double MAX_HEIGHT = 200;
 
 	public static final int MAX_PEOPLE_NUMBER = Integer.MAX_VALUE;
 
@@ -77,6 +51,18 @@ public class DataBaseManager {
 
 	private long generationTime;
 
+	private ArrayList<String> loadedNames;
+
+	private ArrayList<String> loadedSurnames;
+	
+	//Saves country name and probability
+	private ArrayList<Pair<String,Double>> loadedCountries;	
+
+	//Age stored represents the maximum age and accumulative probability
+	private ArrayList<Pair<Integer,Double>> loadedAges;
+	
+	private SplittableRandom sr;
+	
 	//------------------------------------------------------------------------------------
 
 	//Relations of the DataBaseManager class
@@ -141,7 +127,7 @@ public class DataBaseManager {
 
 	//------------------------------------------------------------------------------------
 
-	// Get's methods of the DataBaseManager class
+	// Set's methods of the DataBaseManager class
 
 	public void setCurrentPerson(Person p) {
 		currentPerson = p;
@@ -215,8 +201,7 @@ public class DataBaseManager {
 		try {
 
 			File file = new File(PEOPLE_DATA_PATH + "people.dat");
-			
-						
+									
 			if(file.exists()) {
 				
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));	
@@ -679,7 +664,9 @@ public class DataBaseManager {
 					
 					Person newPerson = generatePerson(countryName);
 
-					savePerson(newPerson);				
+					savePerson(newPerson);	
+					
+					System.out.println(i+j);
 					
 				}
 
