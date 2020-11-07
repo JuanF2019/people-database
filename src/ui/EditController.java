@@ -136,6 +136,8 @@ public class EditController {
 			successDelete();
 
 			principalController.updateEdit(false);
+			
+			principalController.resetSearch();
 
 		} else {
 

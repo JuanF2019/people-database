@@ -63,6 +63,11 @@ public class DataBaseManager {
 	
 	private SplittableRandom sr;
 	
+	private boolean generating;
+	
+	private int currentGeneration;
+
+	private boolean lastGenerationSuccesful;
 	//------------------------------------------------------------------------------------
 
 	//Relations of the DataBaseManager class
@@ -82,7 +87,7 @@ public class DataBaseManager {
 	private HashTableInterface<Long,Person> idsHashTable;
 
 	private Person currentPerson;
-
+	
 	//------------------------------------------------------------------------------------
 
 	// Constructor method of the DataBaseManager class
@@ -640,6 +645,10 @@ public class DataBaseManager {
 
 		if(MAX_PEOPLE_NUMBER - savedPeopleNumber - n >= 0) {
 
+			currentGeneration = 0;
+			
+			generating = true;
+			
 			int currentCountry = 0;
 			
 			long t1 = System.currentTimeMillis();
@@ -666,6 +675,8 @@ public class DataBaseManager {
 
 					savePerson(newPerson);	
 					
+					currentGeneration++;
+					
 					System.out.println(i+j);
 					
 				}
@@ -681,10 +692,18 @@ public class DataBaseManager {
 
 			generationTime = (t2-t1)/1000;
 
+			generating = false;
+			
+			currentGeneration = 0;
+			
+			lastGenerationSuccesful = true;
+			
 			return true;
 
 		} else {
 
+			lastGenerationSuccesful = false;
+			
 			return false;
 
 		}
@@ -817,4 +836,22 @@ public class DataBaseManager {
 	}
 	
 	//------------------------------------------------------------------------------------
+
+	public boolean isGenerating() {
+		return generating;
+	}
+	
+	//------------------------------------------------------------------------------------
+	
+	public int getCurrentGeneration() {
+		return currentGeneration;
+	}
+	
+	//------------------------------------------------------------------------------------
+
+	public boolean isLastGenerationSuccesful() {
+		return lastGenerationSuccesful;
+	}
+	
+	
 }

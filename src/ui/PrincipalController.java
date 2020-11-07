@@ -215,8 +215,8 @@ public class PrincipalController {
 	
 	//UPDATES THE PROGRESS BAR
 	
-	public void updateProgressBar(double time) {
-		progressBar.setProgress(time);
+	public void updateProgressBar(double progress) {
+		progressBar.setProgress(progress);
 	}
 
 	//------------------------------------------------------------------------------------
@@ -226,8 +226,14 @@ public class PrincipalController {
 	public void updateTime(long time) {
 		
 		timeLabel.setText(Long.toString(time) + " ms");
-	}
+	}	
 	
 	//------------------------------------------------------------------------------------
 
+	public void resetSearch() {
+		
+		searchController.updateSearchCriteria(new ActionEvent());
+		
+	}
+	
 }

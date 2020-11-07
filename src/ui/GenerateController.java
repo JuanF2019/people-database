@@ -6,7 +6,6 @@
 
 package ui;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import model.DataBaseManager;
-import thread.ProgressBarThread;
+import thread.GenerateThread;
 
 public class GenerateController {
 
@@ -23,8 +22,6 @@ public class GenerateController {
 	// RELATIONS
 
 	private DataBaseManager dbm;
-
-	private ProgressBarThread pbt;
 
 	private PrincipalController pc;
 
@@ -57,32 +54,21 @@ public class GenerateController {
 	@FXML
 	void generate(ActionEvent event) throws InterruptedException {
 		
-		long t1 = System.currentTimeMillis();
-		
 		if(!numberGenerateText.getText().equals("")) {
 
 			try {
 
 				final int peopleNumber = Integer.parseInt(numberGenerateText.getText());
 
-				boolean g = false;
-
-				new Thread() {
-					public void run(){
-
-						dbm.generatePeople(peopleNumber);
-
-					}
-				}.start();
-
-				pbt = new ProgressBarThread(pc);
-				pbt.start();
-
-
-				/*
-				if(g) success();
-				else notSuccess();
-				 */
+				if(peopleNumber + dbm.getSavedPeopleNumber() <= DataBaseManager.MAX_PEOPLE_NUMBER) {
+					GenerateThread gt = new GenerateThread(pc, this, dbm, peopleNumber);
+					
+					gt.start();
+				}
+				else {
+					notSuccess();
+				}			
+				
 			}
 			catch(NumberFormatException ex) {
 
@@ -95,10 +81,6 @@ public class GenerateController {
 		else {
 			warning();
 		}	
-		
-		long t2 = System.currentTimeMillis();
-		
-		pc.updateTime(t2-t1);
 
 	}
 
@@ -125,7 +107,7 @@ public class GenerateController {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Alert");
 		alert.setHeaderText("Generation failed");
-		alert.setContentText("The program could not generate the desired amount of people. Please contact technical support.");
+		alert.setContentText("The program could not generate the desired amount of people. Maximum value is surpased. (700000)");
 		alert.showAndWait();
 
 	}
