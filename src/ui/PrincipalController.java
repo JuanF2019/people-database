@@ -152,7 +152,12 @@ public class PrincipalController {
 
 		editTab.setDisable(!visible);
 
-		editController.setVisible(visible);	
+		try {
+			editController.setVisible(visible);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 
 	}
 
