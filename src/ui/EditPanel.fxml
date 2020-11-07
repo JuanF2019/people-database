@@ -70,7 +70,7 @@
                                     </CheckBox>
                                  </children>
                               </HBox>
-                              <Button layoutX="578.0" layoutY="65.0" mnemonicParsing="false" onAction="#validate" style="-fx-background-color: gray;" text="Validate" textFill="WHITE">
+                              <Button layoutX="577.0" layoutY="65.0" mnemonicParsing="false" onAction="#validate" style="-fx-background-color: gray;" text="Validate" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>

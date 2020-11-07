@@ -20,7 +20,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="numberGenerateText" layoutX="275.0" layoutY="198.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-text-fill: gray;" text="2147483647" />
+      <TextField fx:id="numberGenerateText" layoutX="275.0" layoutY="198.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-text-fill: gray;" text="700000" />
       <Button fx:id="generateButton" layoutX="310.0" layoutY="295.0" mnemonicParsing="false" onAction="#generate" style="-fx-background-color: gray;" text="Generate" textFill="WHITE">
          <font>
             <Font size="15.0" />
