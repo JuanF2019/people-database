@@ -13,10 +13,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.DataBaseManager;
+import thread.LoadingThread;
 
 public class LoadingController {
 	
@@ -71,17 +74,25 @@ public class LoadingController {
 
 		dbm = new DataBaseManager();
 
-		new Thread() {
-			
-			public void run() {
-				dbm.read();
-				
-				readyLoading();
-			}
-			
-		}.start();
+		new LoadingThread(this,dbm).start();
 	}
 	
+	//------------------------------------------------------------------------------------
+	
+	public boolean isLoading() {
+		
+		if(startButton == null || text == null) {
+			
+			return true;
+		
+		}
+		else {
+		
+			return false;
+		
+		}
+	}
+
 	//------------------------------------------------------------------------------------
 	
 	public void readyLoading() {		
@@ -96,4 +107,9 @@ public class LoadingController {
 	
 	//------------------------------------------------------------------------------------
 	
+	public void error() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setHeaderText("Error loading data");
+		alert.showAndWait();
+	}
 }
