@@ -217,9 +217,9 @@ public class EditController {
 
 		} else {
 
-			dbm.update(name, surname, s, birthday, height, nat);
+			dbm.update(name, surname, s, birthday, height, nat);		
 
-			success();		
+			success();			
 
 		}
 
